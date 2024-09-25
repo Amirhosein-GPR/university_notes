@@ -29,7 +29,7 @@
     date: [
         نیم سال تحصیلی #text(dir: ltr)[۱۴۰۳-۱]
     ],
-    version: "v0.1.0",
+    version: "v0.2.0",
     phase: none,
     info_color: blue_color,
     no_responsibility: true
@@ -147,11 +147,27 @@
     + Energy efficiency
     + Performance
     + Real-time constrations
+    + Weight efficienct, Cost efficienct, Code-size efficienct
+    + Dedicated toward a certain application
+        - Minimize resources, Maximize robustness
+    + Dedicated user interface
+        - No mouse, keyboard and screen
+    + Frequently connected to physical environment through sensors and actuators
+    + Hybrid systems (analog + digital parts)
 ]
-
 
 #tool.tip()[
     برای سیستم های بدون درنگ، جواب های درستی که دیر می رسند، غلط اند (اشاره به مورد شماره ۴ که در بالا آمده است).
+]
+
+#tool.tip()[
+    اینگونه نیست که هر سیستم نهفته ای تمامی خصوصیات لیست بالا را داشته باشد.   
+]
+
+#tool.tip()[
+    سیستم های سایبر فیزیکی و نهفته شباهت زیادی به یکدیگر دارند.
+    تفاوت اصلی این دو آن است که سیستم های سایبر فیزیکی ارتباط بیشتری با محیط فیزیکی دارند.
+    (بنابراین مواردی که در لیست بالا به عنوان مشخصات سیستم های نهفته آورده شده، برای سیستم های سایبر فیزیکی نیز، صدق می کند.)
 ]
 
 #tool.tip()[
@@ -160,4 +176,123 @@
 
 #tool.tip()[
     فرق Safety با Security این است که Safety به جنبه ایمن بودن سیستم برای جان آدم ها در ارتباط است و Security با مثلاً حفظ امنیت داده های سیستم در ارتباط است.
+]
+
+= جلسه دوم
+
+#tool.question()[
+    در بحث Reliability، افزونگی به کار می رود.
+    چه تعداد افزونگی برای سیستم کفایت می کند؟
+]
+
+#tool.true_answer()[
+    بستگی به میزان افزونگی مورد نیاز سیستم دارد ولی حداقل ۳ عدد؛ تا اگر یکی از منابع دچار آسیب شد بتوانیم با رأی گیری از ۲ منبع سالم دیگر به نتیجه درست برسیم.
+]
+
+#tool.comparision()[
+    ارتباطات Embedded system ها با Real time system ها:
+    - بیشتر Embedded system ها Real time system هستند.
+    - بیشتر Real time system ها Embedded system هستند.
+
+    #tool.custom_figure(image("images/CPS/02_01.png"), caption: "بیشتر ES ها RT هستند و بر عکس.")
+]
+
+#tool.list()[
+    چالش های سیستم های نهفته:
+    + حوزه ای چند رشته ای است
+    + اهداف طراحی مختلفی وجود دارد
+    + چالش در مشخصات سیستم، طراحی و تایید
+    + ویژگی های خاص سیستم های نهفته
+        - Weight efficienct, Cost efficienct, Code-size efficienct, Diskless systems
+]
+
+#tool.list()[
+    تعامل اهداف طراحی
+    - اهداف طراحی:
+        - Fault tolerance (Dependability)
+        - Energy efficiency
+        - Real-time
+        - Cost efficient
+
+]
+
+#tool.example()[
+    برای بهبود تحمل پذیری خطا، افزونگی را افزایش می دهیم که باعث افزایش مصرف انرژی می شود.
+]
+
+== سیستم های واکنشی (Reactive systems)
+
+#tool.definition()[
+    یک Reactive system در تعامل پیوسته با محیط خود می باشد و با سرعتی که توسط آن محیط تعیین می شود، اجرا می شود.
+]
+
+#tool.list()[
+    سیستم های واکنشی (Reactive systesms):
+
+    - عموما سیستم های نهفته، سیستم های واکنشی هستند.
+    - Reactive systems = Event-based systems
+    - رویکرد برنامه نویسی این سیستم ها به صورت سنتی نیست؛ چرا که در ذات، Event-based هستند.
+    - مدل مناسب برای Reactive system ها:
+        - رویکرد برنامه نویسی بر پایه Automata
+]
+
+=== Automata-based programming
+#tool.definition()[
+    نوعی رویکرد برنامه نویسی است که در آن از ماشین حالت متناهی برای توصیف رفتار برنامه، استفاده می شود.
+]
+
+#tool.simple_context()[
+    گراف انتقال یک State machine در تمامی مراحل توسعه نرم افزار، استفاده می شود.
+
+    - Specification
+    - Implementation
+    - debugging
+    - documentation
+]
+
+#tool.example()[
+    در چند تصویر زیر، مثالی از یک سیستم تهویه هوا آورده شده است:
+    
+    #tool.custom_figure(
+        [
+            #image("images/CPS/02_02.png", width: 99%)
+            #image("images/CPS/02_03.png", width: 99%)
+            // #image("images/CPS/02_04.png")
+            // #image("images/CPS/02_05.png")
+            // #image("images/CPS/02_06.png")
+        ],
+        caption: none
+    )
+
+    #tool.custom_figure(
+        [
+            #image("images/CPS/02_04.png", width: 95%)
+            #image("images/CPS/02_05.png", width: 95%)
+            #image("images/CPS/02_06.png", width: 95%)
+        ],
+        caption: "مثالی از ماشین حالت متناهی (به شیوه Moore)"
+    )
+]
+
+
+#tool.tip()[
+    برای مثال تهویه هوا درست این است که از Range استفاده کنیم تا سیستم دائم دچار نوسان نشود (کولر یا بخاری تند تند خاموش و روشن نشود).
+]
+
+#tool.exercise(extra_score: true)[
+    مثال تهویه هوا را به صورت گرافیکی شبیه سازی کنید.
+]
+
+#tool.list()[
+    بعضی از مزایای این رویکرد (Automata-based programming):
+    
+    #text(dir: ltr)[
+        - Suitable for reactive systems
+        - Hierarchical (e.g. Super-states)
+            - Human beings are not capable of comprehending systems with more than 3 #sym.tilde 5 objects.
+        - Verification
+            - Each automata is simple and easy to understand
+            - Each automata has to comply with the super-state that it belongs to.
+        - Automatic code generation
+    ]
 ]

@@ -204,20 +204,48 @@
     ]
 }
 
+#let exercise(content, black_and_white: false, extra_score: false) = {
+    let icon_color = rgb(255, 0, 150)
+    block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%)[
+        #box(stroke: icon_color, radius: 0.2em)[
+            #box(inset: 0.3em, stroke: (left: icon_color), outset: (left: 0.1em))[
+                #svg("../../icons/pen-to-square.svg", rgb: icon_color.to-hex(), width: 0.8em)
+                #if extra_score {
+                    svg("../../icons/plus.svg", rgb: icon_color.to-hex(), width: 0.8em)
+                }
+            ]
+            #box(inset: 0.3em)[
+                #text(baseline: -0.15em, fill: icon_color)[
+                    تمرین
+                ]
+            ]
+        ]
+        #text(baseline: -0.45em)[
+            #content
+        ]
+        
+        // #text(baseline: -0.2em)[
+        //     #content
+        // ]
+    ]
+}
+
 #let custom_figure(content, caption: str, refrence: none, inset: 0em) = {
     show par: set block(above: 0em)
 
     show figure: arg => {
-        block(stroke: (bottom: black), width: 100%, inset: inset)[
-            #arg.body
-        ]
-        v(0.5em)
-        box(inset: 1em, width: 100%)[
-            #align(center)[
-                #text(baseline: 0.1em)[
-                    #arg.caption
-                ]
+        align(center)[
+            #block(stroke: (bottom: black), width: 100%, inset: inset)[
+                #arg.body
             ]
+            #if caption != none {
+                v(0.5em)
+                box(inset: 1em, width: 100%)[
+                        #text(baseline: 0em)[
+                            #arg.caption
+                        ]
+                ]
+            }
         ]
     }
     
