@@ -15,219 +15,81 @@
     box(width: width, height: height)[#image.decode(colored)]
 }
 
-#let tip(content, level: 1, black_and_white: false) = {
-    let star_color = orange_color
+#let section_template(title: str, content, black_and_white: false, icon_paths: (), icon_color: color) = {
+    block(stroke: icon_color, radius: 0.2em, below: 0.5em , width: 100%, clip: true)[
+        #let icon_list = ()
+        #for icon_path in icon_paths {
+            icon_list.push(svg(icon_path, rgb: icon_color.to-hex(), width: 0.8em))
+        }
 
-    let star_list = ()
+        #grid(
+            columns: (auto, 1fr, auto),
+            inset: 0.5em,
+            stroke: icon_color,
+            align: center,
+            icon_list.join(" "),
+            text(fill: icon_color, baseline: -0.2em)[
+                #title
+            ],
+            icon_list.rev().join(" ")
+        )
+    ]
+    block(stroke: icon_color, inset: (bottom: 0.75em, rest: 0.5em), radius: 0.2em, width: 100%)[
+        #content
+    ]
+}
+
+#let tip(content, level: 1, black_and_white: false) = {
+    let icon_paths = ()
     while level > 0 {
-        star_list.push([#svg("../../icons/star.svg", rgb: star_color.to-hex(), width: 0.9em)])
+        icon_paths.push("../../icons/star.svg")
         level -= 1
     }
 
-    block(stroke: star_color, inset: 0.5em, radius: 0.2em, width: 100%)[
-        #box(stroke: star_color, radius: 0.2em)[
-            #box(inset: 0.3em, stroke: (left: star_color), outset: (left: 0.05em))[
-                #star_list.map(star => {
-                    [
-                        #h(0.05em)
-                        #star
-                        #h(0.05em)
-                    ]
-                }).join()
-            ]
-            #box(inset: 0.3em)[
-                #text(baseline: -0.15em, fill: star_color)[
-                    نکته
-                ]
-            ]
-        ]
-        #text(baseline: -0.45em)[
-            #content
-        ]
-    ]
+    section_template(title: "نکته", content, black_and_white: black_and_white, icon_paths: icon_paths, icon_color: orange_color)
 }
 
 #let definition(content, black_and_white: false) = {
-    let icon_color = blue_color
-
-    block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%)[
-        #box(stroke: icon_color, radius: 0.2em)[
-            #box(inset: 0.3em, stroke: (left: icon_color), outset: (left: 0.15em))[
-                #svg("../../icons/file-lines.svg", rgb: icon_color.to-hex(), height: 0.8em)
-            ]
-            #box(inset: 0.3em)[
-                #text(baseline: -0.15em, fill: icon_color)[
-                    تعریف
-                ]
-            ]
-        ]
-        #text(baseline: -0.45em)[
-            #content
-        ]
-    ]
+    section_template(title: "تعریف", content, black_and_white: black_and_white, icon_paths: ("../../icons/file-lines.svg",), icon_color: blue_color)
 }
 
 #let question(content, black_and_white: false) = {
-    let icon_color = brown_color
-    block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%)[
-        #box(stroke: icon_color, radius: 0.2em)[
-            #box(inset: 0.3em, stroke: (left: icon_color), outset: (left: 0.1em))[
-                #svg("../../icons/circle-question.svg", rgb: icon_color.to-hex(), width: 0.8em)
-            ]
-            #box(inset: 0.3em)[
-                #text(baseline: -0.15em, fill: icon_color)[
-                    سؤال
-                ]
-            ]
-        ]
-        #text(baseline: -0.45em)[
-            #content
-        ]
-    ]
+    section_template(title: "سؤال", content, black_and_white: black_and_white, icon_paths: ("../../icons/circle-question.svg",), icon_color: brown_color)
 }
 
 #let example(content, black_and_white: false) = {
-    let icon_color = purple_color
-    block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%)[
-        #box(stroke: icon_color, radius: 0.2em)[
-            #box(inset: 0.3em, stroke: (left: icon_color), outset: (left: 0.1em))[
-                #svg("../../icons/circle-dot.svg", rgb: icon_color.to-hex(), width: 0.8em)
-            ]
-            #box(inset: 0.3em)[
-                #text(baseline: -0.15em, fill: icon_color)[
-                    مثال
-                ]
-            ]
-        ]
-        #text(baseline: -0.45em)[
-            #content
-        ]
-    ]
+    section_template(title: "مثال", content, black_and_white: black_and_white, icon_paths: ("../../icons/circle-dot.svg",), icon_color: purple_color)
 }
 
 #let true_answer(content, black_and_white: false) = {
-    let icon_color = green_color
-    block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%)[
-        #box(stroke: icon_color, radius: 0.2em)[
-            #box(inset: 0.3em, stroke: (left: icon_color), outset: (left: 0.1em))[
-                #svg("../../icons/circle-check.svg", rgb: icon_color.to-hex(), width: 0.8em)
-            ]
-            #box(inset: 0.3em)[
-                #text(baseline: -0.15em, fill: icon_color)[
-                    پاسخ
-                ]
-            ]
-        ]
-        #text(baseline: -0.45em)[
-            #content
-        ]
-    ]
+    section_template(title: "پاسخ درست", content, black_and_white: black_and_white, icon_paths: ("../../icons/circle-check.svg",), icon_color: green_color)
 }
 
+
 #let wrong_answer(content, black_and_white: false) = {
-    let icon_color = red_color
-    block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%)[
-        #box(stroke: icon_color, radius: 0.2em)[
-            #box(inset: 0.3em, stroke: (left: icon_color), outset: (left: 0.1em))[
-                #svg("../../icons/circle-xmark.svg", rgb: icon_color.to-hex(), width: 0.8em)
-            ]
-            #box(inset: 0.3em)[
-                #text(baseline: -0.15em, fill: icon_color)[
-                    پاسخ
-                ]
-            ]
-        ]
-        #text(baseline: -0.45em)[
-            #content
-        ]
-    ]
+    section_template(title: "پاسخ نادرست", content, black_and_white: black_and_white, icon_paths: ("../../icons/circle-xmark.svg",), icon_color: red_color)
 }
 
 #let comparision(content, black_and_white: false) = {
-    let icon_color = rgb(0, 170, 170)
-    block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%)[
-        #box(stroke: icon_color, radius: 0.2em)[
-            #box(inset: 0.3em, stroke: (left: icon_color), outset: (left: 0.1em))[
-                #svg("../../icons/code-compare.svg", rgb: icon_color.to-hex(), width: 0.8em)
-            ]
-            #box(inset: 0.3em)[
-                #text(baseline: -0.15em, fill: icon_color)[
-                    مقایسه
-                ]
-            ]
-        ]
-        #text(baseline: -0.45em)[
-            #content
-        ]
-    ]
+    section_template(title: "مقایسه", content, black_and_white: black_and_white, icon_paths: ("../../icons/code-compare.svg",), icon_color: rgb(0, 170, 170))
 }
 
 #let list(content, black_and_white: false) = {
-    let icon_color = yellow_color
-    block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%)[
-        #box(stroke: icon_color, radius: 0.2em)[
-            #box(inset: 0.3em, stroke: (left: icon_color), outset: (left: 0.1em))[
-                #svg("../../icons/list.svg", rgb: icon_color.to-hex(), width: 0.8em)
-            ]
-            #box(inset: 0.3em)[
-                #text(baseline: -0.15em, fill: icon_color)[
-                    فهرست
-                ]
-            ]
-        ]
-        #text(baseline: -0.45em)[
-            #content
-        ]
-    ]
+    section_template(title: "فهرست", content, black_and_white: black_and_white, icon_paths: ("../../icons/list.svg",), icon_color: yellow_color)
 }
 
 #let simple_context(content, black_and_white: false) = {
-    let icon_color = luma(70)
-    block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%)[
-        #box(stroke: icon_color, radius: 0.2em)[
-            #box(inset: 0.3em, stroke: (left: icon_color), outset: (left: 0.1em))[
-                #svg("../../icons/book.svg", rgb: icon_color.to-hex(), width: 0.8em)
-            ]
-            #box(inset: 0.3em)[
-                #text(baseline: -0.15em, fill: icon_color)[
-                    متن
-                ]
-            ]
-        ]
-        #text(baseline: -0.45em)[
-            #content
-        ]
-        
-        // #text(baseline: -0.2em)[
-        //     #content
-        // ]
-    ]
+    section_template(title: "متن", content, black_and_white: black_and_white, icon_paths: ("../../icons/book.svg",), icon_color: luma(70))
 }
 
 #let exercise(content, black_and_white: false, extra_score: false) = {
-    let icon_color = rgb(255, 0, 150)
-    block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%)[
-        #box(stroke: icon_color, radius: 0.2em)[
-            #box(inset: 0.3em, stroke: (left: icon_color), outset: (left: 0.1em))[
-                #svg("../../icons/pen-to-square.svg", rgb: icon_color.to-hex(), width: 0.8em)
-                #if extra_score {
-                    svg("../../icons/plus.svg", rgb: icon_color.to-hex(), width: 0.8em)
-                }
-            ]
-            #box(inset: 0.3em)[
-                #text(baseline: -0.15em, fill: icon_color)[
-                    تمرین
-                ]
-            ]
-        ]
-        #text(baseline: -0.45em)[
-            #content
-        ]
-        
-        // #text(baseline: -0.2em)[
-        //     #content
-        // ]
-    ]
+    let icon_paths
+    if extra_score {
+        icon_paths = ("../../icons/pen-to-square.svg", "../../icons/plus.svg")
+    } else {
+        icon_paths = ("../../icons/pen-to-square.svg",)
+    }
+    section_template(title: "تمرین", content, black_and_white: black_and_white, icon_paths: icon_paths, icon_color: rgb(255, 0, 150))
 }
 
 #let custom_figure(content, caption: str, refrence: none, inset: 0em) = {
