@@ -16,28 +16,56 @@
 }
 
 #let section_template(title: str, content, black_and_white: false, icon_paths: (), icon_color: color) = {
-    block(stroke: icon_color, radius: 0.2em, below: 0.5em , width: 100%, clip: true)[
+    block(below: 0.5em , width: 100%)[
         #let icon_list = ()
         #for icon_path in icon_paths {
-            icon_list.push(svg(icon_path, rgb: icon_color.to-hex(), width: 0.8em))
+            icon_list.push(svg(icon_path, rgb: icon_color.to-hex(), width: 0.8em, height: 0.8em))
         }
 
+        #let counter = 0
+        #let icon_list_last_index = icon_list.len() - 1
         #grid(
             columns: (auto, 1fr, auto),
-            inset: 0.5em,
-            stroke: icon_color,
             align: center,
-            icon_list.join(" "),
-            text(fill: icon_color, baseline: -0.2em)[
-                #title
+            gutter: 0.5em,
+            {
+                while counter < icon_list_last_index {
+                    box(stroke: icon_color, inset: 0.5em, radius: 0.2em)[
+                        #icon_list.at(counter)
+                    ]
+                    h(0.5em)
+
+                    counter += 1
+                }
+                box(stroke: icon_color, inset: 0.5em, radius: 0.2em)[
+                    #icon_list.at(counter)
+                ]
+            },
+            block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%)[
+                #text(fill: icon_color, baseline: -0.2em)[
+                    #title
+                ]
             ],
-            icon_list.rev().join(" ")
+            {
+                while counter > 0 {
+                    box(stroke: icon_color, inset: 0.5em, radius: 0.2em)[
+                        #icon_list.at(counter)
+                    ]
+                    h(0.5em)
+
+                    counter -= 1
+                }
+                box(stroke: icon_color, inset: 0.5em, radius: 0.2em)[
+                    #icon_list.at(counter)
+                ]
+            },
         )
     ]
-    block(stroke: icon_color, inset: (bottom: 0.75em, rest: 0.5em), radius: 0.2em, width: 100%)[
+    block(stroke: icon_color, inset: (bottom: 0.75em, rest: 0.5em), radius: 0.2em, width: 100%, below: 1em)[
         #content
     ]
 }
+
 
 #let tip(content, level: 1, black_and_white: false) = {
     let icon_paths = ()
@@ -64,7 +92,6 @@
 #let true_answer(content, black_and_white: false) = {
     section_template(title: "پاسخ درست", content, black_and_white: black_and_white, icon_paths: ("../../icons/circle-check.svg",), icon_color: green_color)
 }
-
 
 #let wrong_answer(content, black_and_white: false) = {
     section_template(title: "پاسخ نادرست", content, black_and_white: black_and_white, icon_paths: ("../../icons/circle-xmark.svg",), icon_color: red_color)
@@ -101,11 +128,10 @@
                 #arg.body
             ]
             #if caption != none {
-                v(0.5em)
                 box(inset: 1em, width: 100%)[
-                        #text(baseline: 0em)[
-                            #arg.caption
-                        ]
+                    #text(baseline: 0em)[
+                        #arg.caption
+                    ]
                 ]
             }
         ]
@@ -146,8 +172,9 @@
     ]
 }
 
-#let code_section(content) = {
+#let code_section(content, lang: "js") = {
     line(length: 100%)
+    set raw(lang: lang)
     block(fill: luma(230), inset: 1em, width: 100%, radius: 0.2em)[
         #text(dir: ltr)[
             #content
