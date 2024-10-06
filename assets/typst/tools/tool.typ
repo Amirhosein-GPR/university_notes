@@ -15,57 +15,70 @@
     box(width: width, height: height)[#image.decode(colored)]
 }
 
-#let section_template(title: str, content, black_and_white: false, icon_paths: (), icon_color: color) = {
-    block(below: 0.5em , width: 100%)[
-        #let icon_list = ()
-        #for icon_path in icon_paths {
-            icon_list.push(svg(icon_path, rgb: icon_color.to-hex(), width: 0.8em, height: 0.8em))
-        }
+#let section_template(title: str, content, black_and_white: false, icon_paths: (), icon_color: color, half: false) = {
+    block(below: 1em)[
+        #block(below: 0.5em , width: 100%)[
+            #let icon_list = ()
+            #for icon_path in icon_paths {
+                icon_list.push(svg(icon_path, rgb: icon_color.to-hex(), width: 0.8em, height: 0.8em))
+            }
 
-        #let counter = 0
-        #let icon_list_last_index = icon_list.len() - 1
-        #grid(
-            columns: (auto, 1fr, auto),
-            align: center,
-            gutter: 0.5em,
-            {
-                while counter < icon_list_last_index {
+            #let counter = 0
+            #let icon_list_last_index = icon_list.len() - 1
+            #grid(
+                columns: (auto, 1fr, auto),
+                align: center,
+                gutter: 0.5em,
+                {
+                    while counter < icon_list_last_index {
+                        box(stroke: icon_color, inset: 0.5em, radius: 0.2em)[
+                            #icon_list.at(counter)
+                        ]
+                        h(0.5em)
+
+                        counter += 1
+                    }
                     box(stroke: icon_color, inset: 0.5em, radius: 0.2em)[
                         #icon_list.at(counter)
                     ]
-                    h(0.5em)
+                },
+                block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%)[
+                    #text(fill: icon_color, baseline: -0.2em)[
+                        #title
+                    ]
+                ],
+                {
+                    while counter > 0 {
+                        box(stroke: icon_color, inset: 0.5em, radius: 0.2em)[
+                            #icon_list.at(counter)
+                        ]
+                        h(0.5em)
 
-                    counter += 1
-                }
-                box(stroke: icon_color, inset: 0.5em, radius: 0.2em)[
-                    #icon_list.at(counter)
-                ]
-            },
-            block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%)[
-                #text(fill: icon_color, baseline: -0.2em)[
-                    #title
-                ]
-            ],
-            {
-                while counter > 0 {
+                        counter -= 1
+                    }
                     box(stroke: icon_color, inset: 0.5em, radius: 0.2em)[
                         #icon_list.at(counter)
                     ]
-                    h(0.5em)
+                },
+            )
+        ]
 
-                    counter -= 1
-                }
-                box(stroke: icon_color, inset: 0.5em, radius: 0.2em)[
-                    #icon_list.at(counter)
-                ]
-            },
-        )
-    ]
-    block(stroke: icon_color, inset: (bottom: 0.75em, rest: 0.5em), radius: 0.2em, width: 100%, below: 1em)[
-        #content
+        #block(stroke: icon_color, inset: (bottom: 0.75em, rest: 0.5em), radius: 0.2em, width: 100%, below: 1em)[
+            #content
+        ]
     ]
 }
 
+#let double_section(content1, content2) = {
+    block(below: 1em)[
+        #grid(
+            columns: (1fr, 1fr),
+            gutter: 1em,
+            content1,
+            content2
+        )
+    ]
+}
 
 #let tip(content, level: 1, black_and_white: false) = {
     let icon_paths = ()
@@ -181,4 +194,67 @@
         ]
     ]
     line(length: 100%)
+}
+
+#let introduce_sections() = {
+    title("توضیح بخش های مختلف جزوه", color: green_color)
+
+    double_section()[
+        #tip()[
+            نکاتی که به نظر قابل توجه می آیند در این بخش قرار می گیرند.
+        ]
+
+        #question()[
+            سؤال ها در این بخش قرار می گیرند.
+        ]
+
+        #true_answer()[
+            پاسخ های درست در این بخش قرار می گیرند.
+        ]
+
+        #comparision()[
+            مقایسه ها در این بخش قرار می گیرند.
+        ]
+
+        #simple_context()[
+            متن های عادی در این بخش قرار می گیرند.
+        ]
+        
+        #exercise(extra_score: true)[
+            تمرین های نمره مثبت در این بخش قرار می گیرند.
+        ]
+    ][
+        #definition()[
+            تعریف ها در این بخش قرار می گیرند.
+            #v(1.6em)
+        ]
+
+        #example()[
+            مثال ها در این بخش قرار می گیرند.
+        ]
+
+        #wrong_answer()[
+            پاسخ های نادرست در این بخش قرار می گیرند.
+        ]
+
+        #list()[
+            فهرست ها در این بخش قرار می گیرند.
+        ]
+
+        #exercise()[
+            تمرین ها در این بخش قرار می گیرند.
+            #v(1.6em)
+        ]
+    ]
+
+
+
+
+
+
+
+
+
+
+    
 }

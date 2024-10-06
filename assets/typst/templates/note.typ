@@ -67,185 +67,195 @@
         arg
     }
     show heading.where(level: 1): arg => {
-        grid(
-            columns: (16%, 82%),
-            gutter: 2%,
-            align(center)[
-                #if black_and_white {
-                    block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: red_color, thickness: 0.15em))[
-                        #text(stylistic-set: 1, dir: ltr, fill: red_color)[
-                            #counter(heading).display()
+        block(above: 0.8em)[
+            #grid(
+                columns: (16%, 82%),
+                gutter: 2%,
+                align(center)[
+                    #if black_and_white {
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: red_color, thickness: 0.15em))[
+                            #text(stylistic-set: 1, dir: ltr, fill: red_color)[
+                                #counter(heading).display()
+                            ]
                         ]
-                    ]
-                } else {
-                    block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: red_color))[
-                        #text(stylistic-set: 1, dir: ltr)[
-                            #counter(heading).display()
+                    } else {
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: red_color))[
+                            #text(stylistic-set: 1, dir: ltr)[
+                                #counter(heading).display()
+                            ]
                         ]
-                    ]
-                }
-            ],
-            align(center)[
-                #if black_and_white {
-                    block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: red_color, thickness: 0.15em))[
-                        #text(fill: red_color)[
-                            #arg.body
+                    }
+                ],
+                align(center)[
+                    #if black_and_white {
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: red_color, thickness: 0.15em))[
+                            #text(fill: red_color)[
+                                #arg.body
+                            ]
                         ]
-                    ]
-                } else {
-                    block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: red_color))[
-                        #text()[
-                            #arg.body
+                    } else {
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: red_color))[
+                            #text()[
+                                #arg.body
+                            ]
                         ]
-                    ]
-                }
-            ]
-        )
+                    }
+                ]
+            )
+        ]
     }
     show heading.where(level: 2): arg => {
-        grid(
-            columns: (16%, 82%),
-            gutter: 2%,
-            align(center)[
-                #if black_and_white {
-                    block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: blue_color, thickness: 0.15em))[
-                        #text(stylistic-set: 1, fill: blue_color)[
-                            #counter(heading).display()
+        block(above: 0.8em)[
+            #grid(
+                columns: (16%, 82%),
+                gutter: 2%,
+                align(center)[
+                    #if black_and_white {
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: blue_color, thickness: 0.15em))[
+                            #text(stylistic-set: 1, fill: blue_color)[
+                                #counter(heading).display()
+                            ]
                         ]
-                    ]
-                } else {
-                    block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: blue_color))[
-                        #text(stylistic-set: 1)[
-                            #counter(heading).display()
+                    } else {
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: blue_color))[
+                            #text(stylistic-set: 1)[
+                                #counter(heading).display()
+                            ]
                         ]
-                    ]
-                }
-            ],
-            align(center)[
-                #if black_and_white {
-                    block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: blue_color, thickness: 0.15em))[
-                        #text(fill: blue_color)[
-                            #arg.body
+                    }
+                ],
+                align(center)[
+                    #if black_and_white {
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: blue_color, thickness: 0.15em))[
+                            #text(fill: blue_color)[
+                                #arg.body
+                            ]
                         ]
-                    ]
-                } else {
-                    block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: blue_color))[
-                        #text()[
-                            #arg.body
+                    } else {
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: blue_color))[
+                            #text()[
+                                #arg.body
+                            ]
                         ]
-                    ]
-                }
-                
-            ]
-        )
+                    }
+                    
+                ]
+            )
+        ]
     }
     show heading.where(level: 3): arg => {
-        grid(
-            columns: (16%, 82%),
-            gutter: 2%,
-            align(center)[
-                #if black_and_white {
-                    block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: green_color, thickness: 0.15em))[
-                        #text(stylistic-set: 1, fill: green_color)[
-                            #counter(heading).display()
+        block(above: 0.8em)[
+            #grid(
+                columns: (16%, 82%),
+                gutter: 2%,
+                align(center)[
+                    #if black_and_white {
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: green_color, thickness: 0.15em))[
+                            #text(stylistic-set: 1, fill: green_color)[
+                                #counter(heading).display()
+                            ]
                         ]
-                    ]
-                } else {
-                    block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: green_color))[
-                        #text(stylistic-set: 1)[
-                            #counter(heading).display()
+                    } else {
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: green_color))[
+                            #text(stylistic-set: 1)[
+                                #counter(heading).display()
+                            ]
                         ]
-                    ]
-                }
-            ],
-            align(center)[
-                #if black_and_white {
-                    block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: green_color, thickness: 0.15em))[
-                        #text(fill: green_color)[
-                            #arg.body
+                    }
+                ],
+                align(center)[
+                    #if black_and_white {
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: green_color, thickness: 0.15em))[
+                            #text(fill: green_color)[
+                                #arg.body
+                            ]
                         ]
-                    ]
-                } else {
-                    block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: green_color))[
-                        #text()[
-                            #arg.body
+                    } else {
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: green_color))[
+                            #text()[
+                                #arg.body
+                            ]
                         ]
-                    ]
-                }
-            ]
-        )
+                    }
+                ]
+            )
+        ]
     }
     show heading.where(level: 4): arg => {
-        grid(
-            columns: (16%, 82%),
-            gutter: 2%,
-            align(center)[
-                #if black_and_white {
-                    block(inset: 0.9em, radius: 0.2em, width: 100%, stroke: (paint: purple_color, thickness: 0.15em))[
-                        #text(stylistic-set: 1, fill: purple_color, size: 0.9em)[
-                            #counter(heading).display()
+        block(above: 0.8em)[
+            #grid(
+                columns: (16%, 82%),
+                gutter: 2%,
+                align(center)[
+                    #if black_and_white {
+                        block(inset: 0.9em, radius: 0.2em, width: 100%, stroke: (paint: purple_color, thickness: 0.15em))[
+                            #text(stylistic-set: 1, fill: purple_color, size: 0.9em)[
+                                #counter(heading).display()
+                            ]
                         ]
-                    ]
-                } else {
-                    block(inset: 0.9em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: purple_color))[
-                        #text(stylistic-set: 1, size: 0.9em)[
-                            #counter(heading).display()
+                    } else {
+                        block(inset: 0.9em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: purple_color))[
+                            #text(stylistic-set: 1, size: 0.9em)[
+                                #counter(heading).display()
+                            ]
                         ]
-                    ]
-                }
-            ],
-            align(center)[
-                #if black_and_white {
-                    block(inset: 0.9em, radius: 0.2em, width: 100%, stroke: (paint: purple_color, thickness: 0.15em))[
-                        #text(fill: purple_color, size: 0.9em)[
-                            #arg.body
+                    }
+                ],
+                align(center)[
+                    #if black_and_white {
+                        block(inset: 0.9em, radius: 0.2em, width: 100%, stroke: (paint: purple_color, thickness: 0.15em))[
+                            #text(fill: purple_color, size: 0.9em)[
+                                #arg.body
+                            ]
                         ]
-                    ]
-                } else {
-                    block(inset: 0.9em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: purple_color))[
-                        #text()[
-                            #arg.body
+                    } else {
+                        block(inset: 0.9em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: purple_color))[
+                            #text()[
+                                #arg.body
+                            ]
                         ]
-                    ]
-                }
-            ]
-        )
+                    }
+                ]
+            )
+        ]
     }
     show heading.where(level: 5): arg => {
-        grid(
-            columns: (16%, 82%),
-            gutter: 2%,
-            align(center)[
-                #if black_and_white {
-                    block(inset: 0.8em, radius: 0.2em, width: 100%, stroke: (paint: orange_color, thickness: 0.15em))[
-                        #text(stylistic-set: 1, fill: orange_color, size: 0.8em)[
-                            #counter(heading).display()
+        block(above: 0.8em)[
+            #grid(
+                columns: (16%, 82%),
+                gutter: 2%,
+                align(center)[
+                    #if black_and_white {
+                        block(inset: 0.8em, radius: 0.2em, width: 100%, stroke: (paint: orange_color, thickness: 0.15em))[
+                            #text(stylistic-set: 1, fill: orange_color, size: 0.8em)[
+                                #counter(heading).display()
+                            ]
                         ]
-                    ]
-                } else {
-                    block(inset: 0.8em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: orange_color))[
-                        #text(stylistic-set: 1, size: 0.8em)[
-                            #counter(heading).display()
+                    } else {
+                        block(inset: 0.8em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: orange_color))[
+                            #text(stylistic-set: 1, size: 0.8em)[
+                                #counter(heading).display()
+                            ]
                         ]
-                    ]
-                }
-            ],
-            align(center)[
-                #if black_and_white {
-                    block(inset: 0.8em, radius: 0.2em, width: 100%, stroke: (paint: orange_color, thickness: 0.15em))[
-                        #text(fill: orange_color, size: 0.8em)[
-                            #arg.body
+                    }
+                ],
+                align(center)[
+                    #if black_and_white {
+                        block(inset: 0.8em, radius: 0.2em, width: 100%, stroke: (paint: orange_color, thickness: 0.15em))[
+                            #text(fill: orange_color, size: 0.8em)[
+                                #arg.body
+                            ]
                         ]
-                    ]
-                } else {
-                    block(inset: 0.8em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: orange_color))[
-                        #text(size: 0.8em)[
-                            #arg.body
+                    } else {
+                        block(inset: 0.8em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: orange_color))[
+                            #text(size: 0.8em)[
+                                #arg.body
+                            ]
                         ]
-                    ]
-                }
-            ]
-        )
+                    }
+                ]
+            )
+        ]
     }
 
     set text(

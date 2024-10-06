@@ -29,7 +29,7 @@
     date: [
         نیم سال تحصیلی #text(dir: ltr)[۱۴۰۳-۱]
     ],
-    version: "v0.3.0",
+    version: "v0.3.1",
     phase: none,
     info_color: blue_color,
     no_responsibility: true
@@ -37,6 +37,11 @@
 
 #tool.title("فهرست مطالب", color: red_color)
 #outline(title: none, indent: auto)
+
+#colbreak()
+#colbreak()
+
+#tool.introduce_sections()
 
 #colbreak()
 
@@ -65,24 +70,28 @@
 = جلسه اول
 
 == یادگیری ماشین
-
-#tool.simple_context()[
-    یادگیری ماشین زیر شاخه ای از هوش مصنوعی است.
-]
-
-#tool.tip()[
-    ملاک درست بودن پاسخ، دادن جواب مورد انتظار کاربر است.
+#tool.double_section()[
+    #tool.simple_context()[
+        یادگیری ماشین زیر شاخه ای از هوش مصنوعی است.
+    ]
+][
+    #tool.tip()[
+        ملاک درست بودن پاسخ، دادن جواب مورد انتظار کاربر است.
+    ]
 ]
 
 === هوش
-#tool.definition()[
-    هوش: معیار اندازه گیری میزان انطباق پاسخ با انتظار
-]
+#tool.double_section()[
+    #tool.definition()[
+        هوش: معیار اندازه گیری میزان انطباق پاسخ با انتظار
+        #v(2em)
+    ]
+][
+    #tool.example()[
+        دو عدد ادامه دنباله زیر را مشخص کنید.
 
-#tool.example()[
-    دو عدد ادامه دنباله زیر را مشخص کنید.
-
-    #text(dir: ltr)[۱, ۲, ۵, ۷, ۱۰, ..., ...]
+        #text(dir: ltr)[۱, ۲, ۵, ۷, ۱۰, ..., ...]
+    ]
 ]
 
 #tool.true_answer()[
@@ -96,23 +105,27 @@
     هوش مصنوعی: توانمندی کامپیوتر ها (ماشین ها) برای تولید پاسخ های مورد انتظار انسان.
 ]
 
-#tool.tip()[
-    هوش مصنوعی از دید کاربر تعریف می شود.
-]
-
-#tool.definition()[
-    ماشین (کامپیوتر): به ابزاری که قابل برنامه ریزی است می گوییم.
+#tool.double_section()[
+    #tool.tip()[
+        هوش مصنوعی از دید کاربر تعریف می شود.
+    ]
+][
+    #tool.definition()[
+        ماشین (کامپیوتر): به ابزاری که قابل برنامه ریزی است می گوییم.
+    ]
 ]
 
 === رویکرد های هوش مصنوعی
 ==== مبتنی بر قانون (Rule based approach)
-#tool.definition()[
-    در این روش مثلا از یک آدم متخصص در حوزه ای سوال می شود که چگونه کارش را انجام می دهد.
-    بر این اساس یک سری پارامتر استخراج می کنیم و بر اساس آن ها برنامه ای را می نویسیم.
-]
-
-#tool.example()[
-    تشخیص انواع چند ضلعی ها #sym.arrow.l این که چند ضلعی مورد نظر مثلث متساوی الساقین است یا مربع است یا پنج ضلعی منتظم است یا ۱۰۰ ضلعی منتظم است یا #sym.dots .
+#tool.double_section()[
+    #tool.definition()[
+        در این روش مثلا از یک آدم متخصص در حوزه ای سوال می شود که چگونه کارش را انجام می دهد.
+        بر این اساس یک سری پارامتر استخراج می کنیم و بر اساس آن ها برنامه ای را می نویسیم.
+    ]
+][
+    #tool.example()[
+        تشخیص انواع چند ضلعی ها #sym.arrow.l این که چند ضلعی مورد نظر مثلث متساوی الساقین است یا مربع است یا پنج ضلعی منتظم است یا ۱۰۰ ضلعی منتظم است یا #sym.dots .
+    ]
 ]
 
 #tool.true_answer()[
@@ -122,13 +135,17 @@
 ]
 
 ==== مبتنی بر یادگیری (Learning based approach)
-#tool.definition()[
-    در این روش الگوریتمی به کامپیوتر داده می شود تا خودش قاعده و قانون مسأله را به دست آورد.
+#tool.double_section()[
+    #tool.definition()[
+        در این روش الگوریتمی به کامپیوتر داده می شود تا خودش قاعده و قانون مسأله را به دست آورد.
+    ]
+][
+    #tool.example()[
+        تشخیص هواپیما #sym.arrow.l تعداد زیادی نمونه می آوریم.
+        #v(1.55em)
+    ]
 ]
 
-#tool.example()[
-    تشخیص هواپیما #sym.arrow.l تعداد زیادی نمونه می آوریم.
-]
 #tool.true_answer()[
     #tool.custom_figure(
         image("images/ML/01_02.jpg"),
@@ -167,7 +184,7 @@
     
     #tool.custom_figure(
         align(center)[
-            #image("images/ML/01_01.png", width: 50%)
+            #image("images/ML/01_01.png", width: 41%)
         ],
         caption: "گراف مربوط به فعالیت یادگیری",
         inset: 1em
@@ -175,21 +192,24 @@
 ]
 
 = جلسه دوم
-
-#tool.tip()[
-    کار هایی که مهندس یادگیری ماشین به همراه فرد خبره در حوزه مرتبطش انجام می دهند:
-    ML engineer + Domain expert:
-    #text(dir: ltr)[
-        + Data collection
-        + Template building
-        + Training
+#tool.double_section()[
+    #tool.tip()[
+        کار هایی که مهندس یادگیری ماشین به همراه فرد خبره در حوزه مرتبطش انجام می دهند:
+        ML engineer + Domain expert:
+        #text(dir: ltr)[
+            + Data collection
+            + Template building
+            + Training
+        ]
+    ]
+][
+    #tool.tip()[
+        در Machine learning نقش اصلی را ML engineer بر عهده دارد.
+        در حالی که در Data mining و Deep learning نقش اصلی بر عهده ماشین است.
+        #v(4.8em)
     ]
 ]
 
-#tool.tip()[
-    در Machine learning نقش اصلی را ML engineer بر عهده دارد.
-    در حالی که در Data mining و Deep learning نقش اصلی بر عهده ماشین است.
-]
 
 #tool.definition()[
     یادگیری ماشین: یعنی به کامپیوتر ها یاد بدهیم تا مسائل را حل کنند.
