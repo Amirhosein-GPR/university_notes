@@ -27,16 +27,24 @@
             if counter(page).at(loc).first() > 1 {
                 block()[
                     #grid(
-                        columns: (1fr, 1fr),
+                        columns: (1fr, 1fr, 1fr),
                         row-gutter: 0.5em,
                         align(right + horizon)[
                             #topic
                         ],
+                        align(center + horizon)[
+                            #let previous_heading = query(
+                                selector(heading.where(level: 2)).before(here())
+                            )
+                            
+                            #if previous_heading.len() > 0 {
+                                previous_heading.last().body
+                            }
+                        ],
                         align(left + horizon)[
                             #image(image_path, height: 2em)
                         ],
-                        line(length: 100%),
-                        line(length: 100%)
+                        line(length: 300%)
                     )
                 ]
             }
@@ -347,11 +355,11 @@
                 ]
 
                 #text(fill: green_color)[
-                    این جزوه بر گرفته از جزوه دست نویسم هست که سر \ کلاس های درس می نویسم و طبیعیه که احتمال داره \ مشکلاتی داشته باشه.
+                    این جزوه، جزوه شخصیم هست و طبیعیه \ که احتمال داره مشکلاتی داشته باشه.
                 ]
 
                 #text(fill: brown_color)[
-                    بنابراین اگه میخوای ازش استفاده کنی، با کمال \ احترام بدون که
+                    بنابراین اگه میخوای ازش استفاده \ کنی، با کمال احترام بدون که
                 ]
 
                 #v(2em)
