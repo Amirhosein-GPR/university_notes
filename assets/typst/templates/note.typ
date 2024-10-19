@@ -1,11 +1,11 @@
-#let note(doc, paper: str, flipped: bool, first_page_font_size: relative, font_size: relative, image_path: str, image_width: relative, topic: str, problem_topic: str, black_and_white: bool, version: str, authors_name: (), professors_name: (), date: str, faculty: str, phase: str, info_color: luma(50), no_responsibility: false) = {
-    let red_color = rgb(200, 0, 0, 255)
-    let orange_color = rgb(220, 100, 0, 255)
-    let yellow_color = rgb(130, 130, 0, 255)
-    let green_color = rgb(0, 120, 0, 255)
-    let blue_color = rgb(0, 100, 200, 255)
-    let dark_blue_color = rgb(0, 0, 200, 255)
-    let purple_color = rgb(150, 0, 150, 255)
+#let note(doc, paper: str, flipped: bool, first_page_font_size: relative, font_size: relative, image_path: str, image_width: relative, topic: str, problem_topic: str, black_and_white: bool, version: str, authors_name: (), professors_name: (), date: str, faculty: str, phase: str, info_color: luma(50), no_responsibility: false, should_fill: true) = {
+    let red_color = rgb(200, 0, 0)
+    let orange_color = rgb(220, 100, 0)
+    let yellow_color = rgb(130, 130, 0)
+    let green_color = rgb(0, 120, 0)
+    let blue_color = rgb(0, 100, 200)
+    let dark_blue_color = rgb(0, 0, 200)
+    let purple_color = rgb(150, 0, 150)
     let gold_color = rgb(255, 215, 0)
     let brown_color = rgb(125, 50, 0)
     
@@ -75,6 +75,17 @@
         arg
     }
     show heading.where(level: 1): arg => {
+        counter(figure.where(kind: image)).update(0)
+        counter(figure.where(kind: table)).update(0)
+        counter(figure.where(kind: raw)).update(0)
+
+        let fill_color
+        if should_fill {
+            fill_color = red_color
+        } else {
+            fill_color = rgb(0, 0, 0, 0)
+        }
+        
         block(above: 0.8em)[
             #grid(
                 columns: (16%, 82%),
@@ -87,7 +98,7 @@
                             ]
                         ]
                     } else {
-                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: red_color))[
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: red_color), fill: fill_color.lighten(97%))[
                             #text(stylistic-set: 1, dir: ltr)[
                                 #counter(heading).display()
                             ]
@@ -102,7 +113,7 @@
                             ]
                         ]
                     } else {
-                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: red_color))[
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: red_color), fill: fill_color.lighten(97%))[
                             #text()[
                                 #arg.body
                             ]
@@ -113,6 +124,13 @@
         ]
     }
     show heading.where(level: 2): arg => {
+        let fill_color
+        if should_fill {
+            fill_color = blue_color
+        } else {
+            fill_color = rgb(0, 0, 0, 0)
+        }
+
         block(above: 0.8em)[
             #grid(
                 columns: (16%, 82%),
@@ -125,7 +143,7 @@
                             ]
                         ]
                     } else {
-                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: blue_color))[
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: blue_color), fill: fill_color.lighten(97%))[
                             #text(stylistic-set: 1)[
                                 #counter(heading).display()
                             ]
@@ -140,7 +158,7 @@
                             ]
                         ]
                     } else {
-                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: blue_color))[
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: blue_color), fill: fill_color.lighten(97%))[
                             #text()[
                                 #arg.body
                             ]
@@ -152,6 +170,13 @@
         ]
     }
     show heading.where(level: 3): arg => {
+        let fill_color
+        if should_fill {
+            fill_color = green_color
+        } else {
+            fill_color = rgb(0, 0, 0, 0)
+        }
+
         block(above: 0.8em)[
             #grid(
                 columns: (16%, 82%),
@@ -164,7 +189,7 @@
                             ]
                         ]
                     } else {
-                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: green_color))[
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: green_color), fill: fill_color.lighten(97%))[
                             #text(stylistic-set: 1)[
                                 #counter(heading).display()
                             ]
@@ -179,7 +204,7 @@
                             ]
                         ]
                     } else {
-                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: green_color))[
+                        block(inset: 1em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: green_color), fill: fill_color.lighten(97%))[
                             #text()[
                                 #arg.body
                             ]
@@ -190,6 +215,13 @@
         ]
     }
     show heading.where(level: 4): arg => {
+        let fill_color
+        if should_fill {
+            fill_color = purple_color
+        } else {
+            fill_color = rgb(0, 0, 0, 0)
+        }
+
         block(above: 0.8em)[
             #grid(
                 columns: (16%, 82%),
@@ -202,7 +234,7 @@
                             ]
                         ]
                     } else {
-                        block(inset: 0.9em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: purple_color))[
+                        block(inset: 0.9em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: purple_color), fill: fill_color.lighten(97%))[
                             #text(stylistic-set: 1, size: 0.9em)[
                                 #counter(heading).display()
                             ]
@@ -217,7 +249,7 @@
                             ]
                         ]
                     } else {
-                        block(inset: 0.9em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: purple_color))[
+                        block(inset: 0.9em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: purple_color), fill: fill_color.lighten(97%))[
                             #text()[
                                 #arg.body
                             ]
@@ -228,6 +260,13 @@
         ]
     }
     show heading.where(level: 5): arg => {
+        let fill_color
+        if should_fill {
+            fill_color = orange_color
+        } else {
+            fill_color = rgb(0, 0, 0, 0)
+        }
+
         block(above: 0.8em)[
             #grid(
                 columns: (16%, 82%),
@@ -240,7 +279,7 @@
                             ]
                         ]
                     } else {
-                        block(inset: 0.8em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: orange_color))[
+                        block(inset: 0.8em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: orange_color), fill: fill_color.lighten(97%))[
                             #text(stylistic-set: 1, size: 0.8em)[
                                 #counter(heading).display()
                             ]
@@ -255,7 +294,7 @@
                             ]
                         ]
                     } else {
-                        block(inset: 0.8em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: orange_color))[
+                        block(inset: 0.8em, radius: 0.2em, width: 100%, stroke: (thickness: 0.15em, paint: orange_color), fill: fill_color.lighten(97%))[
                             #text(size: 0.8em)[
                                 #arg.body
                             ]
@@ -296,58 +335,81 @@
     }
 
     set text(size: first_page_font_size)
-    
-    align(center + horizon)[
-        #image(image_path, width: image_width)
 
-        #text(size: 1.2em)[
-            دانشکده #faculty
-        ]
-
-        #v(2em)
-
-        #text(size: 1.6em)[
-            *#topic*
-        ]
-
-        #v(2em)
-
-        #text(size: 1.2em)[
-            استاد درس: #professors_name
-        ]
-
-        #text(size: 1.2em)[
-            نویسنده: #authors_name
-        ]
-        
-        #v(4em)
-
-        #if authors_name != none {
-            block(width: 80%)[
-                #set block(below: 0pt)
-                #grid(
-                    columns: (1fr, 1fr),
-                    align(right)[
-                        #date
-                    ],
-                    align(left)[
-                        #version
-                    ]
-                )
-                #v(1em)
-                #line(length: 100%)
+    set figure(
+        supplement: "شکل",
+        numbering: arg => box()[
+            #text(dir: ltr)[
+                #counter(heading.where(level: 1)).display().#arg
             ]
-        }
-        #align(bottom)[
-            #text(size: 1.4em)[
-                #phase
+        ]
+    )
+    show figure: arg => {
+        show par: set block(above: 0em)
+        set text(stylistic-set: 1)
+        align(center)[
+            #block(stroke: black, width: 100%, inset: 1em, radius: (top-left: 0.2em, top-right: 0.2em), clip: true)[
+                #arg.body
+            ]
+            #box(stroke: black, inset: 1em, width: 100%, radius: (bottom-left: 0.2em, bottom-right: 0.2em))[
+                #text(baseline: 0em)[
+                    #arg.caption
+                ]
+            ]
+        ]
+    }
+    
+    block(width: 100%, height: 100%)[
+        #align(center + horizon)[
+            #image(image_path, width: image_width)
+
+            #text(size: 1.2em)[
+                دانشکده #faculty
+            ]
+
+            #v(2em)
+
+            #text(size: 1.6em)[
+                *#topic*
+            ]
+
+            #v(2em)
+
+            #text(size: 1.2em)[
+                استاد درس: #professors_name
+            ]
+
+            #text(size: 1.2em)[
+                نویسنده: #authors_name
+            ]
+            
+            #v(4em)
+
+            #if authors_name != none {
+                block(width: 80%)[
+                    #set block(below: 0pt)
+                    #grid(
+                        columns: (1fr, 1fr),
+                        align(right)[
+                            #date
+                        ],
+                        align(left)[
+                            #version
+                        ]
+                    )
+                    #v(1em)
+                    #line(length: 100%)
+                ]
+            }
+            #align(bottom)[
+                #text(size: 1.4em)[
+                    #phase
+                ]
             ]
         ]
     ]
 
     if no_responsibility {
-        pagebreak()
-
         align(center + horizon)[
             #text(weight: "bold")[
                 #text(fill: blue_color)[

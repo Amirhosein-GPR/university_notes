@@ -1,12 +1,12 @@
-#let red_color = rgb(200, 0, 0, 255)
-#let orange_color = rgb(220, 100, 0, 255)
-#let yellow_color = rgb(120, 120, 0, 255)
-#let green_color = rgb(0, 120, 0, 255)
-#let blue_color = rgb(0, 100, 200, 255)
-#let dark_blue_color = rgb(0, 0, 200, 255)
-#let purple_color = rgb(150, 0, 150, 255)
+#let red_color = rgb(200, 0, 0)
+#let orange_color = rgb(220, 100, 0)
+#let yellow_color = rgb(120, 120, 0)
+#let green_color = rgb(0, 120, 0)
+#let blue_color = rgb(0, 100, 200)
+#let dark_blue_color = rgb(0, 0, 200)
+#let purple_color = rgb(150, 0, 150)
 #let gold_color = rgb(255, 215, 0)
-#let brown_color = rgb(125, 50, 0)
+#let brown_color = rgb(160, 60, 0)
 
 #let svg(path, rgb: "", width: auto, height: auto) = {
     let original = read(path)
@@ -15,7 +15,13 @@
     box(width: width, height: height)[#image.decode(colored)]
 }
 
-#let section_template(title: str, content, black_and_white: false, icon_paths: (), icon_color: color, pause: bool, continuation: bool) = {
+#let section_template(title: str, content, black_and_white: false, icon_paths: (), icon_color: color, pause: bool, continuation: bool, should_fill: true) = {
+    let fill_color
+    if should_fill {
+        fill_color = icon_color
+    } else {
+        fill_color = rgb(0, 0, 0, 0)
+    }
     block(below: 1em)[
         #block(below: 0.5em , width: 100%)[
             #let icon_list = ()
@@ -38,11 +44,11 @@
 
                         counter += 1
                     }
-                    box(stroke: icon_color, inset: 0.5em, radius: 0.2em)[
+                    box(stroke: icon_color, inset: 0.5em, radius: 0.2em, fill: fill_color.lighten(97%))[
                         #icon_list.at(counter)
                     ]
                 },
-                block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%)[
+                block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%, fill: fill_color.lighten(97%))[
                     #text(fill: icon_color, baseline: -0.2em)[
                         #title
                     ]
@@ -56,14 +62,14 @@
 
                         counter -= 1
                     }
-                    box(stroke: icon_color, inset: 0.5em, radius: 0.2em)[
+                    box(stroke: icon_color, inset: 0.5em, radius: 0.2em, fill: fill_color.lighten(97%))[
                         #icon_list.at(counter)
                     ]
                 },
             )
         ]
 
-        #block(stroke: icon_color, inset: (bottom: 0.75em, rest: 0.5em), radius: 0.2em, width: 100%, below: 1em)[
+        #block(stroke: icon_color, inset: (bottom: 0.75em, rest: 0.5em), radius: 0.2em, width: 100%, below: 1em, fill: fill_color.lighten(97%))[
             #if continuation == true {
                 grid(
                     columns: (1fr),
@@ -293,7 +299,7 @@
 
     context {
         let headings_before_here_count = query(selector(heading.where(level: 1)).before(here())).len()
-        // [#section_counter.get().first()]
+        
         if headings_before_here_count > headings_counter.get().first() {
             headings_counter.update(headings_before_here_count)
             counter("tip").update(1)
@@ -358,7 +364,7 @@
         title += " " + section_counter("question")
     }
 
-    section_template(title: title, content, black_and_white: black_and_white, icon_paths: ("../../icons/circle-question.svg",), icon_color: brown_color, pause: pause, continuation: continuation)
+    section_template(title: title, content, black_and_white: black_and_white, icon_paths: ("../../icons/circle-question.svg",), icon_color: red_color, pause: pause, continuation: continuation)
 }
 
 #let example(content, black_and_white: false, pause: false, continuation: false, enable_counter: false, double_section: false) = {
@@ -388,7 +394,7 @@
         title += " " + section_counter("answer")
     }
 
-    section_template(title: title, content, black_and_white: black_and_white, icon_paths: ("../../icons/circle-xmark.svg",), icon_color: red_color, pause: pause, continuation: continuation)
+    section_template(title: title, content, black_and_white: black_and_white, icon_paths: ("../../icons/circle-xmark.svg",), icon_color: brown_color, pause: pause, continuation: continuation)
 }
 
 #let comparision(content, black_and_white: false, pause: false, continuation: false, enable_counter: false) = {
@@ -447,39 +453,76 @@
     section_template(title: title, content, black_and_white: black_and_white, icon_paths: ("../../icons/arrows-rotate.svg",), icon_color: rgb(0, 180, 100), pause: pause, continuation: continuation)
 }
 
-#let custom_figure(content, caption: str, refrence: none, inset: 0em) = {
-    show par: set block(above: 0em)
+#let custom_figure(content, caption: str, refrence: none, inset: 0em, kind: image) = {
+    let supplement
+    if kind == image {
+        supplement = "شکل"
+    } else if kind == table {
+        supplement = "جدول"
+    }
+    if kind == raw {
+        supplement = "کد"
+        
+        set raw(lang: "js")
 
-    show figure: arg => {
-        align(center)[
-            #block(stroke: (bottom: black), width: 100%, inset: inset)[
-                #arg.body
+        show figure: arg => {
+            show par: set block(above: 0em)
+            block(stroke: black, width: 100%, inset: inset, radius: (top-left: 0.2em, top-right: 0.2em), clip: true, fill: luma(230))[
+                #text(dir: ltr)[
+                    #arg.body
+                ]
             ]
-            #if caption != none {
-                box(inset: 1em, width: 100%)[
-                    #text(baseline: 0em)[
+            align(center)[
+                #box(stroke: black, inset: 1em, width: 100%, radius: (bottom-left: 0.2em, bottom-right: 0.2em))[
+                    #text(baseline: 0em, stylistic-set: 1)[
                         #arg.caption
                     ]
                 ]
-            }
+
+            ]
+        }
+
+        [
+            #figure(content, caption: caption, supplement: supplement) #refrence
+        ]
+    } else {
+        show figure: arg => {
+            show par: set block(above: 0em)
+            align(center)[
+                #block(stroke: black, width: 100%, inset: inset, radius: (top-left: 0.2em, top-right: 0.2em), clip: true)[
+                    #text(dir: ltr)[
+                        #arg.body
+                    ]
+                ]
+                #box(stroke: black, inset: 1em, width: 100%, radius: (bottom-left: 0.2em, bottom-right: 0.2em))[
+                    #text(baseline: 0em, stylistic-set: 1)[
+                        #arg.caption
+                    ]
+                ]
+            ]
+        }
+
+        [
+            #figure(content, caption: caption, supplement: supplement) #refrence
         ]
     }
     
-    set text(stylistic-set: 1)
-
-    block(stroke: black, radius: 0.2em)[
-        #figure(content, caption: caption, supplement: "شکل") #refrence
-    ]
 }
 
-#let title(content, color: blue_color, size: 1.4em) = {
-  block(stroke: (thickness: 0.2em, paint: color), width: 100%, inset: 1.4em, radius: 0.2em)[
-    #align(center)[
-      #text(size: size)[
-        *#content*
-      ]
+#let title(content, color: blue_color, size: 1.4em, should_fill: true) = {
+    let fill_color
+    if should_fill {
+        fill_color = green_color
+    } else {
+        fill_color = rgb(0, 0, 0, 0)
+    }
+    block(stroke: (thickness: 0.2em, paint: color), width: 100%, inset: 1.4em, radius: 0.2em, fill: color.lighten(97%))[
+        #align(center)[
+            #text(size: size)[
+            *#content*
+            ]
+        ]
     ]
-  ]
 }
 
 #let sources(content) = {
@@ -511,7 +554,9 @@
     line(length: 100%)
 }
 
-#let introduce_sections() = {
+#let introduce_sections(should_fill: true) = {
+    
+
     title("راهنمای جزوه", color: green_color)
 
     align(center)[
