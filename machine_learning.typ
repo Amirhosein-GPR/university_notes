@@ -29,7 +29,7 @@
   date: [
     نیم سال تحصیلی #text(dir: ltr)[۱۴۰۳-۱]
   ],
-  version: "v0.8.0",
+  version: "v0.8.1",
   phase: none,
   info_color: blue_color,
   no_responsibility: true,
@@ -1160,8 +1160,8 @@
 ]
 
 #tool.tip()[
-  تعداد نمونه های آموزشی مورد نیاز برای این که مدل خوب یاد بگیرد به لگاریتم خطا ربط دارد:
-  $ N space alpha space log ("error") $
+  تعداد نمونه های آموزشی مورد نیاز برای این که مدل خوب یاد بگیرد به لگاریتم معکوس خطا ربط دارد:
+  $ N space alpha space log(1 / "error") $
   $N$ تعداد نمونه های آموزشی می باشد.
 ]
 
@@ -1934,14 +1934,15 @@
   تعدادی از توزیع های پیوسته مربوط به Feature ها عبارتند از:
   + Uniform:
     در این توزیع، مقدار $p(x)$ به ازای تمامی $x$ ها یکسان است.
-  #grid(columns: (1fr, 1fr), align: center)[
+  #grid(columns: 3, gutter: 1em)[
     2. Gaussian
-    4. Rayleigh
   ][
-    3. Poisson
-    5. Cauchy
+    3. Rayleigh
+  ][
+    4. Cauchy
   ]
 
+  توزیعی به نام Poisson نیز وجود دارد که جزو توزیع های پر کاربرد گسسته است.
   توزیع Normal که نوع خاصی از توزیع Gaussian می باشد توزیعی ساده و محبوب است.
   در بحث های Epidemic ها توزیع Rayleigh بهتر از توزیع Normal عمل می کند.
 ]
