@@ -10,11 +10,11 @@
   problem_topic: str,
   black_and_white: bool,
   version: str,
+  progress_string: str,
   authors_name: (),
   professors_name: (),
   date: str,
   faculty: str,
-  phase: str,
   info_color: luma(50),
   no_responsibility: false,
   should_fill: true,
@@ -445,6 +445,19 @@
     text(stylistic-set: 1, fill: blue_color)[#arg]
   }
 
+  show raw.where(block: true): code => {
+    grid(
+      columns: 2,
+      align: left + top,
+      column-gutter: 1em,
+      stroke: (x, y) => if x == 0 {
+        (right: (paint: luma(150), dash: "densely-dashed"))
+      },
+      inset: (right: 1em, top: 0.4em, bottom: 0.4em),
+      ..code.lines.map(line => (text(fill: luma(150))[#line.number], line.body)).flatten()
+    )
+  }
+
   block(width: 100%, height: 100%)[
     #set text(size: first_page_font_size)
     #align(center + horizon)[
@@ -488,10 +501,100 @@
           #line(length: 100%)
         ]
       }
+
       #align(bottom)[
-        #text(size: 1.4em)[
-          #phase
+
+        #set text(dir: ltr, weight: "bold", stylistic-set: 1, number-width: "tabular")
+
+        #block(below: 0em, width: 80%, fill: black.lighten(97%), inset: 10%, radius: 0.5em, stroke: black.lighten(87%))[
+          پیشرفت کلاس
+
+          #v(5em)
+
+          #let progress = eval(progress_string)
+          #block(width: 100%, height: 0.5em, fill: blue_color, stroke: (thickness: 0.1em))[
+            #align(left)[
+              #block(fill: red_color, width: progress * 100%, height: 0.5em)
+            ]
+          ]
+
+          #place(dx: 0% - 0.2%, dy: -1em)[
+            #block(height: 1.5em, width: 0.2em, fill: black)
+          ]
+
+          #place(dx: 25% - 0.2%, dy: -1em)[
+            #block(height: 1.5em, width: 0.2em, fill: black)
+          ]
+
+          #place(dx: 50% - 0.2%, dy: -1em)[
+            #block(height: 1.5em, width: 0.2em, fill: black)
+          ]
+
+          #place(dx: 75% - 0.2%, dy: -1em)[
+            #block(height: 1.5em, width: 0.2em, fill: black)
+          ]
+
+          #place(dx: 100% - 0.2%, dy: -1em)[
+            #block(height: 1.5em, width: 0.2em, fill: black)
+          ]
+
+          #place(dx: progress * 100% - 1.1%, dy: -0.75em)[
+            #circle(fill: red_color, width: 1em, stroke: (thickness: 0.1em))
+
+            #place(dx: -1.35em, dy: -2.8em)[
+              #progress_string
+            ]
+
+            #place(dx: -0.4em, dy: 0.8em)[
+              #int(progress * 100)%
+            ]
+          ]
+
+          #place(dy: -5em)[
+            #block(width: 100%)[
+              #text(size: 1.5em)[
+                #place(dx: -1.7%)[
+                  #emoji.face.peek
+                ]
+                #place(dx: 25% - 1.7%)[
+                  #emoji.face.think
+                ]
+                #place(dx: 50% - 1.7%)[
+                  #emoji.face.smile.slight
+                ]
+                #place(dx: 75% - 1.7%)[
+                  #emoji.face.tear.withheld
+                ]
+                #place(dx: 100% - 1.7%)[
+                  #emoji.face.party
+                ]
+              ]
+            ]
+          ]
+
+          #place(dy: 2.5em)[
+            #block(width: 100%)[
+              #place(dx: -1.6%)[
+                0%
+              ]
+              #place(dx: 25% - 2%)[
+                25%
+              ]
+              #place(dx: 50% - 2%)[
+                50%
+              ]
+              #place(dx: 75% - 2%)[
+                75%
+              ]
+              #place(dx: 100% - 2%)[
+                100%
+              ]
+            ]
+          ]
+
+          #v(3em)
         ]
+        // Typst Version: #sys.version
       ]
     ]
   ]

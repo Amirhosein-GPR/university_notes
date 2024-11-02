@@ -26,11 +26,17 @@
   should_fill: true,
 ) = {
   let fill_color
+  let stroke_color
   if should_fill {
     fill_color = icon_color
   } else {
     fill_color = rgb(0, 0, 0, 0)
   }
+  // stroke_color = fill_color.lighten(85%)
+  // fill_color = fill_color.lighten(95%)
+  stroke_color = fill_color.lighten(0%)
+  fill_color = fill_color.lighten(97%)
+
   block(below: 1em)[
     #block(below: 0.5em, width: 100%)[
       #let icon_list = ()
@@ -46,32 +52,32 @@
         gutter: 0.5em,
         {
           while counter < icon_list_last_index {
-            box(stroke: icon_color, inset: 0.5em, radius: 0.2em)[
+            box(stroke: stroke_color, inset: 0.5em, radius: 0.2em, fill: fill_color)[
               #icon_list.at(counter)
             ]
             h(0.5em)
 
             counter += 1
           }
-          box(stroke: icon_color, inset: 0.5em, radius: 0.2em, fill: fill_color.lighten(97%))[
+          box(stroke: stroke_color, inset: 0.5em, radius: 0.2em, fill: fill_color)[
             #icon_list.at(counter)
           ]
         },
-        block(stroke: icon_color, inset: 0.5em, radius: 0.2em, width: 100%, fill: fill_color.lighten(97%))[
+        block(stroke: stroke_color, inset: 0.5em, radius: 0.2em, width: 100%, fill: fill_color)[
           #text(fill: icon_color, baseline: -0.2em)[
             #title
           ]
         ],
         {
           while counter > 0 {
-            box(stroke: icon_color, inset: 0.5em, radius: 0.2em)[
+            box(stroke: stroke_color, inset: 0.5em, radius: 0.2em, fill: fill_color)[
               #icon_list.at(counter)
             ]
             h(0.5em)
 
             counter -= 1
           }
-          box(stroke: icon_color, inset: 0.5em, radius: 0.2em, fill: fill_color.lighten(97%))[
+          box(stroke: stroke_color, inset: 0.5em, radius: 0.2em, fill: fill_color)[
             #icon_list.at(counter)
           ]
         },
@@ -79,12 +85,12 @@
     ]
 
     #block(
-      stroke: icon_color,
+      stroke: stroke_color,
       inset: (bottom: 0.75em, rest: 0.5em),
       radius: 0.2em,
       width: 100%,
       below: 1em,
-      fill: fill_color.lighten(97%),
+      fill: fill_color,
     )[
       #if continuation == true {
         grid(
@@ -590,10 +596,12 @@
         inset: inset,
         radius: (top-left: 0.2em, top-right: 0.2em),
         clip: true,
-        fill: luma(230),
+        fill: luma(240),
       )[
-        #text(dir: ltr)[
-          #arg.body
+        #align(left)[
+          #text(dir: ltr)[
+            #arg.body
+          ]
         ]
       ]
       align(center)[
@@ -636,11 +644,17 @@
 #let title(content, color: blue_color, size: 1.4em, should_fill: true) = {
   let fill_color
   if should_fill {
-    fill_color = green_color
+    fill_color = color
   } else {
     fill_color = rgb(0, 0, 0, 0)
   }
-  block(stroke: (thickness: 0.2em, paint: color), width: 100%, inset: 1.4em, radius: 0.2em, fill: color.lighten(97%))[
+  block(
+    stroke: (thickness: 0.2em, paint: fill_color),
+    width: 100%,
+    inset: 1.4em,
+    radius: 0.2em,
+    fill: fill_color.lighten(97%),
+  )[
     #align(center)[
       #text(size: size)[
         *#content*
@@ -682,7 +696,7 @@
   title("راهنمای جزوه", color: green_color)
 
   align(center)[
-    #block(fill: luma(240), inset: 1em, radius: 0.2em, width: 100%, stroke: luma(200))[
+    #block(fill: black.lighten(97%), inset: 1em, radius: 0.2em, width: 100%, stroke: black.lighten(87%))[
       *نحوه خواندن جزوه*
     ]
     #align(right)[
@@ -700,7 +714,7 @@
   ]
 
   align(center)[
-    #block(fill: luma(240), inset: 1em, radius: 0.2em, width: 100%, stroke: luma(200))[
+    #block(fill: black.lighten(97%), inset: 1em, radius: 0.2em, width: 100%, stroke: black.lighten(87%))[
       *بخش های مختلف جزوه*
     ]
   ]
@@ -759,7 +773,7 @@
   ]
 
   align(center)[
-    #block(fill: luma(240), inset: 1em, radius: 0.2em, width: 100%, stroke: luma(200))[
+    #block(fill: black.lighten(97%), inset: 1em, radius: 0.2em, width: 100%, stroke: black.lighten(87%))[
       *قطع شدن بخش ها*
     ]
   ]

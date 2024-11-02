@@ -29,8 +29,8 @@
   date: [
     نیم سال تحصیلی #text(dir: ltr)[۱۴۰۳-۱]
   ],
-  version: "v0.8.1",
-  phase: none,
+  version: "v0.8.2",
+  progress_string: "08 / 22",
   info_color: blue_color,
   no_responsibility: true,
 )
@@ -143,7 +143,7 @@
 
 #tool.true_answer()[
   #tool.custom_figure(
-    image("images/ML/01_02.jpg"),
+    image("images/ML/01_02.jpg", width: 92%),
     caption: "نقاط شکل هواپیما را به صورتی که مشخص شده است، شماره گذاری می کنیم.",
   )
   کد مرتبط:
@@ -179,7 +179,7 @@
 
   #tool.custom_figure(
     align(center)[
-      #image("images/ML/01_01.png", width: 39%)
+      #image("images/ML/01_01.png", width: 42%)
     ],
     caption: "گراف مربوط به فعالیت یادگیری",
     inset: 1em,
@@ -580,7 +580,7 @@
 
   و بر این اساس به نمودار زیر می رسیم:
   #tool.custom_figure(
-    image("images/ML/03_01.png", width: 56%),
+    image("images/ML/03_01.png", width: 53%),
     caption: "با توجه به میانگین و انحراف معیار جمعیت، به نمودار بالا می رسیم.",
     inset: 1em,
   )
