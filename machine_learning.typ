@@ -29,7 +29,7 @@
   date: [
     نیم سال تحصیلی #text(dir: ltr)[۱۴۰۳-۱]
   ],
-  version: "v0.8.2",
+  version: "v0.8.3",
   progress_string: "08 / 22",
   info_color: blue_color,
   no_responsibility: true,
@@ -1610,13 +1610,11 @@
   $ p(x_1, C_1) = p(x) times p(C_1 | x) = p(C_1) times p(x | C_1) $
 
   همانطور که گفتیم پزشک می خواهد احتمال بیمار بودن فرد را بداند:
-  #text(size: 1.25em)[
-    $
-      overbrace(p(C_1 | x), "Posterio") = (overbrace(p(C_1), "Prior") times overbrace(p(x | C_1), "Likelihood")) / (p(
-        x
-      ) = underbrace(p(x | C_1) + p(x | C_2), "Marginal probability of x"))
-    $
-  ]
+  $
+    overbrace(p(C_1 | x), "Posterio") = (overbrace(p(C_1), "Prior") times overbrace(p(x | C_1), "Likelihood")) / (p(
+      x
+    ) = underbrace(p(x | C_1) + p(x | C_2), "Marginal probability of x"))
+  $
   $p(C_1)$ یعنی احتمال بیمار بودن یک آدم در یک جمعیت، بدون اینکه Evidence ای داشته باشیم.
 
   $p(x)$ یعنی احتمال اینکه تعداد گلبول های سفید در یک جمعیت، مقدار $x$ باشد، بدون اینکه Evidence ای داشته باشیم.
@@ -1642,13 +1640,11 @@
 === Bayesian Learning
 #tool.definition()[
   Bayesian Learning:
-  #text(size: 1.25em)[
-    $
-      x in C_1 "iff" p(C_1 | x) > p(C_2 | x) \
-      = (p(C_1) times p(x | C_1)) / cancel(p(x)) > (p(C_2) times p(x | C_2)) / cancel(p(x)) \
-      = p(C_1) times p(x | C_1) > p(C_2) times p(x | C_2)
-    $
-  ]
+  $
+    x in C_1 "iff" p(C_1 | x) > p(C_2 | x) \
+    = (p(C_1) times p(x | C_1)) / cancel(p(x)) > (p(C_2) times p(x | C_2)) / cancel(p(x)) \
+    = p(C_1) times p(x | C_1) > p(C_2) times p(x | C_2)
+  $
 ]
 
 #tool.question()[
@@ -1659,9 +1655,7 @@
   از Domain Knowledge می آوریم.
 
   در مسائل Machine Learning همان اول روی Train Data معادله زیر را اعمال کرده و با این معادله مقدار $p(C_1)$ را حساب می کنیم:
-  #text(size: 1.25em)[
-    $ p(C_1) = n(C_1) / (n(C_1) + n(C_2) = N) $
-  ]
+  $ p(C_1) = n(C_1) / (n(C_1) + n(C_2) = N) $
 ]
 
 === به دست آوردن $p(x | C_1)$ و $p(x | C_2)$
@@ -1737,16 +1731,10 @@
   + PDF: یک تابع ریاضی می نویسیم که $x$ را به احتمالش نگاشت می کند.
     مثلاً برای خیلی از پدیده هایی که با آن ها سر و کار داریم، یک تابع توزیع احتمال نرمال می نویسیم.
     فرمول تابع توزیع نرمال برای $C_1$ به صورت زیر است:
-    #text(size: 1.5em)[
-      $ p(x | C_1): "Normal"(underbrace(mu_1, "Mean"), underbrace(sigma_1, "Standard deviation")) arrow.curve.b $
-    ]
-    #text(size: 2em)[
-      $ p(x | C_1) = 1 / (sqrt(2 pi sigma_1^2)) e^((-(x - mu_1)^2) / (2 sigma_1^2)) $
-    ]
-    #text(size: 1.5em)[
-      $ mu_1 = (sum_(x in C_1)x) / (n(C_1)) $
-      $ sigma_1 = sqrt((sum_(x in C_1)(x - mu_1)^2) / (N - 1)) $
-    ]
+    $ p(x | C_1): "Normal"(underbrace(mu_1, "Mean"), underbrace(sigma_1, "Standard deviation")) arrow.curve.b $
+    $ p(x | C_1) = 1 / (sqrt(2 pi sigma_1^2)) e^display((-(x - mu_1)^2) / (2 sigma_1^2)) $
+    $ mu_1 = (sum_display(x in C_1)x) / (n(C_1)) $
+    $ sigma_1 = sqrt((sum_display(x in C_1)(x - mu_1)^2) / (N - 1)) $
 ]
 
 #tool.tip()[
@@ -1758,7 +1746,7 @@
 #tool.question()[
   ۶ نمونه که هر یک، دو Feature دارند و در کل به دو کلاس تقسیم بندی می شوند، به شکل زیر داریم:
   #tool.custom_figure(
-    image("images/ML/06_03.png", width: 46%),
+    image("images/ML/06_03.png"),
     caption: "۶ نمونه داریم که به شکل بالا توزیع شده اند.",
     inset: 1em,
     refrence: <diagram1>,
@@ -1795,7 +1783,7 @@
       columns: 3,
       inset: 1em,
       stroke: black,
-      align: center,
+      align: center + horizon,
       $x_1$, $p(x_1 | C_1)$, $p(x_1 | C_2)$,
       $-1$, $ 2 / 3 $, $0$,
       $0$, $ 1 / 3 $, $ 1 / 3 $,
@@ -1809,7 +1797,7 @@
       columns: 3,
       inset: 1em,
       stroke: black,
-      align: center,
+      align: center + horizon,
       $x_2$, $p(x_2 | C_1)$, $p(x_2 | C_2)$,
       $-1$, $ 2 / 3 $, $0$,
       $0$, $ 1 / 3 $, $ 1 / 3 $,
@@ -1974,13 +1962,11 @@
 
   $ |"Sample"| >= 33 $
   می توان گفت که:
-  #text(size: 1.25em)[
-    $
-      mu &tilde.equiv hat(mu) = (sum_(x in "Sample") x) / (|"Sample"|) \ sigma &tilde.equiv hat(sigma) = sqrt((sum_(x in "Sample") (
+  $
+    mu &tilde.equiv hat(mu) = (sum_display(x in "Sample") x) / (|"Sample"|) \ sigma &tilde.equiv hat(sigma) = sqrt((sum_display(x in "Sample") (
       x - hat(mu)
     )^2) / (|"Sample"| - 1))
-    $
-  ]
+  $
   بر این اساس می توانیم در یک مسأله ای که دو کلاس داریم، میانگین و انحراف معیار هر یک از کلاس ها را حساب کرده و سپس بر اساس این میانگین و انحراف معیار بگوییم که هر نمونه ای به چه کلاسی تعلق دارد.
 ]
 
@@ -2019,11 +2005,9 @@
   $ p(x | "Smoker") > p(x | "Non-smoker") $
 
   فرمول تابع توزیع Gaussian به صورت زیر است:
-  #text(size: 1.75em)[
-    $
-      p(x ; mu , sigma) = 1 / (sqrt(2 pi sigma^2)) e^((-(x - mu)^2) / (2 sigma^2))
-    $
-  ]
+  $
+    p(x ; mu , sigma) = 1 / (sqrt(2 pi sigma^2)) e^display((-(x - mu)^2) / (2 sigma^2))
+  $
 
   با استفاده از فرمول بالا مقدار دو احتمال زیر به دست می آید و از این دو احتمال نتیجه می گیریم که احتمال غیر سیگاری بودن فردی که پس از ۱۹ دقیقه خسته شود بیشتر از احتمال سیگاری بودنش است.
 
@@ -2280,13 +2264,13 @@
     Maximum Likelihood برای بسیاری از Estimation ها Unbiased است.
     به این صورت که سعی می کند هر پارامتر $hat(theta)$ ای را از روی جمعیت دست آورد به گونه ای که:
     #h(3.1em)
-    #text(size: 1.25em)[$hat(theta) tilde.equiv theta$]
+    $ hat(theta) tilde.equiv theta $
   ]
 ][
   #tool.tip()[
     اگر انحراف معیار را با فرمولی که توضیح داده شده حساب کنیم و از جمعیت تعداد زیادی نمونه برداریم، انحراف معیار نمونه به صورت زیر خواهد بود:
     #h(3em)
-    #text(size: 1.25em)[$hat(sigma) tilde.equiv N / (N - 1) sigma$]
+    $ hat(sigma) tilde.equiv N / (N - 1) sigma $
   ]
 ]
 
@@ -2341,14 +2325,11 @@
     p(x | C_1) > p(x | C_2)
   $
   بر اساس فرضی که داشتیم، اگر به تعداد کافی نمونه برداری کنیم می توان فرض کرد که توزیع نمونه ها نیز نرمال است و از PDF توزیع نرمال استفاده کرد:
-  #text(size: 1.75em)[
-
-    $
-      1 / (sqrt(2 pi) sigma_1) e^((-(x - mu_1)^2) / (2 sigma_1^2)) > 1 / (sqrt(2 pi) sigma_2) e^((-(
-        x - mu_2
-      )^2) / (2 sigma_2^2))
-    $
-  ]
+  $
+    1 / (sqrt(2 pi) sigma_1) e^display((-(x - mu_1)^2) / (2 sigma_1^2)) > 1 / (sqrt(2 pi) sigma_2) e^display((-(
+      x - mu_2
+    )^2) / (2 sigma_2^2))
+  $
 
   در فرمول بالا تنها $x$ است که مجهول است و $sigma$ و $mu$ ها را با استفاده از تکنیک های Estimation، می توان از روی داده ها به دست آورد.
 
