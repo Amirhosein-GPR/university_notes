@@ -458,6 +458,9 @@
     )
   }
 
+  set math.vec(delim: "[")
+  set math.mat(delim: "[")
+
   block(width: 100%, height: 100%)[
     #set text(size: first_page_font_size)
     #align(center + horizon)[
