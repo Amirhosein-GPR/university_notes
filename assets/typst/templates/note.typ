@@ -715,7 +715,7 @@
     ]
   ]
 
-  set page(margin: (outside: 1.5cm))
+  set page(margin: (inside: 1.5cm))
 
   if no_responsibility {
     align(center + horizon)[

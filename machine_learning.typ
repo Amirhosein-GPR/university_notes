@@ -29,7 +29,7 @@
   date: [
     نیم سال تحصیلی #text(dir: ltr)[۱۴۰۳-۱]
   ],
-  version: "v0.9.1",
+  version: "v0.9.2",
   progress_string: "09 / 22",
   info_color: blue_color,
   no_responsibility: true,
