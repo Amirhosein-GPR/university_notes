@@ -1,3 +1,5 @@
+#let black_and_white = false
+
 #let red_color = rgb(200, 0, 0)
 #let orange_color = rgb(220, 100, 0)
 #let yellow_color = rgb(120, 120, 0)
@@ -18,24 +20,21 @@
 #let section_template(
   title: str,
   content,
-  black_and_white: false,
   icon_paths: (),
   icon_color: color,
   pause: bool,
   continuation: bool,
-  should_fill: true,
 ) = {
   let fill_color
   let stroke_color
-  if should_fill {
-    fill_color = icon_color
-  } else {
+  if black_and_white {
+    stroke_color = black
     fill_color = rgb(0, 0, 0, 0)
+    icon_color = black
+  } else {
+    stroke_color = icon_color
+    fill_color = icon_color.lighten(97%)
   }
-  // stroke_color = fill_color.lighten(85%)
-  // fill_color = fill_color.lighten(95%)
-  stroke_color = fill_color.lighten(0%)
-  fill_color = fill_color.lighten(97%)
 
   block(below: 1em)[
     #block(below: 0.5em, width: 100%)[
@@ -126,193 +125,6 @@
   ]
 }
 
-// #let reset_section_counters() = {
-//     counter("tip").update(0)
-//     counter("definition").update(0)
-//     counter("question").update(0)
-//     counter("example").update(0)
-//     counter("true_answer").update(0)
-//     counter("wrong_answer").update(0)
-//     counter("comparision").update(0)
-//     counter("list").update(0)
-//     counter("simple_context").update(0)
-//     counter("exercise").update(0)
-//     counter("exercise").update(0)
-//     counter("reminder").update(0)
-// }
-
-// #let section(counter_enabled: true, black_and_white: false, types: (), contents: (), options: (level: 1, pause: false, continuation: false)) = {
-//     let headings_counter = counter("heading")
-//     let section_counters = ()
-
-//     let title_array = ()
-//     let icon_paths_array = ()
-//     let icon_color_array = ()
-
-//     let number_of_sections = types.len()
-
-//     if options == none {
-//         options = ()
-//         for i in range(number_of_sections) {
-//             options.push((level: 1, pause: false, continuation: false))
-//         }
-//     } else {
-//         options = options
-//     }
-
-//     for i in range(number_of_sections) {
-//         if types.at(i) == "tip" {
-//             let icon_paths = ()
-//             while options.at(i).level > 0 {
-//                 icon_paths.push("../../icons/star.svg")
-//                 options.at(i).level -= 1
-//             }
-
-//             title_array.push("نکته")
-//             icon_paths_array.push(icon_paths)
-//             icon_color_array.push(orange_color)
-//             section_counters.push(counter("tip"))
-//         } else if types.at(i) == "definition" {
-//             title_array.push("تعریف")
-//             icon_paths_array.push(("../../icons/file-lines.svg",))
-//             icon_color_array.push(blue_color)
-//             section_counters.push(counter("definition"))
-//         } else if types.at(i) == "question" {
-//             title_array.push("سؤال")
-//             icon_paths_array.push(("../../icons/circle-question.svg",))
-//             icon_color_array.push(brown_color)
-//             section_counters.push(counter("question"))
-//         } else if types.at(i) == "example" {
-//             title_array.push("مثال")
-//             icon_paths_array.push(("../../icons/circle-dot.svg",))
-//             icon_color_array.push(purple_color)
-//             section_counters.push(counter("example"))
-//         } else if types.at(i) == "true_answer" {
-//             title_array.push("پاسخ")
-//             icon_paths_array.push(("../../icons/circle-check.svg",))
-//             icon_color_array.push(green_color)
-//             section_counters.push(counter("true_answer"))
-//         } else if types.at(i) == "wrong_answer" {
-//             title_array.push("پاسخ")
-//             icon_paths_array.push(("../../icons/circle-xmark.svg",))
-//             icon_color_array.push(red_color)
-//             section_counters.push(counter("wrong_answer"))
-//         } else if types.at(i) == "comparision" {
-//             title_array.push("مقایسه")
-//             icon_paths_array.push(("../../icons/code-compare.svg",))
-//             icon_color_array.push(rgb(0, 170, 170))
-//             section_counters.push(counter("comparision"))
-//         } else if types.at(i) == "list" {
-//             title_array.push("فهرست")
-//             icon_paths_array.push(("../../icons/list.svg",))
-//             icon_color_array.push(yellow_color)
-//             section_counters.push(counter("list"))
-//         } else if types.at(i) == "simple_context" {
-//             title_array.push("متن")
-//             icon_paths_array.push(("../../icons/book.svg",))
-//             icon_color_array.push(luma(70))
-//             section_counters.push(counter("simple_context"))
-//         } else if types.at(i) == "exercise" {
-//             title_array.push("تمرین")
-//             icon_paths_array.push(("../../icons/pen-to-square.svg",))
-//             icon_color_array.push( rgb(255, 0, 150))
-//             section_counters.push(counter("exercise"))
-//         } else if types.at(i) == "exercise-p" {
-//             title_array.push("تمرین")
-//             icon_paths_array.push(("../../icons/pen-to-square.svg", "../../icons/plus.svg"))
-//             icon_color_array.push( rgb(255, 0, 150))
-//             section_counters.push(counter("exercise-p"))
-//         } else if types.at(i) == "reminder" {
-//             title_array.push("یادآوری")
-//             icon_paths_array.push(("../../icons/arrows-rotate.svg",))
-//             icon_color_array.push( rgb(0, 180, 100))
-//             section_counters.push(counter("reminder"))
-//         }
-//     }
-
-//     if counter_enabled {
-//         context {
-//             let headings_before_here_count = query(selector(heading.where(level: 1)).before(here())).len()
-
-//             if headings_before_here_count > headings_counter.get().first() {
-//                 headings_counter.update(headings_before_here_count)
-
-//                 reset_section_counters()
-//             }
-
-
-//             if number_of_sections == 1 {
-//                 section_counters.at(0).step()
-
-//                 let first_section_title = text(stylistic-set: 1)[#headings_before_here_count.#{context section_counters.at(0).get().first()}]
-
-//                 section_template(title: title_array.at(0) + " " + first_section_title, contents.at(0), black_and_white: black_and_white, icon_paths: icon_paths_array.at(0), icon_color: icon_color_array.at(0), pause: options.at(0).pause, continuation: options.at(0).continuation)
-//             } else if number_of_sections == 2 {
-//                 let first_section_title
-//                 let second_section_title
-
-//                 if types.at(0) == types.at(1) {
-//                     section_counters.at(0).step()
-
-//                     first_section_title = text(stylistic-set: 1)[#headings_before_here_count.#{context section_counters.at(0).get().first() * 2 - 1}]
-//                     second_section_title = text(stylistic-set: 1)[#headings_before_here_count.#{context section_counters.at(1).get().first() * 2}]
-//                     // section_counters.at(0).step()
-//                 } else {
-//                     for i in range(number_of_sections) {
-//                         section_counters.at(i).step()
-//                     }
-
-//                     first_section_title = text(stylistic-set: 1)[#headings_before_here_count.#{context section_counters.at(0).get().first()}]
-//                     second_section_title = text(stylistic-set: 1)[#headings_before_here_count.#{context section_counters.at(1).get().first()}]
-//                 }
-
-//                 block(below: 1em)[
-//                     #grid(
-//                         columns: (1fr, 1fr),
-//                         gutter: 1em,
-//                         section_template(title: title_array.at(0) + " " + first_section_title, contents.at(0), black_and_white: black_and_white, icon_paths: icon_paths_array.at(0), icon_color: icon_color_array.at(0), pause: options.at(0).pause, continuation: options.at(0).continuation),
-//                         section_template(title: title_array.at(1) + " " + second_section_title, contents.at(1), black_and_white: black_and_white, icon_paths: icon_paths_array.at(1), icon_color: icon_color_array.at(1), pause: options.at(1).pause, continuation: options.at(1).continuation)
-//                     )
-//                 ]
-//             //TODO: number_of_sections == 3
-//             } else if number_of_sections == 3 {
-//                 let first_section_title = text(stylistic-set: 1)[#headings_before_here_count.#{context section_counters.at(0).get().first() * 3 - 2}]
-//                 let second_section_title = text(stylistic-set: 1)[#headings_before_here_count.#{context section_counters.at(1).get().first() * 3 - 1}]
-//                 let third_section_title = text(stylistic-set: 1)[#headings_before_here_count.#{context section_counters.at(2).get().first() * 3}]
-
-//                 block(below: 1em)[
-//                     #grid(
-//                         columns: (1fr, 1fr),
-//                         gutter: 1em,
-//                         section_template(title: title_array.at(0) + " " + first_section_title, contents.at(0), black_and_white: black_and_white, icon_paths: icon_paths_array.at(0), icon_color: icon_color_array.at(0), pause: options.at(0).pause, continuation: options.at(0).continuation),
-//                         section_template(title: title_array.at(1) + " " + second_section_title, contents.at(1), black_and_white: black_and_white, icon_paths: icon_paths_array.at(1), icon_color: icon_color_array.at(1), pause: options.at(1).pause, continuation: options.at(1).continuation),
-//                         section_template(title: title_array.at(2) + " " + third_section_title, contents.at(2), black_and_white: black_and_white, icon_paths: icon_paths_array.at(2), icon_color: icon_color_array.at(2), pause: options.at(2).pause, continuation: options.at(2).continuation)
-//                     )
-//                 ]
-//             //TODO: number_of_sections == 4
-//             } else if number_of_sections == 4 {
-//                 let first_section_title = text(stylistic-set: 1)[#headings_before_here_count.#{context section_counters.at(0).get().first() * 4 - 3}]
-//                 let second_section_title = text(stylistic-set: 1)[#headings_before_here_count.#{context section_counters.at(1).get().first() * 4 - 2}]
-//                 let third_section_title = text(stylistic-set: 1)[#headings_before_here_count.#{context section_counters.at(2).get().first() * 4 - 1}]
-//                 let fourth_section_title = text(stylistic-set: 1)[#headings_before_here_count.#{context section_counters.at(3).get().first() * 4}]
-
-//                 block(below: 1em)[
-//                     #grid(
-//                         columns: (1fr, 1fr),
-//                         gutter: 1em,
-//                         section_template(title: title_array.at(0) + " " + first_section_title, contents.at(0), black_and_white: black_and_white, icon_paths: icon_paths_array.at(0), icon_color: icon_color_array.at(0), pause: options.at(0).pause, continuation: options.at(0).continuation),
-//                         section_template(title: title_array.at(1) + " " + second_section_title, contents.at(1), black_and_white: black_and_white, icon_paths: icon_paths_array.at(1), icon_color: icon_color_array.at(1), pause: options.at(1).pause, continuation: options.at(1).continuation),
-//                         section_template(title: title_array.at(2) + " " + third_section_title, contents.at(2), black_and_white: black_and_white, icon_paths: icon_paths_array.at(2), icon_color: icon_color_array.at(2), pause: options.at(2).pause, continuation: options.at(2).continuation),
-//                         section_template(title: title_array.at(3) + " " + fourth_section_title, contents.at(3), black_and_white: black_and_white, icon_paths: icon_paths_array.at(3), icon_color: icon_color_array.at(3), pause: options.at(3).pause, continuation: options.at(3).continuation)
-//                     )
-//                 ]
-//             }
-//         }
-//     } else {
-//         section_template(title: title_array.at(0), contents.at(0), black_and_white: black_and_white, icon_paths: icon_paths_array.at(0), icon_color: icon_color_array.at(0), pause: options.at(0).pause, continuation: options.at(0).continuation)
-//     }
-// }
-
 #let section_counter(section_type) = {
   let headings_counter = counter("heading")
   let section_counter = counter(section_type)
@@ -352,7 +164,7 @@
   ]
 }
 
-#let tip(content, level: 1, black_and_white: false, pause: false, continuation: false, enable_counter: false) = {
+#let tip(content, level: 1, pause: false, continuation: false, enable_counter: false) = {
   let title = "نکته"
 
   if enable_counter {
@@ -368,7 +180,6 @@
   section_template(
     title: title,
     content,
-    black_and_white: black_and_white,
     icon_paths: icon_paths,
     icon_color: orange_color,
     pause: pause,
@@ -376,7 +187,7 @@
   )
 }
 
-#let definition(content, black_and_white: false, pause: false, continuation: false, enable_counter: false) = {
+#let definition(content, pause: false, continuation: false, enable_counter: false) = {
   let title = "تعریف"
 
   if enable_counter {
@@ -386,7 +197,6 @@
   section_template(
     title: title,
     content,
-    black_and_white: black_and_white,
     icon_paths: ("../../icons/file-lines.svg",),
     icon_color: blue_color,
     pause: pause,
@@ -394,7 +204,7 @@
   )
 }
 
-#let question(content, black_and_white: false, pause: false, continuation: false, enable_counter: false) = {
+#let question(content, pause: false, continuation: false, enable_counter: false) = {
   let title = "سؤال"
 
   if enable_counter {
@@ -404,7 +214,6 @@
   section_template(
     title: title,
     content,
-    black_and_white: black_and_white,
     icon_paths: ("../../icons/circle-question.svg",),
     icon_color: red_color,
     pause: pause,
@@ -414,7 +223,6 @@
 
 #let example(
   content,
-  black_and_white: false,
   pause: false,
   continuation: false,
   enable_counter: false,
@@ -429,7 +237,6 @@
   section_template(
     title: title,
     content,
-    black_and_white: black_and_white,
     icon_paths: ("../../icons/circle-dot.svg",),
     icon_color: purple_color,
     pause: pause,
@@ -437,7 +244,7 @@
   )
 }
 
-#let true_answer(content, black_and_white: false, pause: false, continuation: false, enable_counter: false) = {
+#let true_answer(content, pause: false, continuation: false, enable_counter: false) = {
   let title = "پاسخ"
 
   if enable_counter {
@@ -447,7 +254,6 @@
   section_template(
     title: title,
     content,
-    black_and_white: black_and_white,
     icon_paths: ("../../icons/circle-check.svg",),
     icon_color: green_color,
     pause: pause,
@@ -455,7 +261,7 @@
   )
 }
 
-#let wrong_answer(content, black_and_white: false, pause: false, continuation: false, enable_counter: false) = {
+#let wrong_answer(content, pause: false, continuation: false, enable_counter: false) = {
   let title = "پاسخ"
 
   if enable_counter {
@@ -465,7 +271,6 @@
   section_template(
     title: title,
     content,
-    black_and_white: black_and_white,
     icon_paths: ("../../icons/circle-xmark.svg",),
     icon_color: brown_color,
     pause: pause,
@@ -473,7 +278,7 @@
   )
 }
 
-#let comparision(content, black_and_white: false, pause: false, continuation: false, enable_counter: false) = {
+#let comparision(content, pause: false, continuation: false, enable_counter: false) = {
   let title = "مقایسه"
 
   if enable_counter {
@@ -483,7 +288,6 @@
   section_template(
     title: title,
     content,
-    black_and_white: black_and_white,
     icon_paths: ("../../icons/code-compare.svg",),
     icon_color: rgb(0, 170, 170),
     pause: pause,
@@ -491,7 +295,7 @@
   )
 }
 
-#let list(content, black_and_white: false, pause: false, continuation: false, enable_counter: false) = {
+#let list(content, pause: false, continuation: false, enable_counter: false) = {
   let title = "فهرست"
 
   if enable_counter {
@@ -501,7 +305,6 @@
   section_template(
     title: title,
     content,
-    black_and_white: black_and_white,
     icon_paths: ("../../icons/list.svg",),
     icon_color: yellow_color,
     pause: pause,
@@ -509,7 +312,7 @@
   )
 }
 
-#let simple_context(content, black_and_white: false, pause: false, continuation: false, enable_counter: false) = {
+#let simple_context(content, pause: false, continuation: false, enable_counter: false) = {
   let title = "متن"
 
   if enable_counter {
@@ -519,7 +322,6 @@
   section_template(
     title: title,
     content,
-    black_and_white: black_and_white,
     icon_paths: ("../../icons/book.svg",),
     icon_color: luma(70),
     pause: pause,
@@ -529,7 +331,6 @@
 
 #let exercise(
   content,
-  black_and_white: false,
   extra_score: false,
   pause: false,
   continuation: false,
@@ -550,7 +351,6 @@
   section_template(
     title: title,
     content,
-    black_and_white: black_and_white,
     icon_paths: icon_paths,
     icon_color: rgb(255, 0, 150),
     pause: pause,
@@ -558,7 +358,7 @@
   )
 }
 
-#let reminder(content, black_and_white: false, pause: false, continuation: false, enable_counter: false) = {
+#let reminder(content, pause: false, continuation: false, enable_counter: false) = {
   let title = "یادآوری"
 
   if enable_counter {
@@ -568,7 +368,6 @@
   section_template(
     title: title,
     content,
-    black_and_white: black_and_white,
     icon_paths: ("../../icons/arrows-rotate.svg",),
     icon_color: rgb(0, 180, 100),
     pause: pause,
@@ -589,7 +388,7 @@
     set raw(lang: "js")
 
     show figure: arg => {
-      set block(below: 0em)
+      set block(below: 0em, breakable: true)
       block(
         stroke: black,
         width: 100%,
@@ -619,7 +418,7 @@
     ]
   } else {
     show figure: arg => {
-      set block(below: 0em)
+      set block(below: 0em, breakable: true)
       align(center)[
         #block(stroke: black, width: 100%, inset: inset, radius: (top-left: 0.2em, top-right: 0.2em), clip: true)[
           #text(dir: ltr)[
@@ -641,19 +440,22 @@
 
 }
 
-#let title(content, color: blue_color, size: 1.4em, should_fill: true) = {
+#let title(content, color: blue_color, size: 1.4em) = {
+  let stroke_color
   let fill_color
-  if should_fill {
-    fill_color = color
-  } else {
+  if black_and_white {
+    stroke_color = black
     fill_color = rgb(0, 0, 0, 0)
+  } else {
+    stroke_color = color
+    fill_color = color.lighten(97%)
   }
   block(
-    stroke: (thickness: 0.2em, paint: fill_color),
+    stroke: (thickness: 0.2em, paint: stroke_color),
     width: 100%,
     inset: 1.4em,
     radius: 0.2em,
-    fill: fill_color.lighten(97%),
+    fill: fill_color,
   )[
     #align(center)[
       #text(size: size)[
@@ -692,7 +494,7 @@
   line(length: 100%)
 }
 
-#let introduce_sections(should_fill: true) = {
+#let introduce_sections() = {
   title("راهنمای جزوه", color: green_color)
 
   align(center)[
@@ -804,7 +606,7 @@
     #double_section()[
       #true_answer()[
         #sym.dots
-        #v(1.7em)
+        #v(2em)
 
       ]
     ][

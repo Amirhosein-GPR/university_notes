@@ -17,7 +17,6 @@
   faculty: str,
   info_color: luma(50),
   no_responsibility: false,
-  should_fill: true,
 ) = {
   let red_color = rgb(200, 0, 0)
   let orange_color = rgb(220, 100, 0)
@@ -30,14 +29,23 @@
   let brown_color = rgb(125, 50, 0)
 
   if black_and_white {
-    red_color = rgb(0, 0, 0, 255)
-    orange_color = rgb(0, 0, 0, 255)
-    yellow_color = rgb(0, 0, 0, 255)
-    green_color = rgb(0, 0, 0, 255)
-    blue_color = rgb(0, 0, 0, 255)
-    dark_blue_color = rgb(0, 0, 0, 255)
-    purple_color = rgb(0, 0, 0, 255)
+    red_color = rgb(0, 0, 0)
+    orange_color = rgb(0, 0, 0)
+    yellow_color = rgb(0, 0, 0)
+    green_color = rgb(0, 0, 0)
+    blue_color = rgb(0, 0, 0)
+    dark_blue_color = rgb(0, 0, 0)
+    purple_color = rgb(0, 0, 0)
+    gold_color = rgb(0, 0, 0)
+    brown_color = rgb(0, 0, 0)
   }
+
+
+  let total_page = context counter(page).final().first() - query(heading.where(level: 1))
+    .first()
+    .location()
+    .position()
+    .page - 1
 
   set page(
     header: context {
@@ -47,39 +55,99 @@
           #grid(
             columns: (1fr, 1fr, 1fr),
             row-gutter: 0.5em,
-            align(right + horizon)[
+            align: horizon,
+            align(right)[
               #topic
             ],
-            align(center + horizon)[
+            align(center)[
+              #let next_heading
               #let previous_heading = query(
                 selector(heading.where(level: 2)).before(here()),
               )
 
               #if previous_heading.len() > 0 {
                 previous_heading.last().body
+              } else {
+                next_heading = query(
+                  selector(heading.where(level: 2)).after(here()),
+                )
+                if next_heading.len() > 0 and counter(page).get().first() == next_heading
+                  .first()
+                  .location()
+                  .position()
+                  .page {
+                  next_heading.first().body
+                }
               }
             ],
-            align(left + horizon)[
+            align(left)[
               #image(image_path, height: 2em)
             ],
-
-            line(length: 300%),
           )
+
+          #set block(above: 1em)
+          #line(length: 100%, stroke: (dash: "densely-dash-dotted"))
         ]
       }
     },
-    numbering: (..nums) => (
-      context {
-        if counter(page).get().first() > 1 {
-          text(stylistic-set: 1)[
-            #nums.pos().at(0)
-          ]
-        }
+    footer: context {
+      set text(fill: black)
+
+      let current_page = counter(page).get().first()
+      let h1 = query(
+        selector(heading.where(level: 1)).before(here()),
+      )
+
+      if current_page > 1 {
+        set block(below: 1em)
+        set text(stylistic-set: 1, number-width: "tabular")
+
+        let first_lesson_page = query(heading.where(level: 1)).first().location().position().page - 1
+        let lesson_page = current_page - first_lesson_page
+
+        line(length: 100%, stroke: (dash: "densely-dash-dotted"))
+        grid(
+          columns: (1fr, 1fr, 1fr),
+          row-gutter: 0.5em,
+          align: horizon,
+          {
+            if lesson_page > 0 {
+              align(right)[
+                #total_page / #lesson_page
+              ]
+              // CONSTANT UPDATE IF NECESSARY (if statements):
+            } else if lesson_page == -2 {
+              [پ / آ]
+            } else if lesson_page == -1 {
+              [پ / ب]
+            } else if lesson_page == 0 {
+              [پ / پ]
+            }
+          },
+          align(center)[
+            #if h1.len() > 0 {
+              h1.last().body
+            } else {
+              [پیش گفتار]
+            }
+          ],
+          align(left)[
+            #if h1.len() > 0 {
+              [#int((current_page - 4) / 22 * 100)%]
+            } else {
+              [
+                #{
+                  int(((current_page - 1) / (first_lesson_page - 1)) * 100)
+                }%
+              ]
+            }
+          ],
+        )
       }
-    ),
+    },
     paper: paper,
     flipped: flipped,
-    margin: (x: 1cm, y: 2cm),
+    margin: (x: 0.75cm, top: 1.65cm, bottom: 1.25cm),
   )
 
   set heading(numbering: (..nums) => {
@@ -100,12 +168,7 @@
     counter(figure.where(kind: table)).update(0)
     counter(figure.where(kind: raw)).update(0)
 
-    let fill_color
-    if should_fill {
-      fill_color = red_color
-    } else {
-      fill_color = rgb(0, 0, 0, 0)
-    }
+    let fill_color = red_color
 
     block(above: 0.8em)[
       #grid(
@@ -113,8 +176,13 @@
         gutter: 2%,
         align(center)[
           #if black_and_white {
-            block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: red_color, thickness: 0.15em))[
-              #text(stylistic-set: 1, dir: ltr, fill: red_color)[
+            block(
+              inset: 1em,
+              radius: 0.2em,
+              width: 100%,
+              stroke: (thickness: 0.15em, paint: black),
+            )[
+              #text(stylistic-set: 1, dir: ltr)[
                 #counter(heading).display()
               ]
             ]
@@ -134,8 +202,13 @@
         ],
         align(center)[
           #if black_and_white {
-            block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: red_color, thickness: 0.15em))[
-              #text(fill: red_color)[
+            block(
+              inset: 1em,
+              radius: 0.2em,
+              width: 100%,
+              stroke: (thickness: 0.15em, paint: black),
+            )[
+              #text()[
                 #arg.body
               ]
             ]
@@ -157,12 +230,7 @@
     ]
   }
   show heading.where(level: 2): arg => {
-    let fill_color
-    if should_fill {
-      fill_color = blue_color
-    } else {
-      fill_color = rgb(0, 0, 0, 0)
-    }
+    let fill_color = blue_color
 
     block(above: 0.8em)[
       #grid(
@@ -170,8 +238,13 @@
         gutter: 2%,
         align(center)[
           #if black_and_white {
-            block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: blue_color, thickness: 0.15em))[
-              #text(stylistic-set: 1, fill: blue_color)[
+            block(
+              inset: 1em,
+              radius: 0.2em,
+              width: 100%,
+              stroke: (thickness: 0.15em, paint: black),
+            )[
+              #text(stylistic-set: 1)[
                 #counter(heading).display()
               ]
             ]
@@ -191,8 +264,13 @@
         ],
         align(center)[
           #if black_and_white {
-            block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: blue_color, thickness: 0.15em))[
-              #text(fill: blue_color)[
+            block(
+              inset: 1em,
+              radius: 0.2em,
+              width: 100%,
+              stroke: (thickness: 0.15em, paint: black),
+            )[
+              #text()[
                 #arg.body
               ]
             ]
@@ -209,18 +287,12 @@
               ]
             ]
           }
-
         ],
       )
     ]
   }
   show heading.where(level: 3): arg => {
-    let fill_color
-    if should_fill {
-      fill_color = green_color
-    } else {
-      fill_color = rgb(0, 0, 0, 0)
-    }
+    let fill_color = green_color
 
     block(above: 0.8em)[
       #grid(
@@ -228,8 +300,13 @@
         gutter: 2%,
         align(center)[
           #if black_and_white {
-            block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: green_color, thickness: 0.15em))[
-              #text(stylistic-set: 1, fill: green_color)[
+            block(
+              inset: 1em,
+              radius: 0.2em,
+              width: 100%,
+              stroke: (thickness: 0.15em, paint: black),
+            )[
+              #text(stylistic-set: 1)[
                 #counter(heading).display()
               ]
             ]
@@ -249,8 +326,13 @@
         ],
         align(center)[
           #if black_and_white {
-            block(inset: 1em, radius: 0.2em, width: 100%, stroke: (paint: green_color, thickness: 0.15em))[
-              #text(fill: green_color)[
+            block(
+              inset: 1em,
+              radius: 0.2em,
+              width: 100%,
+              stroke: (thickness: 0.15em, paint: black),
+            )[
+              #text()[
                 #arg.body
               ]
             ]
@@ -272,12 +354,7 @@
     ]
   }
   show heading.where(level: 4): arg => {
-    let fill_color
-    if should_fill {
-      fill_color = purple_color
-    } else {
-      fill_color = rgb(0, 0, 0, 0)
-    }
+    let fill_color = purple_color
 
     block(above: 0.8em)[
       #grid(
@@ -285,8 +362,13 @@
         gutter: 2%,
         align(center)[
           #if black_and_white {
-            block(inset: 0.9em, radius: 0.2em, width: 100%, stroke: (paint: purple_color, thickness: 0.15em))[
-              #text(stylistic-set: 1, fill: purple_color, size: 0.9em)[
+            block(
+              inset: 0.9em,
+              radius: 0.2em,
+              width: 100%,
+              stroke: (thickness: 0.15em, paint: black),
+            )[
+              #text(stylistic-set: 1, size: 0.9em)[
                 #counter(heading).display()
               ]
             ]
@@ -306,8 +388,13 @@
         ],
         align(center)[
           #if black_and_white {
-            block(inset: 0.9em, radius: 0.2em, width: 100%, stroke: (paint: purple_color, thickness: 0.15em))[
-              #text(fill: purple_color, size: 0.9em)[
+            block(
+              inset: 0.9em,
+              radius: 0.2em,
+              width: 100%,
+              stroke: (thickness: 0.15em, paint: black),
+            )[
+              #text()[
                 #arg.body
               ]
             ]
@@ -329,12 +416,7 @@
     ]
   }
   show heading.where(level: 5): arg => {
-    let fill_color
-    if should_fill {
-      fill_color = orange_color
-    } else {
-      fill_color = rgb(0, 0, 0, 0)
-    }
+    let fill_color = orange_color
 
     block(above: 0.8em)[
       #grid(
@@ -342,8 +424,13 @@
         gutter: 2%,
         align(center)[
           #if black_and_white {
-            block(inset: 0.8em, radius: 0.2em, width: 100%, stroke: (paint: orange_color, thickness: 0.15em))[
-              #text(stylistic-set: 1, fill: orange_color, size: 0.8em)[
+            block(
+              inset: 0.8em,
+              radius: 0.2em,
+              width: 100%,
+              stroke: (thickness: 0.15em, paint: black),
+            )[
+              #text(stylistic-set: 1, size: 0.8em)[
                 #counter(heading).display()
               ]
             ]
@@ -363,8 +450,13 @@
         ],
         align(center)[
           #if black_and_white {
-            block(inset: 0.8em, radius: 0.2em, width: 100%, stroke: (paint: orange_color, thickness: 0.15em))[
-              #text(fill: orange_color, size: 0.8em)[
+            block(
+              inset: 0.8em,
+              radius: 0.2em,
+              width: 100%,
+              stroke: (thickness: 0.15em, paint: black),
+            )[
+              #text(size: 0.8em)[
                 #arg.body
               ]
             ]
@@ -409,11 +501,33 @@
 
   show outline.entry: it => {
     set text(stylistic-set: 1, number-width: "tabular", dir: rtl)
-    it.body
-    h(1em)
+    if it.level == 1 {
+      v(1em)
+      link(
+        it.element.location(),
+        box()[
+          #text(weight: "bold")[
+            #it.body
+          ]
+        ],
+      )
+    } else {
+      link(
+        it.element.location(),
+        box()[
+          #it.body
+        ],
+      )
+    }
+    h(0.3em)
     box(width: 1fr)[#repeat([.])]
-    h(1em)
-    box()[#it.page]
+    h(0.3em)
+    link(
+      it.element.location(),
+      box()[#{
+          int(it.page.text) - query(heading.where(level: 1)).first().location().position().page + 1
+        }],
+    )
   }
 
   set text(size: font_size)
@@ -486,7 +600,7 @@
         نویسنده: #authors_name
       ]
 
-      #v(4em)
+      #v(1em)
 
       #if authors_name != none {
         block(width: 80%)[
@@ -505,102 +619,103 @@
         ]
       }
 
-      #align(bottom)[
+      #v(3em)
 
-        #set text(dir: ltr, weight: "bold", stylistic-set: 1, number-width: "tabular")
 
-        #block(below: 0em, width: 80%, fill: black.lighten(97%), inset: 10%, radius: 0.5em, stroke: black.lighten(87%))[
-          پیشرفت کلاس
+      #set text(dir: ltr, weight: "bold", stylistic-set: 1, number-width: "tabular")
 
-          #v(5em)
+      #block(below: 0em, width: 80%, fill: black.lighten(97%), inset: 10%, radius: 0.5em, stroke: black.lighten(87%))[
+        پیشرفت کلاس
 
-          #let progress = eval(progress_string)
-          #block(width: 100%, height: 0.5em, fill: blue_color, stroke: (thickness: 0.1em))[
-            #align(left)[
-              #block(fill: red_color, width: progress * 100%, height: 0.5em)
-            ]
+        #v(5em)
+
+        #let progress = eval(progress_string)
+        #block(width: 100%, height: 0.5em, fill: blue_color, stroke: (thickness: 0.1em))[
+          #align(left)[
+            #block(fill: red_color, width: progress * 100%, height: 0.5em)
           ]
-
-          #place(dx: 0% - 0.2%, dy: -1em)[
-            #block(height: 1.5em, width: 0.2em, fill: black)
-          ]
-
-          #place(dx: 25% - 0.2%, dy: -1em)[
-            #block(height: 1.5em, width: 0.2em, fill: black)
-          ]
-
-          #place(dx: 50% - 0.2%, dy: -1em)[
-            #block(height: 1.5em, width: 0.2em, fill: black)
-          ]
-
-          #place(dx: 75% - 0.2%, dy: -1em)[
-            #block(height: 1.5em, width: 0.2em, fill: black)
-          ]
-
-          #place(dx: 100% - 0.2%, dy: -1em)[
-            #block(height: 1.5em, width: 0.2em, fill: black)
-          ]
-
-          #place(dx: progress * 100% - 1.1%, dy: -0.75em)[
-            #circle(fill: red_color, width: 1em, stroke: (thickness: 0.1em))
-
-            #place(dx: -1.35em, dy: -2.8em)[
-              #progress_string
-            ]
-
-            #place(dx: -0.4em, dy: 0.8em)[
-              #int(progress * 100)%
-            ]
-          ]
-
-          #place(dy: -5em)[
-            #block(width: 100%)[
-              #text(size: 1.5em)[
-                #place(dx: -1.7%)[
-                  #emoji.face.peek
-                ]
-                #place(dx: 25% - 1.7%)[
-                  #emoji.face.think
-                ]
-                #place(dx: 50% - 1.7%)[
-                  #emoji.face.smile.slight
-                ]
-                #place(dx: 75% - 1.7%)[
-                  #emoji.face.tear.withheld
-                ]
-                #place(dx: 100% - 1.7%)[
-                  #emoji.face.party
-                ]
-              ]
-            ]
-          ]
-
-          #place(dy: 2.5em)[
-            #block(width: 100%)[
-              #place(dx: -1.6%)[
-                0%
-              ]
-              #place(dx: 25% - 2%)[
-                25%
-              ]
-              #place(dx: 50% - 2%)[
-                50%
-              ]
-              #place(dx: 75% - 2%)[
-                75%
-              ]
-              #place(dx: 100% - 2%)[
-                100%
-              ]
-            ]
-          ]
-
-          #v(3em)
         ]
-        // Typst Version: #sys.version
+
+        #place(dx: 0% - 0.2%, dy: -1em)[
+          #block(height: 1.5em, width: 0.2em, fill: black)
+        ]
+
+        #place(dx: 25% - 0.2%, dy: -1em)[
+          #block(height: 1.5em, width: 0.2em, fill: black)
+        ]
+
+        #place(dx: 50% - 0.2%, dy: -1em)[
+          #block(height: 1.5em, width: 0.2em, fill: black)
+        ]
+
+        #place(dx: 75% - 0.2%, dy: -1em)[
+          #block(height: 1.5em, width: 0.2em, fill: black)
+        ]
+
+        #place(dx: 100% - 0.2%, dy: -1em)[
+          #block(height: 1.5em, width: 0.2em, fill: black)
+        ]
+
+        #place(dx: progress * 100% - 1.1%, dy: -0.75em)[
+          #circle(fill: red_color, width: 1em, stroke: (thickness: 0.1em))
+
+          #place(dx: -1.35em, dy: -2.8em)[
+            #progress_string
+          ]
+
+          #place(dx: -0.4em, dy: 0.8em)[
+            #int(progress * 100)%
+          ]
+        ]
+
+        #place(dy: -5em)[
+          #block(width: 100%)[
+            #text(size: 1.5em)[
+              #place(dx: -1.7%)[
+                #emoji.face.peek
+              ]
+              #place(dx: 25% - 1.7%)[
+                #emoji.face.think
+              ]
+              #place(dx: 50% - 1.7%)[
+                #emoji.face.smile.slight
+              ]
+              #place(dx: 75% - 1.7%)[
+                #emoji.face.tear.withheld
+              ]
+              #place(dx: 100% - 1.7%)[
+                #emoji.face.party
+              ]
+            ]
+          ]
+        ]
+
+        #place(dy: 2.5em)[
+          #block(width: 100%)[
+            #place(dx: -1.6%)[
+              0%
+            ]
+            #place(dx: 25% - 2%)[
+              25%
+            ]
+            #place(dx: 50% - 2%)[
+              50%
+            ]
+            #place(dx: 75% - 2%)[
+              75%
+            ]
+            #place(dx: 100% - 2%)[
+              100%
+            ]
+          ]
+        ]
+
+        #v(1fr)
       ]
     ]
   ]
+
+  set page(margin: (outside: 1.5cm))
 
   if no_responsibility {
     align(center + horizon)[
@@ -648,7 +763,7 @@
 
   pagebreak()
 
-  columns(2)[
+  columns(3, gutter: 1em)[
     #doc
   ]
 }

@@ -17,8 +17,8 @@
   doc,
   paper: "a4",
   black_and_white: false,
-  flipped: false,
-  first_page_font_size: 10pt,
+  flipped: true,
+  first_page_font_size: 9pt,
   font_size: 8pt,
   image_path: "../../images/basu_logo_logosource.ir.svg",
   image_width: 12em,
@@ -29,7 +29,7 @@
   date: [
     نیم سال تحصیلی #text(dir: ltr)[۱۴۰۳-۱]
   ],
-  version: "v0.9.0",
+  version: "v0.9.1",
   progress_string: "09 / 22",
   info_color: blue_color,
   no_responsibility: true,
@@ -58,9 +58,13 @@
   - ایمیل ها:
     + mansoorm\@basu.ac.ir
     + cse.teacher\@gmail.com
+
+#colbreak()
+
 #tool.title("فهرست مطالب", color: red_color)
 #outline(title: none, indent: auto)
 
+#colbreak()
 #colbreak()
 
 = جلسه اول
@@ -179,7 +183,7 @@
 
   #tool.custom_figure(
     align(center)[
-      #image("images/ML/01_01.png", width: 42%)
+      #image("images/ML/01_01.png", width: 86%)
     ],
     caption: "گراف مربوط به فعالیت یادگیری",
     inset: 1em,
@@ -328,7 +332,7 @@
   برای آن که درک بهتری از جدول بالا داشته باشیم به شکل زیر توجه کنید:
 
   #tool.custom_figure(
-    image("images/ML/02_02.png", width: 70%),
+    image("images/ML/02_02.png", width: 85%),
     caption: "تلاش می کنیم معادله ای که تا جای ممکن تمامی نقاط نمودار را پوشش می دهد، پیدا کنیم.",
     inset: 1em,
   )
@@ -580,7 +584,7 @@
 
   و بر این اساس به نمودار زیر می رسیم:
   #tool.custom_figure(
-    image("images/ML/03_01.png", width: 53%),
+    image("images/ML/03_01.png", width: 90%),
     caption: "با توجه به میانگین و انحراف معیار جمعیت، به نمودار بالا می رسیم.",
     inset: 1em,
   )
@@ -789,7 +793,7 @@
   ]
 
   #tool.custom_figure(
-    image("images/ML/04_01.png"),
+    image("images/ML/04_01.png", width: 67%),
     caption: "مثال خرید ماشین مناسب خانواده در جلسه سوم",
     inset: 1em,
   )
@@ -810,7 +814,7 @@
   فرض کنیم در مثال ماشین خانواده، ماشین های مناسب واقعا توسط یک مستطیل مشخص می شوند (مستطیل بزرگتر شکل زیر).
 
   #tool.custom_figure(
-    image("images/ML/04_03.png", width: 76%),
+    image("images/ML/04_03.png", width: 79%),
     caption: "مستطیل بزرگتر چیزی است که واقعا وجود دارد و مستطیل کوچک تر مدلی است که از یادگیری از روی مثال های داده شده به دست آمده است.",
     inset: 1em,
   )
@@ -932,16 +936,17 @@
   در ادامه احتمال های بد شانسی مختلف به همراه تعداد نمونه لازم برای رسیدن به آن ها، آورده شده است:
   #tool.custom_figure(caption: [رابطه بین احتمال بد شانسی $S_2$ و تعداد نمونه ها], kind: table, inset: 1em)[
     #table(
-      columns: 2,
+      columns: 4,
       inset: 1em,
       stroke: black,
       align: center + horizon,
-      [$S_2$ (بد شانسی)], "Samples\ncount",
-      "0.01", "1",
-      "0.1", "2",
+      fill: (x, y) => if calc.even(x) {
+        luma(230)
+      },
+      [$S_2$ (بد شانسی)], "Samples\ncount", [$S_2$ (بد شانسی)], "Samples\ncount",
+      "0.01", "1", "0.9", "43",
+      "0.1", "2", "0.99", "458",
       "0.5", "7",
-      "0.9", "43",
-      "0.99", "458",
     )
   ]
 
@@ -954,7 +959,7 @@
   به عبارت دیگر یادگیری در ابتدا خیلی سریع است و به مرور کند تر می شود.
 
   #tool.custom_figure(
-    image("images/ML/04_04.png", width: 77%),
+    image("images/ML/04_04.png", width: 62%),
     caption: "اغلب نمودار های یادگیری به صورت بالا هستند. افت خطا در ابتدای آموزش که تعداد کمی نمونه دریافت می شود، زیاد است. اما از جایی به بعد نمونه های جدید خیلی کمکی نمی کنند.",
     inset: 1em,
   )
@@ -972,7 +977,7 @@
 #tool.example()[
   فرض کنید Concept واقعی به صورت زیر است اما الگوریتم یادگیری به جای آن که از نمونه های مثبت یاد بگیرد از نمونه های منفی یاد بگیرد.
   #tool.custom_figure(
-    image("images/ML/04_05.png", width: 75%),
+    image("images/ML/04_05.png", width: 72%),
     caption: "در شکل بالا، مدل ما به صورت مستطیل چسبیده به نمونه های منفی تعریف می شود.",
     inset: 1em,
   )
@@ -1026,7 +1031,7 @@
   + False Negative / False Reject (FN / FR)
   که به صورت شهودی در شکل زیر آمده است:
   #tool.custom_figure(
-    image("images/ML/04_06.png", width: 71%),
+    image("images/ML/04_06.png", width: 55%),
     caption: "انواع پاسخ های برنامه ما",
     inset: 1em,
   )
@@ -1038,7 +1043,7 @@
   یک مدل بر پایه داده های مثبت به دست می آمد و مدل دیگر بر پایه داده های منفی.
   قاعده Maximum Entropy به ما می گوید مستطیلی (مدل ما در اینجا) را پیدا کنیم که دقیقا وسط دو مستطیل دیگر (دو مدل دیگر) باشد.
   #tool.custom_figure(
-    image("images/ML/04_07.png"),
+    image("images/ML/04_07.png", width: 85%),
     caption: "مستطیل کوچک مدلی است که از نمونه داده های مثبت و مستطیل بزرگ مدلی است که از نمونه داده های منفی به دست آوردیم. مستطیلی که از قاعده Maximum Entropy به دست می آید، همان مستطیلی است که دقیقا وسط دو مستطیل دیگر قرار دارد.",
     inset: 1em,
   )
@@ -1050,7 +1055,7 @@
   فرض کنید یک مسأله ای به شکل زیر داریم. چه چیزی نمونه های مثبت و منفی را از هم جدا می کند؟ بی نهایت خط.
   اما طبق قاعده Maximum Entropy مرز وسط به دست می آید.
   #tool.custom_figure(
-    image("images/ML/04_08.png", width: 67%),
+    image("images/ML/04_08.png", width: 60%),
     caption: "مرز بین دو گروه به وسیله خط وسطی مشخص شده است که از قاعده Maximum Entropy به دست می آید.",
     inset: 1em,
   )
@@ -1272,7 +1277,7 @@
   می خواهیم مستطیلی را به صورت تصادفی بین S و G انتخاب کنیم. چگونه این کار را انجام می دهیم؟
   ۴ نقطه تصادفی بین S و G را به شکل زیر انتخاب می کنیم:
   #tool.custom_figure(
-    image("images/ML/05_04.png", width: 80%),
+    image("images/ML/05_04.png", width: 77%),
     caption: "مختصات ۴ نقطه درون ۴ بازه بالا که بین S و G هستند، به صورت تصادفی ساخته می شود.",
     inset: 1em,
   )
@@ -1446,7 +1451,7 @@
 
   می خواهیم دو گروه مثبت و منفی را از یکدیگر جدا کنیم که در شکل زیر آمده اند:
   #tool.custom_figure(
-    image("images/ML/05_08.png", width: 50%),
+    image("images/ML/05_08.png", width: 90%),
     caption: "جدا سازی دو گروه به کمک یک Ensemble Model",
     inset: 1em,
   )
@@ -1532,7 +1537,7 @@
 #tool.double_section()[
   #tool.definition()[
     Posterio Probability (احتمال پسین): احتمالی است که با داشتن اطلاعاتی راجع به پیش آمد بیان می شود.
-    #v(1.6em)
+    #v(3.2em)
   ]
 ][
   #tool.definition()[
@@ -1543,7 +1548,7 @@
 #tool.double_section()[
   #tool.tip()[
     از Evidence به Probability می رسیم.
-    #v(3.2em)
+    #v(1.6em)
   ]
 ][
   #tool.example()[
@@ -1578,13 +1583,13 @@
   اگر بدن درگیر مهاجمی شده باشد، تعداد گلبول های سفید افزایش می یابد.
 
   #tool.custom_figure(
-    image("images/ML/06_01.png", width: 79%),
+    image("images/ML/06_01.png"),
     caption: "تعداد گلبول های سفید در واحد خون و فراوانی افراد مرتبط با این تعداد گلبول سفید",
     inset: 1em,
   )
 
   #tool.custom_figure(
-    image("images/ML/06_02.png", width: 79%),
+    image("images/ML/06_02.png"),
     caption: "تعداد گلبول های سفید در واحد خون و احتمال داشتن این تعداد از گلبول های سفید برای یک فرد با توجه به اینکه مریض است یا سالم است.",
     inset: 1em,
   )
@@ -1746,7 +1751,7 @@
 #tool.question()[
   ۶ نمونه که هر یک، دو Feature دارند و در کل به دو کلاس تقسیم بندی می شوند، به شکل زیر داریم:
   #tool.custom_figure(
-    image("images/ML/06_03.png"),
+    image("images/ML/06_03.png", width: 77%),
     caption: "۶ نمونه داریم که به شکل بالا توزیع شده اند.",
     inset: 1em,
     refrence: <image_06_03>,
@@ -1897,21 +1902,19 @@
     inset: 1em,
   )[
     #table(
-      columns: 2,
+      columns: 4,
       inset: 1em,
       stroke: black,
       align: center,
-      "Smokers", "Non-smokers",
-      "10", "30",
-      "5", "45",
-      "12", "25",
-      "13", "20",
-      "15", "5",
-      "10", "30",
-      "11", "35",
-      "9", "25",
-      "5", "18",
-      "7", "38",
+      fill: (x, y) => if calc.even(x) {
+        luma(230)
+      },
+      "Smokers", "Non-smokers", "Smokers", "Non-smokers",
+      "10", "30", "10", "30",
+      "5", "45", "11", "35",
+      "12", "25", "9", "25",
+      "13", "20", "5", "18",
+      "15", "5", "7", "38",
     )
   ]
 
@@ -2173,7 +2176,7 @@
   بنابراین از هر کلاس باید حداقل ۹ نمونه داشته باشیم.
   یعنی برای یک مسأله دو کلاسه اگر بخواهیم یک خط را یاد بگیریم، برای آن که مطمئن شویم که خطی که ما پیدا می کنیم مشابه خطی است که دوست مان پیدا می کند، از هر کلاس باید حداقل ۹ نمونه داشته باشیم که یعنی مجموعاً ۱۸ نمونه باید داشته باشیم.
   #tool.custom_figure(
-    image("images/ML/07_03.png", width: 60%),
+    image("images/ML/07_03.png", width: 50%),
     caption: "مدل خطی این مثال که در آن باید برای هر کلاسی حداقل ۹ نمونه وجود داشته باشد.",
     inset: 1em,
   )
@@ -2264,6 +2267,7 @@
     Maximum Likelihood برای بسیاری از Estimation ها Unbiased است.
     به این صورت که سعی می کند هر پارامتر $hat(theta)$ ای را از روی جمعیت دست آورد به گونه ای که:
     $ hat(theta) tilde.equiv theta $
+    #v(1.6em)
   ]
 ][
   #tool.tip()[
@@ -2305,7 +2309,7 @@
   اگر این توزیع نرمال ها را بر روی محور رسم کنیم، به شکل زیر می رسیم:
 
   #tool.custom_figure(
-    image("images/ML/08_02.png"),
+    image("images/ML/08_02.png", width: 81%),
     caption: "توزیع های دو کلاس Smoker و Non-smoker. محور x بیانگر تعداد دقیقه های پیاده روی است.",
     inset: 1em,
     refrence: <image_08_02>,
@@ -2422,7 +2426,7 @@
 #tool.example()[
   می خواهیم دو کلاس زیر را از یکدیگر جدا کنیم:
   #tool.custom_figure(
-    image("images/ML/08_04.png", width: 80%),
+    image("images/ML/08_04.png", width: 60%),
     caption: "هیچ تک خطی پیدا نمی شود که این دو کلاس را از یکدیگر جدا کند و مسأله به مدلی پیچیده تر از یک خط (به یک سهمی) نیاز دارد.",
     inset: 1em,
   )
@@ -2659,7 +2663,7 @@
   در جلسه ششم، @image_06_03 در صورت سؤالی آورده شد.
   در این مثال از آن شکل مجدداً استفاده می کنیم:
   #tool.custom_figure(
-    image("images/ML/06_03.png", width: 68%),
+    image("images/ML/06_03.png", width: 94%),
     caption: "شکل سؤال جلسه ششم که در آن ۶ نمونه داریم که در دو کلاس دسته بندی می شوند.",
     inset: 1em,
     refrence: <image_09_03>,
