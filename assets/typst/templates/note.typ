@@ -17,6 +17,7 @@
   faculty: str,
   info_color: luma(50),
   no_responsibility: false,
+  font_attribution: false,
 ) = {
   let red_color = rgb(200, 0, 0)
   let orange_color = rgb(220, 100, 0)
@@ -39,13 +40,6 @@
     gold_color = rgb(0, 0, 0)
     brown_color = rgb(0, 0, 0)
   }
-
-
-  let total_page = context counter(page).final().first() - query(heading.where(level: 1))
-    .first()
-    .location()
-    .position()
-    .page - 1
 
   set page(
     header: context {
@@ -104,6 +98,7 @@
 
         let first_lesson_page = query(heading.where(level: 1)).first().location().position().page - 1
         let lesson_page = current_page - first_lesson_page
+        let total_page_number = counter(page).final().first() - first_lesson_page
 
         line(length: 100%, stroke: (dash: "densely-dash-dotted"))
         grid(
@@ -113,15 +108,17 @@
           {
             if lesson_page > 0 {
               align(right)[
-                #total_page / #lesson_page
+                #total_page_number / #lesson_page
               ]
               // CONSTANT UPDATE IF NECESSARY (if statements):
+            } else if lesson_page == -3 {
+              [ت / آ]
             } else if lesson_page == -2 {
-              [پ / آ]
+              [ت / ب]
             } else if lesson_page == -1 {
-              [پ / ب]
+              [ت / پ]
             } else if lesson_page == 0 {
-              [پ / پ]
+              [ت / ت]
             }
           },
           align(center)[
@@ -133,7 +130,8 @@
           ],
           align(left)[
             #if h1.len() > 0 {
-              [#int((current_page - 4) / 22 * 100)%]
+              // CONSTANT UPDATE IF NECESSARY (current_page - CONSTANT):
+              [#int((current_page - 5) / (total_page_number) * 100)%]
             } else {
               [
                 #{
@@ -167,6 +165,7 @@
     counter(figure.where(kind: image)).update(0)
     counter(figure.where(kind: table)).update(0)
     counter(figure.where(kind: raw)).update(0)
+    counter(math.equation).update(0)
 
     let fill_color = red_color
 
@@ -555,9 +554,16 @@
     ]
   }
 
-  show ref: arg => {
-    text(stylistic-set: 1, fill: blue_color)[#arg]
+  show ref: it => {
+    text(stylistic-set: 1, fill: blue_color)[#it]
   }
+
+  // show ref: it => {
+  //   let el = it.element
+  //   if el != none and el.func() == math.equation {
+  //     it.element.supplement
+  //    }
+  // }
 
   show raw.where(block: true): code => {
     grid(
@@ -574,6 +580,15 @@
 
   set math.vec(delim: "[")
   set math.mat(delim: "[")
+
+  set math.equation(
+    numbering: n => box()[
+      #set text(font: "Vazirmatn", stylistic-set: 1)
+      (#n.#counter(heading.where(level: 1)).display())
+    ],
+    supplement: "فرمول",
+    number-align: top + left,
+  )
 
   block(width: 100%, height: 100%)[
     #set text(size: first_page_font_size)
@@ -620,7 +635,6 @@
       }
 
       #v(3em)
-
 
       #set text(dir: ltr, weight: "bold", stylistic-set: 1, number-width: "tabular")
 
@@ -716,6 +730,40 @@
   ]
 
   set page(margin: (inside: 1.5cm))
+
+  if font_attribution {
+    align(center + horizon)[
+      #text(weight: "bold", size: first_page_font_size)[
+        به یاد بزرگ مردی که بی هیچ چشم داشتی
+
+        دنیای فونت فارسی را متحول کرد.
+
+        روحش شاد.
+
+        #image("../../images/saber-rastikerdar-poster.jpg", width: 50%)
+
+
+        #text(fill: blue_color, size: 0.85em, weight: "bold")[#link(
+            "https://www.hamed-bd.com/saber-rastikerdar",
+            "(عکس از وبسایت شخصی حامد بیدی)",
+          )]
+
+        #v(2em)
+
+        #text(size: 1em)[
+          در تهیه این جزوه از فونت *وزیر متن*، طراحی شده
+
+          توسط #text(fill: blue_color)[#link("https://fa.wikipedia.org/wiki/%D8%B5%D8%A7%D8%A8%D8%B1_%D8%B1%D8%A7%D8%B3%D8%AA%DB%8C%E2%80%8C%DA%A9%D8%B1%D8%AF%D8%A7%D8%B1", [*صابر راستی کردار*])]، طراح فونت های
+
+          متن باز فارسی، استفاده شده است.
+
+        ]
+      ]
+
+
+    ]
+    pagebreak()
+  }
 
   if no_responsibility {
     align(center + horizon)[

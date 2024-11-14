@@ -29,10 +29,11 @@
   date: [
     نیم سال تحصیلی #text(dir: ltr)[۱۴۰۳-۱]
   ],
-  version: "v0.9.2",
-  progress_string: "09 / 22",
+  version: "v0.11.0",
+  progress_string: "11 / 22",
   info_color: blue_color,
   no_responsibility: true,
+  font_attribution: true,
 )
 
 #tool.introduce_sections()
@@ -64,7 +65,6 @@
 #tool.title("فهرست مطالب", color: red_color)
 #outline(title: none, indent: auto)
 
-#colbreak()
 #colbreak()
 
 = جلسه اول
@@ -560,6 +560,7 @@
   در اینگونه موارد، معمولاً در آمار به جای کاری که کردیم، برای Distribution از Probability density function استفاده می کنیم که به صورت خلاصه به آن PDF می گویند:
 
   $
+    \
     P(
       "Smoking" | x
     ) = cases(0 &"if" space.quad x < 10 &|space space| space.quad x > 90, 0.01 x &"if" space.quad x >= 10 &amp amp space.quad x < 20, 0.16 &"if" space.quad x >= 20 &amp amp space.quad x < 50, 0.16 - 0.01 x space.quad &"if" space.quad x >= 50 space.quad &amp amp space.quad x < 90)
@@ -929,7 +930,10 @@
 
   اگر بخواهیم احتمال بد شانسی ما کمتر از ۰/۰۱ باشد، (یعنی به احتمال ۰/۹۹ خوش شانس باشیم):
   $ P_"بد شانسی" = (0.5)^N <= 0.01 $
-  $ (0.5)^N <= 0.01 arrow N log 0.5 <= log 0.01 arrow N >= (log 0.01) / (log 0.5) arrow N >= 6.7 tilde.eq 7 $
+  $
+    \
+    (0.5)^N <= 0.01 arrow N log 0.5 <= log 0.01 arrow N >= (log 0.01) / (log 0.5) arrow N >= 6.7 tilde.eq 7
+  $
 
   یعنی به ۷ نمونه نیاز داریم تا به احتمال ۰/۹۹ خوش شانس باشیم (مدل مان چیز جدید یاد بگیرد).
 
@@ -959,7 +963,7 @@
   به عبارت دیگر یادگیری در ابتدا خیلی سریع است و به مرور کند تر می شود.
 
   #tool.custom_figure(
-    image("images/ML/04_04.png", width: 62%),
+    image("images/ML/04_04.png", width: 53%),
     caption: "اغلب نمودار های یادگیری به صورت بالا هستند. افت خطا در ابتدای آموزش که تعداد کمی نمونه دریافت می شود، زیاد است. اما از جایی به بعد نمونه های جدید خیلی کمکی نمی کنند.",
     inset: 1em,
   )
@@ -1484,8 +1488,11 @@
   ]
 ][
   #tool.true_answer()[
-    $ 1 / 6 $
-    #v(0.3em)
+    #v(0.9em)
+    #align(center)[
+      $display(1 / 6)$
+    ]
+    #v(0.57em)
   ]
 ]
 
@@ -1495,8 +1502,11 @@
   ]
 ][
   #tool.true_answer()[
-    $ 1 / 3 $
-    #v(1.9em)
+    #v(1.73em)
+    #align(center)[
+      $display(1 / 3)$
+    ]
+    #v(1.35em)
   ]
 ]
 
@@ -1606,7 +1616,10 @@
   قاعده زنجیره احتمالات توأمان (Chain rule of probability):
   $ p(A, B) = p(A) times p(B | A) = p(B) times p(A | B) = p(B, A) $
   $ P(A, B, C) = p(A) times p(B | A) times p(C | A, B) $
-  $ P(A, B, C, D) = p(A) times p(B | A) times p(C | A, B) times p(D | A, B, C) $
+  $
+    \
+    P(A, B, C, D) = p(A) times p(B | A) times p(C | A, B) times p(D | A, B, C)
+  $
 ]
 
 #tool.example(continuation: true)[
@@ -1639,7 +1652,10 @@
   $ p("بیمار" | "wbc" = 14) space.quad , space.quad p("سالم" | "wbc" = 14) $
 
   بنابراین فرد در صورت زیر بیمار است:
-  $ "Type of a preson" == "بیمار" "iff" p("بیمار" | "wbc" = 14) > p("سالم" | "wbc" = 14) $
+  $
+    \
+    "Type of a preson" == "بیمار" "iff" p("بیمار" | "wbc" = 14) > p("سالم" | "wbc" = 14)
+  $
 ]
 
 === Bayesian Learning
@@ -1677,10 +1693,9 @@
     kind: table,
     inset: 1em,
   )[
-    $
-      #stack(
+    $#stack(
             v(2.5em),
-            $ "Number of rows" arrow.l N lr(\{, size: #20em) $,
+            $"Number of rows" arrow.l N lr(\{, size: #21em)$,
         )
         #table(
             columns: 2,
@@ -1707,12 +1722,11 @@
             $C_2$
         )
         #stack(
-            v(3em),
-            $ lr(}, size: #9em) C_1 $,
+            v(2.75em),
+            $lr(}, size: #10em) C_1$,
             v(2em),
-            $ lr(}, size: #9em) C_2 $,
-        )
-    $
+            $lr(}, size: #10em) C_2$,
+        )$
   ]
 
   با استفاده از یک جدول احتمالاتی ساده $p(C_1)$ و $p(C_2)$ که در پاسخ سؤال قبلی فرمول آن آورده شد، به دست می آیند.
@@ -1763,7 +1777,10 @@
 
 #tool.true_answer()[
   برای حل این مسأله هر دو احتمال زیر را حساب می کنیم:
-  $ p(C_1 | < x_1 = -1, x_2 = 0 >) = space ? space.quarter , space.quarter p(C_2 | < x_1 = -1, x_2 = 0 >) = space ? $
+  $
+    \
+    p(C_1 | < x_1 = -1, x_2 = 0 >) = space ? space.quarter , space.quarter p(C_2 | < x_1 = -1, x_2 = 0 >) = space ?
+  $
   این مسأله را به کمک جدول حل می کنیم.
   ابتدا نمودار را به صورت جدول زیر در می آوریم:
   #tool.custom_figure(caption: [جدول مربوط به نمودار @image_06_03], kind: table, inset: 1em)[
@@ -1790,9 +1807,9 @@
       stroke: black,
       align: center + horizon,
       $x_1$, $p(x_1 | C_1)$, $p(x_1 | C_2)$,
-      $-1$, $ 2 / 3 $, $0$,
-      $0$, $ 1 / 3 $, $ 1 / 3 $,
-      $1$, $0$, $ 2 / 3 $,
+      $-1$, $display(2 / 3)$, $0$,
+      $0$, $display(1 / 3)$, $display(1 / 3)$,
+      $1$, $0$, $display(2 / 3)$,
     )
   ]
 
@@ -1804,9 +1821,9 @@
       stroke: black,
       align: center + horizon,
       $x_2$, $p(x_2 | C_1)$, $p(x_2 | C_2)$,
-      $-1$, $ 2 / 3 $, $0$,
-      $0$, $ 1 / 3 $, $ 1 / 3 $,
-      $1$, $0$, $ 2 / 3 $,
+      $-1$, $display(2 / 3)$, $0$,
+      $0$, $display(1 / 3)$, $display(1 / 3)$,
+      $1$, $0$, $display(2 / 3)$,
     )
   ]
 
@@ -1815,7 +1832,10 @@
 
   فرض کنید برای تست از همان داده های Training استفاده می کنیم (در اینجا برای سادگی این کار را می کنیم و گرنه کار خوبی نیست).
   در ادامه جواب دو احتمال شرطی ای که در ابتدا آورده شدند را محاسبه می کنیم:
-  $ p(C_1 | < x_1 = -1, x_2 = 0 >) = space ? space.quarter , space.quarter p(C_2 | < x_1 = -1, x_2 = 0 >) = space ? $
+  $
+    \
+    p(C_1 | < x_1 = -1, x_2 = 0 >) = space ? space.quarter , space.quarter p(C_2 | < x_1 = -1, x_2 = 0 >) = space ?
+  $
 
   به کمک قاعده بیز ساده (Naive Bayes Assumption) می توان احتمال های بالا را حساب کرد.
   این قاعده می گوید که فرض کنیم $x_1$ و $x_2$ از هم مستقل هستند.
@@ -1872,13 +1892,11 @@
   یعنی احتمال $P(C_i | x)$ را به ازای تمامی $i$ کلاسی که داریم حساب می کنیم.
   $x$ عضو کلاسی است که بیشترین مقدار را در این احتمال دارد.
   خود $P(C | x)$ نیز به صورت زیر محاسبه می شود:
-  #text(size: 1.25em)[
-    $
-      underbrace(p(
+  $
+    underbrace(p(
       C | x
     ), "Posterior") = (overbrace(p(C), "Prior") overbrace(p(x | C), "Likelihood")) / underbrace(p(underbrace(x, "Evidence")), "Marginal probability of evidence")
-    $
-  ]
+  $
   لازم به ذکر است که اگر بخواهیم $P(C | x)$ را برای $C$ های مختلف با یکدیگر مقایسه کنیم، نیازی به دانستن $p(x)$ نیست.
   چرا که مقدار آن بین همه $P(C | x)$ ها مشترک است.
 ]
@@ -1919,6 +1937,7 @@
   ]
 
   گروه های مختلف داده ها توزیع های مرتبط با خودشان را دارند.
+  \ \
 ]
 
 #tool.list()[
@@ -2298,7 +2317,7 @@
   )
 ]
 
-//TODO: MAYBE SHOULD MOVE -> 31:53
+//TODO: MAYBE SHOULD BE MOVED -> 31:53
 #tool.tip()[
   Maximum Likelihood Estimation به ما می گوید که اگر میانگین جمعیت را برداریم به میانگین توزیع نزدیک خواهد بود.
 ]
@@ -2431,7 +2450,10 @@
     inset: 1em,
   )
   مدل های تصویر بالا ($d_1$ تا $d_3$) در ارور $E_0$ مشترک اند که به آن Bias مدل می گویند:
-  $ "Error"(d_1) , "Error"(d_2) , "Error"(d_3) = underbrace(E_0, "Bias") + "Minimum Achievable Error" $
+  $
+    \
+    "Error"(d_1) , "Error"(d_2) , "Error"(d_3) = underbrace(E_0, "Bias") + "Minimum Achievable Error"
+  $
   در این مثال، Bias محصول خط بودن مدل ها است.
 
 ]
@@ -2461,7 +2483,7 @@
 #tool.reminder()[
   همان طور که در جلسه قبلی گفته شد، پارامتر های مدل را از روی نمونه هایی که از جمعیت بر می داریم، می سازیم.
   #tool.custom_figure(
-    image("images/ML/09_01.png", width: 80%),
+    image("images/ML/09_01.png", width: 90%),
     caption: [نمونه های $S_1$ تا $S_N$ را از جمعیت انتخاب کرده و از روی آن ها پارامتر های $P_1$ تا $P_N$ را می سازیم.],
     inset: 1em,
   )
@@ -2603,20 +2625,17 @@
   این کار را تا ۴۰ امین نمونه انجام می دهیم:
   $
     40 cases("Train": 39 #h(0.5em) arrow.long #h(0.5em) M_1 arrow hat(y)_1, "Test": 1 (x^(<1>)) arrow.curve.t)
-  $
-  $
+    \
     40 cases("Train": 39 #h(0.5em) arrow.long #h(0.5em) M_2 arrow hat(y)_2, "Test": 1 (x^(<2>)) arrow.curve.t)
-  $
-  $
+    \
     dots.v
-  $
-  $
+    \
     40 cases("Train": 39 #h(0.5em) arrow.long #h(0.5em) M_40 arrow hat(y)_40, "Test": 1 (x^(<40>)) arrow.curve.t)
   $
   #place(
     dx: -2em,
-    dy: -12.4em,
-    $ lr(\}, size: #10em) "Test Results" $,
+    dy: -10.5em,
+    $lr(\}, size: #8.5em) "Test Results"$,
   )
   در نهایت به ۴۰ عدد Test Result خواهیم رسید.
   دقت شود که در هر یک از ۴۰ مرحله این روش، مدل عوض می شود اما الگوریتم ثابت است.
@@ -2701,6 +2720,7 @@
 
   در این حالت با تغییر متغیر آن را به یک تابع خطی تبدیل می کنیم:
   $
+    \
     y &= w_0 underbrace(x_0, Z_0) + w_1 underbrace(x_1, Z_1) + w_2 underbrace(x_2, Z_2) + w_3 underbrace(x_1^2, Z_3) + w_4 underbrace(x_2^2, Z_4) + w_5 underbrace(x_1 x_2, Z_5) arrow.curve.b \
     y &= w_0 Z_0 + w_1 Z_1 + w_2 Z_2 + w_3 Z_3 + w_4 Z_4 + w_5 Z_5
   $
@@ -2743,6 +2763,7 @@
   $
   مجموعه توابع بالا را می توان به صورت زیر نوشت:
   $
+    \
     overbrace(mat(y^(<1>), y^(<2>), y^(<3>), dots, y^(<N>)), display(Y_(1 times N))) &= overbrace(mat(w_0, w_1, w_2), display(W_(1 times 3)))
     overbrace(mat(
     x_0^(<1>), x_0^(<2>), x_0^(<3>), dots, x_0^(<N>);
@@ -2772,7 +2793,7 @@
     با توجه به بخش قبل،
     ماتریس زیر که با ضرب آن در ماتریس $X$، باعث می شود که اثر $X$ خنثی شود را شبه معکوس ماتریس $X$ می گویند:
     $
-      X times overbrace(underbrace(X^T (X X^T)^(-1), "شبه معکوس"), "Pseudo-inverse") = I
+      #h(1em) X times overbrace(underbrace(X^T (X X^T)^(-1), "شبه معکوس"), "Pseudo-inverse") = I
     $
     به این دلیل می گوییم شبه معکوس، چون $X^T (X X^T)^(-1)$ یک ماتریس مربعی نیست.
   ]
@@ -2791,5 +2812,643 @@
     )
     $
     #v(2.2em)
+  ]
+]
+
+= جلسه دهم
+== روش تحلیلی حل معادلات رگرسیون خطی
+<section_10_01>
+#tool.reminder()[
+  روشی تحلیلی برای حل معادلات رگرسیون خطی:
+  $
+    overbrace(Y, "True Labels") = overbrace(W, "Parameters") underbrace(X, "Features Values")
+    \
+    W = Y underbrace(X^T (X X^T)^(-1), "شبه معکوس X")
+  $
+]
+
+== روشی دیگر برای حل معادلات رگرسیون خطی
+#tool.definition()[
+  فرض کنید معادله ای به شکل زیر داریم:
+  $
+    y^(<k>) = w_0 x_0^(<k>) + w_1 x_1^(<k>) + dots + w_n x_n^(<k>) = sum_(j=0)^n w_n x_n^(<k>)
+  $
+  آن گاه می توان تابع خطا را به شکل زیر تعریف کرد:
+  $
+    E_arrow(w) = sum_(k=1)^N (y^(<k>) - hat(y)^(<k>))^2 , arrow(w) = [w_0, w_1, dots, w_n]
+  $
+  $
+    E = sum_(k=1)^N (y^(<k>) - sum_(j=0)^n w_j x_j^(<k>))^2
+  $
+  همانطور که مشاهده می شود، تابع بالا یک تابع درجه دو است که به این معناست که همواره $E >= 0$.
+  حالت ایده آل این است که مینیمم این تابع را پیدا کنیم.
+  مینیمم تابع هم با مشتق گرفتن از آن و برابر قرار دادنش با مقدار ۰ به دست می آید.
+  در ادامه مشتق این تابع نسبت به $w_0$ را می گیریم:
+  $
+    (partial E) / (partial w_0) = sum_(k=1)^N 2 (y^(<k>) - sum_(j=0)^n w_j x_j^(<k>)) (-x_0^(<k>))
+  $
+  و آن را برابر با ۰ قرار می دهیم:
+  $
+    -2 sum_(k=1)^N (y^(<k>) - sum_(j=0)^n w_j x_j^(<k>)) x_0^(<k>) = 0
+  $
+  با ساده سازی معادله بالا، در نهایت تعدادی معادله برای $w_0$ تا $w_n$ به دست می آید.
+]
+=== خطای جمعی مجموعه ای از پارامتر های $w$
+#tool.definition()[
+  این خطا مستقل از تعداد نمونه ها است و رسیدن به مینیمم این خطا، به جای مشتق گرفتن و برابر ۰ قرار دادن، با روشی Iterative انجام می شود:
+  $
+    E_arrow(w) = 1 / (2 N) sum_(k=1)^N (y^(<k>) - sum_(j=0)^n w_j x_j^(<k>))^2
+  $
+]
+
+#tool.tip()[
+  حرکت در جهت مشتق یا حرکت در جهت گرادیان تابع، مقدار آن را بهبود می بخشد.
+]
+
+#tool.example()[
+  در تصویر زیر، اگر از نقطه $x^(<4>)$ به سمت نقطه $x^(<4>) + epsilon f^' (x^(<4>)) $ حرکت کنیم:
+  $
+    x^(<4>) arrow x^(<4>) + epsilon f^' (x^(<4>)) arrow.curve.b
+    \
+    f(x^(<4>)) <= f(x^(<4>) + epsilon underbrace(f^' (x^(<4>)), > 0))
+  $
+  و برای نقطه $x^(<2>)$ نیز:
+  $
+    x^(<2>) + epsilon underbrace(f^' (x^(<2>)), < 0) < x^(<2>)
+  $
+  #tool.custom_figure(
+    image("images/ML/10_01.jpg"),
+    caption: [اگر به مقدار کمی $x^(<4>)$ را با مشتق آن جمع کنیم، حاصل جمع، بزرگتر از مقدار $x^(<4>)$ خواهد بود و اگر به مقدار کمی $x^(<2>)$ را با مشتق آن جمع کنیم، حاصل جمع، کوچک تر از مقدار $x^(<2>)$ خواهد بود.],
+    inset: 1em,
+  )
+]
+
+#tool.tip()[
+  با توجه به مثال قبل، اگر مشتق مقداری مثبت باشد:
+
+  اگر در جهت آن حرکت کنیم، به سمت ماکزیمم تابع و اگر در خلاف جهت آن حرکت کنیم، به سمت مینیمم تابع خواهیم رفت.
+]
+
+=== الگوریتم Gradient Descent
+#tool.definition()[
+  الگوریتم گرادیان کاهشی (Gradient Descent): الگوریتمی است Iterative که بر اساس مشتق تابع خطا کار می کند و مسیر حرکت به سمت نقطه مینیمم را تعیین می کند.
+  اگر پارامتر تابع خطا، $w$ باشد، می توانیم از یک $w_0$ ای به صورت تصادفی شروع به حرکت کنیم.
+  $
+    E #h(0.5em) alpha #h(0.5em) w
+  $
+  قاعده به روز رسانی این الگوریتم به صورت زیر می باشد:
+  $
+    w^(<t+1>) = w^(<t>) - eta (partial E) / (partial w)
+  $
+
+  که در بالا $eta$ (اتا) همان سرعت یا نرخ یادگیری (Learning Rate) می باشد.
+
+  #tool.custom_figure(
+    image("images/ML/10_02.png", width: 70%),
+    caption: [ابتدا $w$ ای را به صورت تصادفی انتخاب کرده، سپس مشتق آن را حساب می کنیم و بر اساس مثبت یا منفی بودن آن حرکت می کنیم.],
+    inset: 1em,
+  )
+
+  $
+    (partial E) / (partial w_j) = - 1 / N sum_(k=1)^N x_j^(<k>) (
+      y^(<k>) - overbrace(sum_(j=0)^N w_j x_j^(<k>), display(hat(y)^(<k>)))
+    )
+  $
+  $
+    (partial E) / (partial w_j) = - 1 / N sum_(k=1)^N x_j^(<k>) (y^(<k>) - hat(y)^(<k>))
+  $
+  $y^(<k>)$ مقدار واقعی مربوط به یک نمونه و $hat(y)^(<k>)$ مقداری است که برای آن حساب کردیم.
+]
+
+==== پیاده سازی الگوریتم Gradient Descent
+#tool.definition()[
+  پیاده سازی این الگوریتم به صورت زیر است:
+  #tool.custom_figure(
+    caption: "پیاده سازی الگوریتم Gradient Descent",
+    kind: raw,
+    inset: 1em,
+  )[
+    ```
+    // Gradient Descent Algorithm
+    function GD(Input: X, Y; Output: W) {
+      m, n = size(X) // X_(m x n)
+      iteration = 0, max_iteration = 1000
+      [w_0, w_1, w_2, ..., w_n] = small random values
+
+      Repeat {
+        dw = [0, 0, ..., 0]_(1 x n), eta = 0.0001
+        for k = 1 to m {
+          // Calcualting x and w vectors' dot products
+          // yhat is a scalar
+          yhat = x^(<k>) . w
+          dw = dw + x^(<k>) . (y^(<k>) - yhat)
+        }
+        dw = dw / m
+        w = w + eta * dw
+        iteration = iteration + 1
+        // tau is the threshold
+        // ||dw|| is the norm of dw
+      } Until E(w) <= tau || iteration >= max_teration || ||dw|| >= epsilon
+      return w
+    }
+    ```
+  ]
+
+  #tool.custom_figure(
+    caption: [ابعاد ماتریس ورودی $X$ که با $m$ و $n$ نشان داده می شوند.],
+    kind: table,
+    inset: 1em,
+  )[
+    \
+    #place(dx: 12.85em, dy: -1.7em, $n$)
+    #v(0.5em)
+    #place(dx: 12.7em, dy: -4.25em, $#rotate(90deg, $lr(\{, size: #9em)$)$)
+    #table(
+      columns: 4,
+      inset: 1em,
+      stroke: black,
+      align: center + horizon,
+      $x_0$, $x_1$, $x_2$, $y$,
+      "", "", "", "",
+      "", "", "", "",
+      "", "", "", "",
+    )
+    #place(dx: 6.5em, dy: -7.5em, $m lr(\{, size: #8em)$)
+  ]
+]
+
+==== خوبی ها و بدی های Gradient Descent
+#tool.tip()[
+  الگوریتم Gradient Descent برای رگرسیون خطی، بهترین نقطه ممکن را پیدا می کند.
+]
+
+#tool.list()[
+  ایراد های الگوریتم Gradient Descent:
+  + اندازه گام های آن متناسب با مشتق تعیین می شود.
+  + الگوریتمی حریصانه است و لزوماً Global Minimum را پیدا نمی کند.
+  + تابع خطای مدل که الگوریتم بر روی این تابع اجرا می شود، باید پیوسته و مشتق پذیر باشد.
+]
+
+#tool.example()[
+  الگوریتم Gradient Descent را بر روی تابع خطایی به دو حالت شکل زیر می توان اعمال کرد:
+  #tool.custom_figure(
+    image("images/ML/10_03.png", width: 70%),
+    caption: "الگوریتم Gradient Descent لزوماً Global Minimum را پیدا نمی کند چرا که وابسته به مکانی است که حرکت از آن شروع می شود.",
+    inset: 1em,
+  )
+]
+
+#tool.tip()[
+  مشکل Local Minimum الگوریتم Gradient Descent را می توان با شروع دوباره آن، تا حدی حل کرد.
+  چرا که هر بار از نقطه ای تصادفی شروع به حرکت می کند و در نهایت به بهترین Minimum ای که با N بار اجرای الگوریتم می توان به آن رسید، می رسد که در مواردی *ممکن است* همان Global Minimum باشد.
+]
+
+#tool.list()[
+  روش های کم اثر کردن مسأله Local Minimum:
+  + تست چندین نقطه شروع و انتخاب بهترین جواب Minimum بین آن ها.
+  + الگوریتم مورد نظر را به رگرسیون خطی تبدیل کرده و Global Minimum را پیدا می کنیم.
+]
+
+#tool.comparision()[
+  در مقایسه الگوریتم Gradient Descent و روشی که در @section_10_01[بخش] یادآوری شد، روش @section_10_01[بخش] روشی Deterministic است.
+  چرا که زمان ضرب و جمع های این الگوریتم توسط CPU را تحت شرایطی می توان حساب کرد.
+  اما روش Gradient Descent روشی Stochastic و Iterative می باشد و همگرایی آن وابسته به انتخاب پارامتر ها و مقدار تصادفی اولیه است.
+  بنابراین الگوریتم Gradient Descent، زمان بر تر و پر هزینه تر از الگوریتم @section_10_01[بخش] است.
+]
+
+#tool.tip()[
+  با وجود زمان بر تر و پر هزینه تر بودن الگوریتم Gradient Descent، به دلیل این که برای همه مدل ها و تابع خطاهایی که پیوسته و مشتق پذیر اند، قابل استفاده است، از آن استفاده می کنیم.
+  البته حتی در صورتی که از تابع خطا به صورت مستقیم نتوان مشتق گرفت، مشتق عددی آن را حساب می کنیم.
+  اما الگوریتم @section_10_01[بخش] برای رگرسیون خطی استفاده می شود.
+]
+
+#tool.tip()[
+  به طور خلاصه الگوریتم Gradient Descent، الگوریتمی عمومی تر و قابل تعمیم تر است و برای هر نوع مدلی قابل استفاده است.
+]
+
+== Logistic Regression Model
+#tool.reminder()[
+  Linear Regression به صورت زیر تعریف می شد:
+  $
+    y^(<k>) = sum_(j=0)^n w_j x_j^(<k>)
+  $
+]
+
+#tool.definition()[
+  Logistic Regression به صورت زیر تعریف می شود:
+  $
+    y^(<k>) = 1 / (1 + e^display(-sum_(j=0)^n w_j x_j^(<k>)))
+  $ <equation_10_14>
+  در این مدل:
+  $
+    y^(<k>) in (0, 1)
+  $
+  یعنی $y^(<k>)$ هیچ گاه خود ۱ یا خود ۰ نمی شود.
+
+  اگر:
+  $
+    sum_(j=0)^n w_j x_j^(<k>)
+  $
+  را معادل $v$ در نظر بگیریم، به معادله و نمودار زیر می رسیم:
+  $
+    y^(<k>) = 1 / (1 + e^(-v))
+  $
+  #tool.custom_figure(
+    image("images/ML/10_04.png"),
+    caption: [اگر $v$ به بی نهایت میل کند، $y$ به یک میل می کند؛ و اگر $v$ به منفی بی نهایت میل کند، $y$ به صفر میل می کند.],
+    inset: 1em,
+  )
+  //TODO:
+  با مشتق گرفتن از @equation_10_14، به معادله زیر می رسیم:
+  $
+    \
+    (partial y) / (partial w_j) &= (0 times dots - 1 times (x_j^(<k>) e^display(-sum_(j=0)^n w_j x_j^(<k>)))) / (
+      1 + e^display(-sum_(j=0)^n w_j x_j^(<k>))
+    )^2
+    \
+    &= -x_j^(<k>) #h(1em) times #h(1em) 1 / (1 + e^display(-sum_(j=0)^n w_j x_j^(<k>))) #h(1em) times #h(1em) (e^display(-sum_(j=0)^n w_j x_j^(<k>))) / (1 + e^display(-sum_(j=0)^n w_j x_j^(<k>)))
+  $
+  #place(dx: -12em, dy: -5.75em, rect(width: 9em, height: 5em, stroke: (dash: "densely-dash-dotted"), radius: 0.5em))
+  #place(dx: -0.9em, dy: -7.8em, rect(width: 9em, height: 7em, stroke: (dash: "densely-dash-dotted"), radius: 0.5em))
+  #v(2em)
+  #place(dx: -15em, dy: -2em, $y^(<k>)$)
+  #place(dx: -3em, dy: -2em, $1 - y^(<k>)$)
+  $
+    (partial y) / (partial w_j) = -x_j y (1- y)
+  $
+  با نگاه به فرمول بالا می توان فهمید که مشتق تابع $y$، با خود تابع $y$ بیان می شود.
+]
+
+#tool.definition()[
+  تابع خطای Logistic Regression به صورت زیر تعریف می شود (RMS Error for Logistic Regression):
+  $
+    E = 1 / (2 N) sum_(k=1)^N (y^(<k>) - hat(y)^(<k>))^2
+  $
+  $
+    w arrow.l w - eta (partial E) / (partial w)
+  $
+  <equation_10_22>
+  $
+    (partial E) / (partial w) &= 1 / N sum_(k=1)^N (y^(<k>) - hat(y)^(<k>)) (partial (
+      y^(<k>) - hat(y)^(<k>)
+    )) / (partial w)
+    \
+    &= -1 / N sum_(k=1)^N (y^(<k>) - hat(y)^(<k>)) (partial hat(y)^(<k>)) / (partial w)
+    \
+    &= -1 / N sum_(k=1)^N (y^(<k>) - hat(y)^(<k>)) x_j hat(y)^(<k>)(1 - hat(y)^(<k>))
+  $
+  <equation_10_23>
+  $
+    0 < hat(y)^(<k>)(1 - hat(y)^(<k>)) < 0.25
+  $
+  با توجه به @equation_10_23، @equation_10_22 به شکل زیر در می آید:
+  $
+    w arrow.l w + eta / N sum_(k=1)^N (y^(<k>) - hat(y)^(<k>)) x_j^(<k>) (hat(y)^(<k>))(1 - hat(y)^(<k>))
+  $
+  از آن جایی که $(hat(y)^(<k>))(1 - hat(y)^(<k>))> 0$ است، می توان آن را به عنوان یک ضریب مثبت در نظر گرفت.
+  اگر این ضریب را برداریم گویی که $eta$ را بزرگ تر کرده ایم.
+  به همین دلیل می توان $w$ ای به نام $"Polished" w$ به شکل زیر تعریف کرد:
+  $
+    "Polished" w: w arrow.l w + eta 1 / N sum_(k=1)^N x_j^(<k>) (y^(<k>) - hat(y)^(<k>))
+  $
+  با نگاه به فرمول بالا می توان فهمید که این فرمول، همان قاعده به روز رسانی $w$ در رگرسیون خطی می باشد.
+  تنها فرق آن این است که $hat(y)$ در رگرسیون خطی، از تابع خطی به دست می آید اما در رگرسیون لاجستیک از تابع لاجستیک به دست می آید.
+]
+
+= جلسه یازدهم
+== ساده یا پیچیده؟ مسأله این است! #emoji.face.think
+#tool.tip()[
+  گاهی نیاز است که برای حل بهینه مسأله، مدل خود را کمی پیچیده تر کنیم.
+  مانند تصویر زیر:
+  #tool.custom_figure(
+    image("images/ML/11_01.png", width: 58.5%),
+    caption: "حل بهینه این مسأله کلاس بندی، نیازمند معادله ای درجه دو است.",
+    inset: 1em,
+  )
+  اما گاهی اوقات افزایش پیچیدگی نتیجه عکس می دهد:
+  #tool.custom_figure(
+    image("images/ML/11_02.png", width: 58.5%),
+    caption: [در این جا مرز بندی دقیق باعث می شود تا نمونه تست به اشتباه در کلاس $C_2$ طبقه بندی شود. در حالی که اگر از مدل ساده تر خط استفاده می کردیم، با وجود خطاهای احتمالی، نمونه ما درست طبقه بندی می شد.],
+    inset: 1em,
+  )
+]
+
+#tool.question()[
+  با توجه به بخش قبل، از کجا بفهمیم چه مدلی را باید انتخاب کنیم؟
+]
+
+#tool.true_answer()[
+  + روش اول:
+    قاعده ساده ای وجود دارد که بر اساس آن از ساده ترین مدل شروع می کنیم به امتحان کردن مدل.
+    پیچیدگی مدل را تا زمانی افزایش می دهیم که به میزان خطای قابل قبول مد نظرمان برسیم.
+  + روش دوم:
+    از تکنیک Regularization استفاده می کنیم.
+]
+
+== Regularization
+#tool.example()[
+  مجموعه داده هایی با ویژگی ها و برچسب زیر داریم:
+  $
+    "Features": <x_0, x_1, x_2, dots, x_n> , "Label": y
+  $
+  این داده ها را می توان با مدل های مختلفی تحلیل کرد.
+
+  معادله مدل خطی:
+  $
+    hat(y)^(<k>) = h(arrow(x)^(<k>)) = sum_(j=0)^n w_j x_j^(<k>)
+  $
+  معادله مدل غیر خطی:
+  $
+    hat(y) = h_2(arrow(x)) = sum_(j=0)^n w_j x_j + sum_(j=0)^n u_j x_j^2
+  $
+  برای مثال اگر داده ما ۳ ویژگی داشته باشد، معادله بالا به صورت زیر در می آید:
+  $
+    hat(y) = h_2(x) = w_0 x_0 + w_1 x_1 + w_2 x_2 + u_0 x_0^2 + u_1 x_1^2 + u_2 x_2^2
+  $
+  $
+    E = underbrace(1 / (2 N) sum_(k=1)^N (y^(<k>) - hat(y)^(<k>))^2, display(E_1)) + underbrace(lambda sum_(j=0)^n u_j^2, display(E_2)) #h(1em) , #h(1em) lambda >= 100
+    \
+    (partial E) / (partial w) = (partial E_1) / (partial w) + (partial E_2) / (partial u)
+  $
+  در بالا، $lambda$ توسط ML Engineer تعیین می شود.
+]
+
+#tool.definition()[
+  Regularization (تنظیم):
+  به تنطیم کردن تأثیر جملات تابع خطای مدل که در اغلب مدل های یادگیری کاربرد دارد، Regularization می گوییم که ضریبی به نام $lambda$ دارد.
+  $lambda$ عدد بزرگی است.
+  مثلاً: $lambda >= 100$ به این معنا است که جمله با ضریب $lambda$، ۱۰۰ برابر تأثیر بیشتری در تابع خطا دارد نسبت به جمله ای که این ضریب را ندارد.
+]
+
+#tool.tip()[
+  هر جایی که Gradient Descent وجود داشته باشد می توان از Regularization استفاده کرد.
+]
+
+== Hyper Parameters
+#tool.list()[
+  Hyper Parameter های زیر برای Train کردن، توسط ML Engineer تعیین می شوند:
+  + Max-iteration
+  + Learning Rate ($eta, alpha$)
+  + Regularization Coefficient ($lambda_i$)
+]
+
+== Initial Momentum
+#tool.reminder()[
+  تابع به روز رسانی ای که در جلسه قبل تعریف کردیم، به شکل زیر بود:
+  $
+    w = w + overbrace(alpha (1 / N) sum_(k=1)^N (y^(<k>) - hat(y)^(<k>)) x^(<k>), display(Delta w))
+    \
+    w = w + Delta w
+  $
+]
+
+#tool.definition()[
+  فرض کنید مدلی به صورت زیر داریم:
+  $
+    y = w x
+  $
+  مقدار اولیه $w$ به صورت تصادفی تعیین می شود.
+  فرض کنید مقدار اولیه آن ۰ باشد:
+  $
+    w = 0
+  $
+  در مرحله های بعدی با توجه به $Delta w$ ای که خواهیم داشت، $w$ جدید را تعیین می کنیم:
+  $
+    Delta w = 1 arrow w^("New") = 1
+    \
+    Delta w = 2 arrow w^("New") = 3
+    \
+    Delta w = 5 arrow w^("New") = 8
+    \
+    Delta w = -1 arrow w^("New") = 7
+  $
+  همان طور که در بالا مشاهده می شود، روند کلی $Delta w$ صعودی است.
+  در گام آخر، شاید Data ما دچار Noise شده باشد یا Selection خوبی نداشته ایم که باعث شده $Delta w$ مقداری منفی و کاهشی به ما بدهد که باعث بر هم زدن روند کلی می شود.
+
+  راه حل این است که از روش Initial Momentum استفاده کنیم که در آن $Delta w$ به صورت زیر محاسبه می شود:
+  $
+    Delta w_"Average"^(<t>) = (Delta w_"Average"^(<t - 1>) + Delta w^(<t>)) / 2
+  $
+]
+
+#tool.example()[
+  جدول زیر را در نظر بگیرید:
+  #tool.custom_figure(
+    caption: [همان گونه که مشاهده می شود، $w$ ای که با $Delta w_"Average"$ به دست می آید، تأثیر کمتری از تغییرات شدید می گیرد و پایدار تر است],
+    kind: table,
+    inset: 1em,
+  )[
+    #table(
+      columns: 5,
+      inset: 1em,
+      stroke: black,
+      align: center + horizon,
+      table.cell(fill: luma(230), $t$), table.cell(fill: luma(230), $Delta w$), table.cell(
+        fill: luma(230),
+        $Delta w_"Average"$,
+      ), table.cell(fill: luma(230), $w$), table.cell(fill: luma(230), $w_"Old(بدون استفاده از میانگین گیری)"$),
+      $0$, $0$, $0$, $0$, $0$,
+      $1$, $1$, $display(1 / 2)$, $display(1 / 2)$, $1$,
+      $2$, $2$, $1.25$, $1.75$, $3$,
+      $3$, $5$, $3.12$, $4.9$, $8$,
+      $4$, $-1$, $1.06$, $5.96$, $7$,
+      table.cell(fill: luma(230), $t$), table.cell(fill: luma(230), $Delta w$), table.cell(
+        fill: luma(230),
+        $Delta w_"Average"$,
+      ), table.cell(fill: luma(230), $w$), table.cell(fill: luma(230), $w_"Old(بدون استفاده از میانگین گیری)"$),
+      $0$, $0$, $0$, $0$, $0$,
+      $1$, $1$, $display(1 / 2)$, $display(1 / 2)$, $1$,
+      $2$, $-1$, $display((-1) / 4)$, $display(1 / 4)$, $0$,
+      $3$, $1$, $display(3 / 8)$, $display(5 / 8)$, $1$,
+      $4$, $-1$, $display((-5) / 16)$, $display(5 / 16)$, $0$,
+    )
+  ]
+  با توجه به جدول بالا، در می یابیم که زمانی که از $Delta w_"Average"$ استفاده می کنیم، نمودار هموار تر (Smooth تر) می شود.
+  #tool.custom_figure(
+    image("images/ML/11_03.png", width: 53%),
+    caption: [استفاده از $Delta w_"Average"$، حساسیت به تغییرات شدید را کمتر و نمودار را هموار تر می کند.],
+    inset: 1em,
+  )
+]
+
+== Non-parameteric Models
+#tool.definition()[
+  در این مدل ها، برای مدل سازی $hat(y)$ از یک مدل دارای پارامتر های مشخص (مانند: Bayesian، خط، Logistic Regression و مواردی همچون این ها)، استفاده *نمی شود*.
+]
+=== k-Nearest Neighbour (k-NN)
+#tool.definition()[
+  وقتی می خواهیم یک نمونه را کلاس بندی کنیم و نمی دانیم که به کدام کلاس تعلق دارد.
+  می توانیم تعداد فردی از نزدیک ترین نمونه ها به آن را انتخاب کرده و آن را در کلاسی که اکثریت شان در آن قرار دارند، قرار دهیم.
+  این روش، k-NN نام دارد.
+  #tool.custom_figure(
+    image("images/ML/11_04.png", width: 60%),
+    caption: "نمونه در کلاس مثبت طبقه بندی می شود. چرا که در نزدیکی آن ۳ نمونه با کلاس مثبت، در مقایسه با ۲ نمونه با کلاس منفی، وجود دارد.",
+    inset: 1em,
+  )
+]
+
+#tool.double_section()[
+  #tool.tip()[
+    خوبی روش k-NN آن است که ساده است و نتیجه خوبی می دهد.
+    بدی روش k-NN سنگین بودن آن است.
+    چرا که برای طبقه بندی نمونه تست، باید تمامی نمونه های آموزشی را در حافظه داشته باشیم.
+    بر خلاف روش های پارامتری که بعد از آموزش، تنها پارامتر های آن ها را نگه می داشتیم.
+  ]
+][
+  #tool.example()[
+    برای مدل های زیر، نیاز به نگهداری موارد زیر است:
+    #set text(dir: ltr)
+    #set math.equation(numbering: none)
+    + Bayes Gaussian:
+      $ | mu_1, mu_2, sigma_1, sigma_2 | = 4 $
+    + k-NN:
+      $ &| x^(<1>), x^(<2>), x^(<3>), dots, x^(<N>) | \ &= "Sample Size" $
+    #v(0.2em)
+  ]
+]
+
+#tool.tip()[
+  به روش k-NN، روش Lazy Learning نیز می گویند.
+  چرا که در این روش، گام Training وجود ندارد و تمامی کار هایش را زمانی که نمونه تست را باید بررسی کند، انجام می دهد.
+]
+
+=== r-NN
+#tool.definition()[
+  روشی شبیه به k-NN به نام r-NN وجود دارد که در آن دایره ای به شعاع r رسم می شود و هر آن چه درون این دایره بیافتد، برای کلاس بندی بررسی می شود.
+]
+
+#tool.tip()[
+  مشکلی که در روش r-NN وجود دارد این است که تعداد نمونه هایی که درون دایره می افتند دیگر دست ما نیست و ممکن است تعداد آن ها زوج شود و اگر مثلاً دو کلاس داشته باشیم که نصف نمونه های آموزشی درون دایره به یک کلاس و نصف دیگر به کلاس دیگر تعلق داشته باشد، نمی توانیم تشخیص دهیم که نمونه تست به کدام کلاس تعلق دارد.
+]
+
+=== Case-Based Reasoning (1NN)
+#tool.definition()[
+  الگوریتمی منشعب از k-NN است که معادل 1NN می باشد.
+  به این معنا که نزدیک ترین همسایه خود را پیدا کرده و Label آن را به عنوان پاسخ بر می گرداند.
+]
+
+== کم کردن هزینه k-NN
+=== الگوریتم Quad Tree Decomposition
+#tool.definition()[
+  برای کم کردن هزینه روش k-NN (در حالت دو بعدی)، کل داده های آموزشی را به شکل یک ماتریس در می آوریم (@image_11_02).
+  سپس این ماتریس را به دو بخش افقی تقسیم می کنیم. بخش پایین کاملاً مثبت است و تنها به کلاس مثبت تعلق دارد.
+  به همین دلیل به جای آن که کل بخش پایین نگه داشته شود، کافی است این نکته که هر آن چه که در نیمه پایینی ماتریس است، مثبت می باشد، را ذخیره کنیم.
+  به همین ترتیب نیمه بالایی ماتریس را نیز به دو بخش چپ و راست تقسیم کرده و این تقسیم های عمودی و افقی را در هر بخش آن قدر ادامه می دهیم تا ماتریس به بخش هایی تقسیم شود که تمامی نمونه های درون آن بخش ها متعلق به یک کلاس باشد.
+  به هر یک از این بخش ها، Hyper Cube می گویند:
+  $
+    "Hyper Cubes" = {R_1, R_2, R_3, R_4, R_5, R_6}
+  $
+  در نهایت کافی است که تنها مختصات این ۶ ناحیه و این که هر یک به چه کلاسی تعلق دارند را در حافظه نگه داریم.
+  #tool.custom_figure(
+    caption: "ماتریس داده های آموزشی که با روش QTD به ۶ ناحیه تقسیم شده اند. در نهایت تنها اطلاعات مربوط به این ۶ ناحیه نگه داشته می شوند.",
+    inset: 1em,
+    refrence: <image_11_02>,
+  )[
+    #set circle(radius: 0.95em)
+    #place(
+      dx: 8em,
+      dy: 0.5em,
+      [
+        #place(dy: -0.5em, $R_1$)
+        #rotate(90deg, $lr(\{, size: #3.5em)$)
+      ],
+    )
+    #place(
+      dx: 11.95em,
+      dy: 0.5em,
+      [
+        #place(dy: -0.5em, $R_2$)
+        #rotate(90deg, $lr(\{, size: #3.5em)$)
+      ],
+    )
+    #place(
+      dx: 15.9em,
+      dy: 0.5em,
+      [
+        #place(dy: -0.5em, $R_3$)
+        #rotate(90deg, $lr(\{, size: #3.5em)$)
+      ],
+    )
+    #place(
+      dx: 19.8em,
+      dy: 0.5em,
+      [
+        #place(dy: -0.5em, $R_4$)
+        #rotate(90deg, $lr(\{, size: #3.5em)$)
+      ],
+    )
+    #v(2.5em)
+    #place(
+      dx: 5.25em,
+      dy: 4.7em,
+      [
+        #place(dx: -1.5em, dy: 0.75em, $R_5$)
+        $lr(\{, size: #3.5em)$
+      ],
+    )
+    #table(
+      columns: 4,
+      inset: 1em,
+      stroke: black,
+      align: center + horizon,
+      table.cell(fill: red_color.lighten(60%), circle($-$)), table.cell(
+        fill: green_color.lighten(60%),
+        circle($+$),
+      ), table.cell(fill: blue_color.lighten(60%), circle($+$)), table.cell(
+        fill: orange_color.lighten(60%),
+        circle($-$),
+      ),
+      table.cell(fill: brown_color.lighten(60%), circle($-$)), table.cell(
+        fill: brown_color.lighten(60%),
+        circle($-$),
+      ), table.cell(fill: blue_color.lighten(60%), circle($+$)), table.cell(
+        fill: orange_color.lighten(60%),
+        circle($-$),
+      ),
+      table.cell(fill: purple_color.lighten(60%), circle($+$)), table.cell(
+        fill: purple_color.lighten(60%),
+        circle($+$),
+      ), table.cell(fill: purple_color.lighten(60%), circle($+$)), table.cell(
+        fill: purple_color.lighten(60%),
+        circle($+$),
+      ),
+      table.cell(fill: purple_color.lighten(60%), circle($+$)), table.cell(
+        fill: purple_color.lighten(60%),
+        circle($+$),
+      ), table.cell(fill: purple_color.lighten(60%), circle($+$)), table.cell(
+        fill: purple_color.lighten(60%),
+        circle($+$),
+      ),
+    )
+    #v(2.5em)
+    #place(
+      dx: 13.9em,
+      dy: -8.5em,
+      [
+        #place(dy: 7.9em, $R_6$)
+        #rotate(-90deg, $lr(\{, size: #15em)$)
+      ],
+    )
+  ]
+]
+
+#tool.tip()[
+  از الگوریتم k-NN می توان برای بررسی این که آیا مسأله مورد نظر ما به جواب می رسد یا خیر، استفاده کرد.
+  به این صورت که ابتدا آن را اجرا می کنیم.
+  اگر جواب خوبی داد، یعنی با مدل های پارامتری نیز ممکن است به این حد از دقت برسیم.
+]
+
+#tool.tip()[
+  Hyper Parameter الگوریتم k-NN، همان k و Hyper Parameter الگوریتم r-NN، همان r است.
+]
+
+#align(center + horizon)[
+  #block(
+    stroke: (thickness: 0.2em, paint: black, dash: "densely-dashed"),
+    inset: (top: 0.5em, rest: 1em),
+    radius: 1em,
+    clip: true,
+  )[
+    #image("assets/images/work_in_progress.png", width: 10em, height: 10em, fit: "contain")
   ]
 ]
