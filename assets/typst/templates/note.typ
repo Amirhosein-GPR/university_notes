@@ -555,7 +555,9 @@
   }
 
   show ref: it => {
-    text(stylistic-set: 1, fill: blue_color)[#it]
+    box[
+      #text(stylistic-set: 1, fill: blue_color)[#it]
+    ]
   }
 
   // show ref: it => {
@@ -740,7 +742,7 @@
 
         روحش شاد.
 
-        #image("../../images/saber-rastikerdar-poster.jpg", width: 50%)
+        #image("../../images/saber-rastikerdar-poster.jpg", width: 35%)
 
 
         #text(fill: blue_color, size: 0.85em, weight: "bold")[#link(
