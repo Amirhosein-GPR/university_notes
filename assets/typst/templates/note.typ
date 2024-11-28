@@ -111,14 +111,16 @@
                 #total_page_number / #lesson_page
               ]
               // CONSTANT UPDATE IF NECESSARY (if statements):
+            } else if lesson_page == -4 {
+              [ث / آ]
             } else if lesson_page == -3 {
-              [ت / آ]
+              [ث / ب]
             } else if lesson_page == -2 {
-              [ت / ب]
+              [ث / پ]
             } else if lesson_page == -1 {
-              [ت / پ]
+              [ث / ت]
             } else if lesson_page == 0 {
-              [ت / ت]
+              [ث / ث]
             }
           },
           align(center)[
@@ -131,7 +133,7 @@
           align(left)[
             #if h1.len() > 0 {
               // CONSTANT UPDATE IF NECESSARY (current_page - CONSTANT):
-              [#int((current_page - 5) / (total_page_number) * 100)%]
+              [#int((current_page - 6) / (total_page_number) * 100)%]
             } else {
               [
                 #{
