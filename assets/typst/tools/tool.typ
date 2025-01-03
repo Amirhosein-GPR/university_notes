@@ -1,4 +1,4 @@
-#let black_and_white = false
+#let black_and_white = true
 
 #let red_color = rgb(200, 0, 0)
 #let orange_color = rgb(220, 100, 0)
@@ -93,13 +93,12 @@
     )[
       #if continuation == true {
         grid(
-          columns: (1fr),
+          columns: 1fr,
           align: center,
           inset: (top: 0.3em),
           place(center, dy: -0.4em)[
             #svg("../../icons/circle-play.svg", rgb: icon_color.to-hex(), width: 1em, height: 1em)
           ],
-
         )
         block(above: 1em, below: 0.7em)[
           #line(length: 100%, stroke: (paint: icon_color, dash: "densely-dashed"))
@@ -113,12 +112,11 @@
           #line(length: 100%, stroke: (paint: icon_color, dash: "densely-dashed"))
         ]
         grid(
-          columns: (1fr),
+          columns: 1fr,
           align: center,
           place(center, dy: -0.6em)[
             #svg("../../icons/circle-pause.svg", rgb: icon_color.to-hex(), width: 1em, height: 1em)
           ],
-
         )
       }
     ]
@@ -150,7 +148,6 @@
     } else {
       text(stylistic-set: 1)[#context headings_before_here_count.#context section_counter.get().first()]
     }
-
   }
 }
 
@@ -375,6 +372,118 @@
   )
 }
 
+#let special(content, pause: false, continuation: false, enable_counter: false) = {
+  let fill_color
+  let stroke_color
+  let icon_color
+  let icon_paths = ("../../icons/receipt.svg",)
+  let text_color
+  let title = [#emoji.face.relief نصیحت های استاد#emoji.face.relief]
+  if black_and_white {
+    stroke_color = black
+    fill_color = rgb(0, 0, 0, 0)
+    icon_color = black
+    text_color = black
+  } else {
+    stroke_color = gradient.linear(..color.map.rainbow.map(a => a.lighten(0%)), angle: 0deg)
+    fill_color = gradient.linear(..color.map.rainbow.map(a => a.lighten(97%)), angle: 0deg)
+
+    // icon_color = gradient.linear(..color.map.turbo)
+    icon_color = rgb(0, 150, 150)
+    text_color = gradient.linear(..color.map.rainbow.map(a => a.darken(50%)))
+  }
+
+  set text(fill: text_color, weight: "bold")
+
+  block(below: 1em)[
+    #block(below: 0.5em, width: 100%)[
+      #let icon_list = ()
+      #for icon_path in icon_paths {
+        icon_list.push(svg(icon_path, rgb: icon_color.to-hex(), width: 0.8em, height: 0.8em))
+      }
+
+      #let counter = 0
+      #let icon_list_last_index = icon_list.len() - 1
+      #grid(
+        columns: (auto, 1fr, auto),
+        align: center,
+        gutter: 0.5em,
+        {
+          while counter < icon_list_last_index {
+            box(stroke: stroke_color, inset: 0.5em, radius: 0.2em, fill: fill_color)[
+              #icon_list.at(counter)
+            ]
+            h(0.5em)
+
+            counter += 1
+          }
+          box(stroke: stroke_color, inset: 0.56em, radius: 0.2em, fill: fill_color)[
+            #icon_list.at(counter)
+          ]
+        },
+        block(stroke: stroke_color, inset: 0.5em, radius: 0.2em, width: 100%, fill: fill_color)[
+          #text(fill: icon_color, baseline: -0.2em)[
+            #title
+          ]
+        ],
+        {
+          while counter > 0 {
+            box(stroke: stroke_color, inset: 0.5em, radius: 0.2em, fill: fill_color)[
+              #icon_list.at(counter)
+            ]
+            h(0.5em)
+
+            counter -= 1
+          }
+          box(stroke: stroke_color, inset: 0.56em, radius: 0.2em, fill: fill_color)[
+            #icon_list.at(counter)
+          ]
+        },
+      )
+    ]
+
+    #block(
+      stroke: stroke_color,
+      inset: (bottom: 0.75em, rest: 0.5em),
+      radius: 0.2em,
+      width: 100%,
+      below: 1em,
+      fill: fill_color,
+    )[
+      #if continuation == true {
+        grid(
+          columns: 1fr,
+          align: center,
+          inset: (top: 0.3em),
+          place(center, dy: -0.4em)[
+            #svg("../../icons/circle-play.svg", rgb: icon_color.to-hex(), width: 1em, height: 1em)
+          ],
+        )
+        block(above: 1em, below: 0.7em)[
+          #line(length: 100%, stroke: (paint: icon_color, dash: "densely-dashed"))
+        ]
+      }
+
+      // #set text(fill: white)
+
+      #content
+
+      #if pause == true {
+        block(below: 1em, above: 0.7em)[
+          #line(length: 100%, stroke: (paint: icon_color, dash: "densely-dashed"))
+        ]
+        grid(
+          columns: 1fr,
+          align: center,
+          place(center, dy: -0.6em)[
+            #svg("../../icons/circle-pause.svg", rgb: icon_color.to-hex(), width: 1em, height: 1em)
+          ],
+        )
+      }
+    ]
+  ]
+}
+
 #let custom_figure(content, caption: str, refrence: none, inset: 0em, kind: image) = {
   let supplement
   if kind == image {
@@ -437,7 +546,6 @@
       #figure(content, caption: caption, supplement: supplement) #refrence
     ]
   }
-
 }
 
 #let title(content, color: blue_color, size: 1.4em) = {
@@ -571,6 +679,12 @@
     #reminder(enable_counter: false)[
       يادآوری ها در این بخش قرار می گیرند.
       #v(1.6em)
+    ]
+  ]
+
+  special()[
+    #align(center)[
+      بشنو زِ استاد نصیحتی چند!#emoji.face.beam
     ]
   ]
 

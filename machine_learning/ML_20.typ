@@ -57,9 +57,20 @@
   بابت آن Action یک Reward ای به دست می آوریم و به State جدیدی وارد می شویم و در نهایت بیشترین ارزش Action ها را به دست می آوریم.
 ]
 
-=== #text(fill: red_color)[S]#text(fill: orange_color)[A]#text(fill: green_color)[R]#text(fill: blue_color)[S]#text(
-  fill: purple_color,
-)[A]
+#let sarsa = [
+  #text(fill: red_color)[S]#text(fill: orange_color)[A]#text(fill: green_color)[R]#text(fill: blue_color)[S]#text(
+    fill: purple_color,
+  )[A]
+]
+
+#if black_and_white {
+  sarsa = [SARSA]
+} else {
+  sarsa = [#text(fill: red_color)[S]#text(fill: orange_color)[A]#text(fill: green_color)[R]#text(
+      fill: blue_color,
+    )[S]#text(fill: purple_color)[A]]
+}
+=== #sarsa
 #tool.definition()[
   @equation_20_04 را می توان بهتر و واقع گرایانه تر کرد:
   $

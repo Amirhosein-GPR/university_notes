@@ -55,21 +55,16 @@
             ],
             align(center)[
               #let next_heading
-              #let previous_heading = query(
-                selector(heading.where(level: 2)).before(here()),
-              )
+              #let previous_heading = query(selector(heading.where(level: 2)).before(here()))
 
               #if previous_heading.len() > 0 {
                 previous_heading.last().body
               } else {
-                next_heading = query(
-                  selector(heading.where(level: 2)).after(here()),
-                )
-                if next_heading.len() > 0 and counter(page).get().first() == next_heading
-                  .first()
-                  .location()
-                  .position()
-                  .page {
+                next_heading = query(selector(heading.where(level: 2)).after(here()))
+                if (
+                  next_heading.len() > 0
+                    and counter(page).get().first() == next_heading.first().location().position().page
+                ) {
                   next_heading.first().body
                 }
               }
@@ -88,9 +83,7 @@
       set text(fill: black)
 
       let current_page = counter(page).get().first()
-      let h1 = query(
-        selector(heading.where(level: 1)).before(here()),
-      )
+      let h1 = query(selector(heading.where(level: 1)).before(here()))
 
       if current_page > 1 {
         set block(below: 1em)
@@ -150,15 +143,17 @@
     margin: (x: 0.75cm, top: 1.65cm, bottom: 1.25cm),
   )
 
-  set heading(numbering: (..nums) => {
-    nums
-      .pos()
-      .map(num => {
+  set heading(
+    numbering: (..nums) => {
+      nums
+        .pos()
+        .map(num => {
           box[#num]
         })
-      .rev()
-      .join(".")
-  })
+        .rev()
+        .join(".")
+    },
+  )
   show heading: arg => {
     set par(justify: false)
     arg
@@ -619,10 +614,10 @@
         نویسنده: #authors_name
       ]
 
-      #v(1em)
+      #v(5em)
 
       #if authors_name != none {
-        block(width: 80%)[
+        block(width: 60%)[
           #set block(below: 0pt)
           #grid(
             columns: (1fr, 1fr),
@@ -637,99 +632,6 @@
           #line(length: 100%)
         ]
       }
-
-      #v(3em)
-
-      #set text(dir: ltr, weight: "bold", stylistic-set: 1, number-width: "tabular")
-
-      #block(below: 0em, width: 80%, fill: black.lighten(97%), inset: 10%, radius: 0.5em, stroke: black.lighten(87%))[
-        پیشرفت کلاس
-
-        #v(5em)
-
-        #let progress = eval(progress_string)
-        #block(width: 100%, height: 0.5em, fill: blue_color, stroke: (thickness: 0.1em))[
-          #align(left)[
-            #block(fill: red_color, width: progress * 100%, height: 0.5em)
-          ]
-        ]
-
-        #place(dx: 0% - 0.2%, dy: -1em)[
-          #block(height: 1.5em, width: 0.2em, fill: black)
-        ]
-
-        #place(dx: 25% - 0.2%, dy: -1em)[
-          #block(height: 1.5em, width: 0.2em, fill: black)
-        ]
-
-        #place(dx: 50% - 0.2%, dy: -1em)[
-          #block(height: 1.5em, width: 0.2em, fill: black)
-        ]
-
-        #place(dx: 75% - 0.2%, dy: -1em)[
-          #block(height: 1.5em, width: 0.2em, fill: black)
-        ]
-
-        #place(dx: 100% - 0.2%, dy: -1em)[
-          #block(height: 1.5em, width: 0.2em, fill: black)
-        ]
-
-        #place(dx: progress * 100% - 1.1%, dy: -0.75em)[
-          #circle(fill: red_color, width: 1em, stroke: (thickness: 0.1em))
-
-          #place(dx: -1.35em, dy: -2.8em)[
-            #progress_string
-          ]
-
-          #place(dx: -0.4em, dy: 0.8em)[
-            #int(progress * 100)%
-          ]
-        ]
-
-        #place(dy: -5em)[
-          #block(width: 100%)[
-            #text(size: 1.5em)[
-              #place(dx: -1.7%)[
-                #emoji.face.peek
-              ]
-              #place(dx: 25% - 1.7%)[
-                #emoji.face.think
-              ]
-              #place(dx: 50% - 1.7%)[
-                #emoji.face.smile.slight
-              ]
-              #place(dx: 75% - 1.7%)[
-                #emoji.face.tear.withheld
-              ]
-              #place(dx: 100% - 1.7%)[
-                #emoji.face.party
-              ]
-            ]
-          ]
-        ]
-
-        #place(dy: 2.5em)[
-          #block(width: 100%)[
-            #place(dx: -1.6%)[
-              0%
-            ]
-            #place(dx: 25% - 2%)[
-              25%
-            ]
-            #place(dx: 50% - 2%)[
-              50%
-            ]
-            #place(dx: 75% - 2%)[
-              75%
-            ]
-            #place(dx: 100% - 2%)[
-              100%
-            ]
-          ]
-        ]
-
-        #v(1fr)
-      ]
     ]
   ]
 
