@@ -30,7 +30,7 @@
   date: [
     نیم سال تحصیلی #text(dir: ltr)[۱۴۰۳-۱]
   ],
-  version: "v1.0.1",
+  version: "v1.0.2",
   progress_string: "22 / 22",
   info_color: blue_color,
   no_responsibility: true,
@@ -95,7 +95,7 @@
 #colbreak()
 #colbreak()
 
-#place(dx: 115%, dy: 0%)[
+#place(dx: 115%, dy: 60%)[
   #block(width: 125%)[
     #tool.title("منابع")
     #set text(dir: ltr, size: 1.25em)
@@ -125,7 +125,7 @@
   ]
 ]
 
-#place(dx: 115%, dy: 65%)[
+#place(dx: 115%, dy: 20.5%)[
   #block(width: 125%)[
     #align(center)[
       #if black_and_white [
@@ -136,12 +136,15 @@
         #line(length: 100%, stroke: (dash: "solid", thickness: 0.25em))
 
         #text(weight: "extrabold", size: 1.75em)[
+          #emoji.heart.green#emoji.heart.white#emoji.heart
           تقدیم به قهرمانان راه آزادی
 
           #emoji.heart#emoji.heart.white#emoji.heart.green
         ]
       ] else [
         #text(fill: gradient.linear(..color.map.turbo.map(a => a.darken(50%))), weight: "extrabold", size: 1.75em)[
+          // #emoji.book #emoji.book.open #emoji.book.green
+
           به پایان آمد این دفتر، حکایت همچنان باقی است#sym.dots
         ]
 
@@ -151,8 +154,8 @@
         )
 
         #text(fill: gradient.linear(..color.map.turbo.map(a => a.darken(50%))), weight: "extrabold", size: 1.75em)[
+          #emoji.heart.green#emoji.heart.white#emoji.heart
           تقدیم به قهرمانان راه آزادی
-
           #emoji.heart#emoji.heart.white#emoji.heart.green
         ]
       ]

@@ -41,10 +41,17 @@
     brown_color = rgb(0, 0, 0)
   }
 
+  // CONSTANT UPDATE: we should subtract number of extra pages at the end of the document in the following line (Like refrences, ...)
+  let extra_start_pages = 6
+  let extra_end_pages = 1
+
   set page(
     header: context {
-      set text(fill: black)
-      if counter(page).get().first() > 1 {
+      let first_lesson_page = query(heading.where(level: 1)).first().location().position().page - 1
+      let current_page = counter(page).get().first()
+      let total_page_number = counter(page).final().first() - first_lesson_page - extra_end_pages
+
+      if current_page > 1 and current_page - extra_start_pages <= total_page_number {
         block()[
           #grid(
             columns: (1fr, 1fr, 1fr),
@@ -80,18 +87,12 @@
       }
     },
     footer: context {
-      set text(fill: black)
-
       let current_page = counter(page).get().first()
       let h1 = query(selector(heading.where(level: 1)).before(here()))
 
       if current_page > 1 {
         set block(below: 1em)
         set text(stylistic-set: 1, number-width: "tabular")
-
-        // CONSTANT UPDATE: we should subtract number of extra pages at the end of the document in the following line (Like refrences, ...)
-        let extra_start_pages = 6
-        let extra_end_pages = 1
 
         let first_lesson_page = query(heading.where(level: 1)).first().location().position().page - 1
         let lesson_page = current_page - first_lesson_page
