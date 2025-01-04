@@ -1,4 +1,4 @@
-#let black_and_white = true
+#let black_and_white = false
 
 #let red_color = rgb(200, 0, 0)
 #let orange_color = rgb(220, 100, 0)

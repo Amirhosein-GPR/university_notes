@@ -30,7 +30,7 @@
   date: [
     نیم سال تحصیلی #text(dir: ltr)[۱۴۰۳-۱]
   ],
-  version: "v1.0.0",
+  version: "v1.0.1",
   progress_string: "22 / 22",
   info_color: blue_color,
   no_responsibility: true,
@@ -95,31 +95,37 @@
 #colbreak()
 #colbreak()
 
-#let ref_color
-
-#if black_and_white {
-  ref_color = black
-} else {
-  ref_color = blue_color
-}
-
 #place(dx: 115%, dy: 0%)[
   #block(width: 125%)[
     #tool.title("منابع")
     #set text(dir: ltr, size: 1.25em)
-    #block(fill: ref_color.lighten(97%), stroke: (paint: blue_color, dash: "solid"), inset: 1em, width: 100%)[
-      - Machine Learning Lecture
-      - Introduction To Machine Learning Slides - Ethem Alpaydin (ethem.alpaydin\@gmail.com)
-      - FontAwesome
-      - Xournal++ (For Some Shapes and Charts)
-      - Libreoffice Draw (For Some Shapes)
-      - Libreoffice Calc (For Some Tables)
-      - #sym.dots
-    ]
+    #if black_and_white {
+      block(stroke: black, inset: 1em, width: 100%)[
+        - Machine Learning Lecture
+        - Introduction To Machine Learning Slides - Ethem Alpaydin (ethem.alpaydin\@gmail.com)
+        - FontAwesome
+        - Xournal++ (For Some Shapes and Charts)
+        - Libreoffice Draw (For Some Shapes)
+        - Libreoffice Calc (For Some Tables)
+        - #text()[Typst] (A markup-based typesetting system which was used to make this document)
+        - #sym.dots
+      ]
+    } else {
+      block(fill: blue_color.lighten(97%), stroke: blue_color, inset: 1em, width: 100%)[
+        - Machine Learning Lecture
+        - Introduction To Machine Learning Slides - Ethem Alpaydin (ethem.alpaydin\@gmail.com)
+        - FontAwesome
+        - Xournal++ (For Some Shapes and Charts)
+        - Libreoffice Draw (For Some Shapes)
+        - Libreoffice Calc (For Some Tables)
+        - #text(fill: blue_color)[Typst] (A markup-based typesetting system which was used to make this document)
+        - #sym.dots
+      ]
+    }
   ]
 ]
 
-#place(dx: 115%, dy: 59%)[
+#place(dx: 115%, dy: 65%)[
   #block(width: 125%)[
     #align(center)[
       #if black_and_white [
@@ -149,13 +155,7 @@
 
           #emoji.heart#emoji.heart.white#emoji.heart.green
         ]
-
-      ]
-      #v(12em)
-      #text()[
-        *This Document Was Written With #text(fill: ref_color)[Typst]*
       ]
     ]
   ]
-
 ]

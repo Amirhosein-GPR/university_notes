@@ -89,53 +89,58 @@
         set block(below: 1em)
         set text(stylistic-set: 1, number-width: "tabular")
 
+        // CONSTANT UPDATE: we should subtract number of extra pages at the end of the document in the following line (Like refrences, ...)
+        let extra_start_pages = 6
+        let extra_end_pages = 1
+
         let first_lesson_page = query(heading.where(level: 1)).first().location().position().page - 1
         let lesson_page = current_page - first_lesson_page
-        let total_page_number = counter(page).final().first() - first_lesson_page
+        let total_page_number = counter(page).final().first() - first_lesson_page - extra_end_pages
 
-        line(length: 100%, stroke: (dash: "densely-dash-dotted"))
-        grid(
-          columns: (1fr, 1fr, 1fr),
-          row-gutter: 0.5em,
-          align: horizon,
-          {
-            if lesson_page > 0 {
-              align(right)[
-                #total_page_number / #lesson_page
-              ]
-              // CONSTANT UPDATE IF NECESSARY (if statements):
-            } else if lesson_page == -4 {
-              [ث / آ]
-            } else if lesson_page == -3 {
-              [ث / ب]
-            } else if lesson_page == -2 {
-              [ث / پ]
-            } else if lesson_page == -1 {
-              [ث / ت]
-            } else if lesson_page == 0 {
-              [ث / ث]
-            }
-          },
-          align(center)[
-            #if h1.len() > 0 {
-              h1.last().body
-            } else {
-              [پیش گفتار]
-            }
-          ],
-          align(left)[
-            #if h1.len() > 0 {
-              // CONSTANT UPDATE IF NECESSARY (current_page - CONSTANT):
-              [#int((current_page - 6) / (total_page_number) * 100)%]
-            } else {
-              [
-                #{
-                  int(((current_page - 1) / (first_lesson_page - 1)) * 100)
-                }%
-              ]
-            }
-          ],
-        )
+        if current_page - extra_start_pages <= total_page_number {
+          line(length: 100%, stroke: (dash: "densely-dash-dotted"))
+          grid(
+            columns: (1fr, 1fr, 1fr),
+            row-gutter: 0.5em,
+            align: horizon,
+            {
+              if lesson_page > 0 {
+                align(right)[
+                  #total_page_number / #lesson_page
+                ]
+                // CONSTANT UPDATE IF NECESSARY (if statements):
+              } else if lesson_page == -4 {
+                [ث / آ]
+              } else if lesson_page == -3 {
+                [ث / ب]
+              } else if lesson_page == -2 {
+                [ث / پ]
+              } else if lesson_page == -1 {
+                [ث / ت]
+              } else if lesson_page == 0 {
+                [ث / ث]
+              }
+            },
+            align(center)[
+              #if h1.len() > 0 {
+                h1.last().body
+              } else {
+                [پیش گفتار]
+              }
+            ],
+            align(left)[
+              #if h1.len() > 0 {
+                [#int((current_page - extra_start_pages) / (total_page_number) * 100)%]
+              } else {
+                [
+                  #{
+                    int(((current_page - 1) / (first_lesson_page - 1)) * 100)
+                  }%
+                ]
+              }
+            ],
+          )
+        }
       }
     },
     paper: paper,
