@@ -30,7 +30,7 @@
   date: [
     نیم سال تحصیلی #text(dir: ltr)[۱۴۰۳-۱]
   ],
-  version: "v1.0.2",
+  version: "v1.0.3",
   progress_string: "22 / 22",
   info_color: blue_color,
   no_responsibility: true,
@@ -138,7 +138,6 @@
         #text(weight: "extrabold", size: 1.75em)[
           #emoji.heart.green#emoji.heart.white#emoji.heart
           تقدیم به قهرمانان راه آزادی
-
           #emoji.heart#emoji.heart.white#emoji.heart.green
         ]
       ] else [
