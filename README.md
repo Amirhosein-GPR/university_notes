@@ -1,5 +1,5 @@
 # university_notes
-### Just a repo in order to track my notes versions :D
+### Just a repo for tracking my notes versions :D
 
 ### مخزنی برای دنبال کردن نسخه های جزوه هام D:
 
